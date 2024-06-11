@@ -5,5 +5,6 @@
 [![DOI](https://zenodo.org/badge/574967377.svg)](https://zenodo.org/badge/latestdoi/574967377)
 
 
+This repository will (hopefully) stores the scripts for the creation of gridded products based on the _Eutrophication_ datasets from [EMODnet Chemistry]([https://www.emodnet-chemistry.eu/](https://emodnet.ec.europa.eu/en/chemistry)). 
 
-This repository stores the scripts for the creation of gridded products based on the _Eutrophication_ datasets from [EMODnet Chemistry](https://www.emodnet-chemistry.eu/). 
+It also contains a series of instructions for different purposes.
