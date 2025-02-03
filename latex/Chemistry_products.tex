@@ -35,10 +35,7 @@
 \affil[6]{National Institute for Marine Research and Development “Grigore Antipa”. Location. B-dul Mamaia Nr. 300, Romina}
 \affil[8]{Institute of Marine Research, P.O box 1870 Nordnes NO-5817 Bergen, Norway}
 \affil[4]{Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS Borgo Grotta Gigante 42/C, 34010 Sgonico (TS), Italy}
-\affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} #0000-0001-6562-068X
-
-
-
+\affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} %0000-0001-6562-068X
 
 
 %% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
@@ -74,14 +71,15 @@ TEXT
 \introduction  %% \introduction[modified heading if necessary]
 TEXT
 
+The rest of the manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, since they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the obsertations; finally we describe the final product (climatologies). 
+
 
 \section{In situ datasets\label{sec:insitu}}
-Two main types of data are considered: the profiles and the time series. They are processed separately but then used together for the production of the climatologies. Six variables (concentrations) were considered for the gridded products (Sec.~ref{}): ammonium, chlorophyll-a, dissolved oxygen, dissolved inorganic nitrogen, phosphate and silicate.
 
-
+Two main types of data are considered: the profiles and the time series. They are processed separately but then used together for the production of the climatologies. Six variables (concentrations) were considered (Sec.~ref{}): ammonium, chlorophyll-a, dissolved oxygen, dissolved inorganic nitrogen, phosphate and silicate.
 
 \begin{figure}[t]
-\includegraphics[width=8.3cm]{EMODnet_data_domains_phosphate.png}
+%\includegraphics[width=8.3cm]{EMODnet_data_domains_phosphate.png}
 \caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
 \end{figure}
 
@@ -180,33 +178,22 @@ The merged data sets are provided at …, while the griddied fields are made ava
 The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis.
 \end{acknowledgements}
 
+\bibliography{emodnet.bib}
+\bibliographystyle{copernicus.bst}
 
-% Bibliography will be managed using Bibtex. Simply add the authors and the DOI and the references will be formatted later.
+%
+%\begin{thebibliography}{}
+%\bibitem[AUTHOR(YEAR)]{LABEL1}
+%REFERENCE 1
+%\bibitem[AUTHOR(YEAR)]{LABEL2}
+%REFERENCE 2
+%\end{thebibliography}
+%
 
 
-\begin{thebibliography}{}
-\bibitem[AUTHOR(YEAR)]{LABEL1}
-REFERENCE 1
-\bibitem[AUTHOR(YEAR)]{LABEL2}
-REFERENCE 2
-\end{thebibliography}
-
-
-@article{Julia-2017,
-   title={Julia: A fresh approach to numerical computing},
-   author={Bezanson, Jeff and Edelman, Alan and Karpinski, Stefan and Shah, Viral B},
-   journal={SIAM {R}eview},
-   volume={59},
-   number={1},
-   pages={65--98},
-   year={2017},
-   publisher={SIAM},
-   doi={10.1137/141000671}
-}
-
-Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 83, 38pp.
-
-Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate and nitrate+nitrite, silicate). A. Mishonov Technical Ed.; NOAA Atlas NESDIS 84, 35pp.
+%Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 83, 38pp.
+%
+%Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate and nitrate+nitrite, silicate). A. Mishonov Technical Ed.; NOAA Atlas NESDIS 84, 35pp.
 
 
 % The figure files should be labelled correctly with Arabic numerals (e.g. fig01.jpg, fig02.png).
