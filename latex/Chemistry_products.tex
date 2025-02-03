@@ -2,7 +2,7 @@
 % If you’re familiar with LaTeX, don’t hesitate to modify the commands, otherwise treat this document as a normal word document.
 
 \documentclass[essd, manuscript]{copernicus}
-
+\graphicspath{{../figures/}}
 
 
 \begin{document}
@@ -35,7 +35,7 @@
 \affil[6]{National Institute for Marine Research and Development “Grigore Antipa”. Location. B-dul Mamaia Nr. 300, Romina}
 \affil[8]{Institute of Marine Research, P.O box 1870 Nordnes NO-5817 Bergen, Norway}
 \affil[4]{Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS Borgo Grotta Gigante 42/C, 34010 Sgonico (TS), Italy}
-\affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} #ORCID
+\affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} #0000-0001-6562-068X
 
 
 
@@ -46,7 +46,7 @@
 
 \correspondence{Charles Troupin (ctroupin@uliege.be)}
 
-\runningtitle{Eutrophication climatologies}
+\runningtitle{Eutrophication climatologies for the European Seas}
 
 \runningauthor{Troupin et al.}
 
@@ -80,10 +80,10 @@ Two main types of data are considered: the profiles and the time series. They ar
 
 
 
-%\begin{figure}[t]
-%%\includegraphics[width=8.3cm]{EMODnet_data_domains_phosphate.png}
-%\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
-%\end{figure}
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{EMODnet_data_domains_phosphate.png}
+\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
+\end{figure}
 
 
 \subsection{Domains}
@@ -139,6 +139,9 @@ The value distribution (Fig. ) shows different patterns according to the variabl
 \subsection{File format}
 The original data collections are provided as ODV \citep[Ocean Data View,][]{SCHLITZER02} data collections. Such collections are easily read then exported to another format using the ODV software tool. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
+
+\section{The interpolation method}
+
 
 \section{Gridded climatologies\label{sec:clim}}
 
