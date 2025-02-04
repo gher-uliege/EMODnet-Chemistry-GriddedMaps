@@ -47,7 +47,7 @@ function make_scatter(datafilelist::Array, varname::String)
     xlims!(-180, 180.0)
     ylims!(-90.0, 90.0)
     for (iii, datafile) in enumerate(datafilelist)
-        debug("Reading data from $(basename(datafile))")
+        @debug("Reading data from $(basename(datafile))")
         @time obsvalue, obslon, obslat, obsdepth, obstime, obsids =
             loadobs(Float64, datafile, varname)
 
@@ -70,6 +70,43 @@ function make_scatter(datafilelist::Array, varname::String)
         backgroundcolor = :white,
         alpha = 0.85,
     )
+    hidedecorations!(ga)
+    return fig
+end
+
+function make_hexbin(datafilelist::Array, varname::String)
+    varname_ = replace(varname, "_" => " ")
+    fig = Figure(size = (600, 600))
+    ga = GeoAxis(
+        fig[1, 1],
+        title = "Observations of $(varname_)",
+        dest = "+proj=ortho +lon_0=15 +lat_0=35",
+    )
+    heatmap!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea,
+        colormap = Reverse(:greys),
+        colorrange = [0, 2],
+    )
+    xlims!(-180, 180.0)
+    ylims!(-90.0, 90.0)
+
+    obslonvec = Float64[]
+    obslatvec = Float64[]
+
+    for (iii, datafile) in enumerate(datafilelist)
+        @debug("Reading data from $(basename(datafile))")
+        obsvalue, obslon, obslat, obsdepth, obstime, obsids =
+            loadobs(Float64, datafile, varname)
+
+        append!(obslonvec, obslon)
+        append!(obslatvec, obslat)
+       
+    end
+    
+    hexbin!(ga, obslonvec, obslatvec, bins = 50)
     hidedecorations!(ga)
     return fig
 end
