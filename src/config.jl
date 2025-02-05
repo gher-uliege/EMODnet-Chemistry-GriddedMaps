@@ -1,3 +1,6 @@
+using GeoJSON
+using PolygonOps
+
 deltalon = 0.25
 deltalat = 0.25
 lonr = -45.:deltalon:70.
@@ -149,4 +152,54 @@ function make_histogram(
     )
     hidespines!(ax2, :t, :r)
     return fig
+end
+
+"""
+    read_polygon_json(contourfile)
+
+Read the coordinates as a list of tuples stored in the geoJSON file `contourfile`,
+as downloaded from https://geojson.io
+
+# Example
+```julia-repl
+julia> coordlist = read_polygon_json(contourfile)
+```
+"""
+function read_polygon_json(contourfile::AbstractString)
+    coordlist = []
+    jsonbytes = read(contourfile);
+    fc = GeoJSON.read(jsonbytes)
+    for poly in fc
+        coordinates = poly.geometry[1]
+        push!(coordlist, coordinates)
+    end
+    return coordlist
+end
+
+"""
+    edit_mask!(xi, yi, mask, coordinatelist)
+
+Edit the land-sea mask (as read using `DIVAnd.load_bath`) by setting to zero (_land_ value)
+the cells that fall inside the polygon(s) defined by `coordinatelist` (as read by using `read_polygon_json`).
+
+The contour file can be downloaded from geojson.io. An example of such a file (`outsidemask.json`) is provided in 
+the data directory.
+
+# Example
+```julia-repl
+julia> coordinatelist = read_polygon_json(contourfile);
+julia> edit_mask!(xi, yi, mask, coordinatelist)
+```
+"""
+function edit_mask!(xi, yi, mask::BitMatrix, coordinatelist::Vector{Any})
+    for (ii, xx) in enumerate(xi)
+        for (jj, yy) in enumerate(yi)
+            for coordinates in coordinatelist
+                if PolygonOps.inpolygon((xx,yy), coordinates) != 0
+                    mask[ii, jj] = 0.
+                end
+            end
+        end
+    end
+    return nothing
 end
