@@ -11,6 +11,7 @@
 
 \Author[1]{Charles}{Troupin}
 \Author[1]{Alexander}{Barth}
+\Author[1]{Jean-Marie}{Beckers}
 \Author[2]{Karin}{Wesslander}
 \Author[3]{Julie}{Gatti}
 \Author[3]{Amandine}{Thomas}
@@ -37,10 +38,6 @@
 \affil[8]{Institute of Marine Research, P.O box 1870 Nordnes NO-5817 Bergen, Norway}
 \affil[4]{Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS Borgo Grotta Gigante 42/C, 34010 Sgonico (TS), Italy}
 \affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} %0000-0001-6562-068X
-
-
-%% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
-
 
 \correspondence{Charles Troupin (ctroupin@uliege.be)}
 
@@ -83,17 +80,33 @@ The rest of the manuscript is organised as follows: first we describe the in sit
 Two main types of data are considered: the profiles and the time series. They are processed separately but then used together for the production of the climatologies. Six variables (concentrations) were considered (Sec.~ref{}): ammonium, chlorophyll-a, dissolved oxygen, dissolved inorganic nitrogen, phosphate and silicate.
 
 
-\begin{figure}[t]
-\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
-\end{figure}
+%\begin{figure}[t]
+%\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
+%\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
+%\end{figure}
+%
+%\begin{figure}[t]
+%\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
+%\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
+%\end{figure}
 
-\begin{figure}[t]
-\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
-\end{figure}
+\subsection{Variables}
 
-
+\begin{table}
+\caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
+\begin{tabular}{llr}
+\tophline
+Variable 						& CF standard name															& Units			\\ 
+\middlehline
+Ammonium						& \verb#mole_concentration_of_ammonium_in_sea_water#						& $\mu$mol/l	\\
+Chlorophyll - a 				& \verb#mass_concentration_of_chlorophyll_a_in_sea_water#					& mg/m$^3$		\\
+Dissolved inorganic nitrogen 	& \verb#mole_concentration_of_dissolved_inorganic_nitrogen_in_sea_water# 	& $\mu$mol/l	\\
+Dissolved oxygen 				& \verb#mole_concentration_of_dissolved_molecular_oxygen_in_sea_water#		& $\mu$mol/l	\\
+Phosphate 						& \verb#moles_of_phosphate_per_unit_mass_in_sea_water#						& $\mu$mol/l	\\
+Silicate 						& \verb#mole_concentration_of_silicate_in_sea_water# 						& $\mu$mol/l	\\
+\bottomhline
+\end{tabular}
+\end{table}
 
 \subsection{Domains}
 The 6 regional domains are illustrated in Fig.~\ref{fig:phosphatedata} and were defined as follows:
@@ -118,13 +131,13 @@ We can see the almost straight lines corresponding to oceanographic campaigns an
 
 \subsection{File preparation}
 
-The original files are provided in the form of ODV \citep[Ocean Data View,][]{Schlitzer2002} collections. There are then converted to ODV netCDF, keeping the relevant metadata (i.e. those relative to the originators) in the exported files. Finally, the files are converted to ragged array netCDF using a script in Julia. The goal is to decrease the time needed to read the observations from the different regions: in the ODV netCDF files, the observations are organised by profile, and reading all of them means we have to loop over each profile. Meanwhile, for the creation of the gridded products, the information about the profile is not needed anymore and the data can be stored as vectors.
+The original files are provided in the form of ODV \citep[Ocean Data View,][]{SCHLITZER2002} collections. There are then converted to ODV netCDF, keeping the relevant metadata (i.e. those relative to the originators) in the exported files. Finally, the files are converted to ragged array netCDF using a script in Julia. The goal is to decrease the time needed to read the observations from the different regions: in the ODV netCDF files, the observations are organised by profile, and reading all of them means we have to loop over each profile. Meanwhile, for the creation of the gridded products, the information about the profile is not needed anymore and the data can be stored as vectors.
 
 EDMO code and CDI \citep{Schaap2010}
 
 With this format change, the files can be read in less than one minute (versus several hours for the ODV collections or ODV netCDF).
 
-These operations were performed with ODV version 5.7.2 \citep{SCHLITZER2024}.
+These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
  
 
 \subsection{Spatial distribution}
@@ -157,7 +170,7 @@ The value distribution (Fig. ) shows different patterns according to the variabl
 
 
 \subsection{File format}
-The original data collections are provided as ODV \citep[Ocean Data View,][]{SCHLITZER02} data collections. Such collections are easily read then exported to another format using the ODV software tool. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
+The original data collections are provided as ODV \citep[Ocean Data View,][]{SCHLITZER2002} data collections. Such collections are easily read then exported to another format using the ODV software tool. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
 \section{The interpolation method}
@@ -180,11 +193,41 @@ DIVAnd is an analysis method designed to generate fields on a curvilinear grid g
 One of the main advantages of the method over widely used methods such as the Optimal Interpolation (OI, REFERENCE) is that DIVAnd (and DIVA) naturally takes into account physical obstacles, typically the presence of land separating two bodies of water.  
 DIVAnd is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. While the previous code was written in Fortran, Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
 
+\subsection{Implementation}
+
+\citep{TROUPIN2025}
+A set of Jupyter-notebooks \citep[https://jupyter.org][]{KLUYVER2016} is
+provided as guidelines explaining all the steps related to the creation of a climatology:
+1. Data reading;
+2. Creation of the land-sea mask based on the bathymetry;
+3. Parameter optimisation;
+4. Analysis;
+5. Creation of figures.
 
 
+The GEBCO bathymetry (GEBCO 2021) was used with a resolution reduced by a factor 4 (file
+gebco_30sec_4.nc) with respect to the original was used for the creation of the land-sea mask
+needed by DIVAnd (Figure 2.3)
 
+
+%----------------------------------------------
 \section{Gridded climatologies\label{sec:clim}}
+%----------------------------------------------
 
+\citep{BUGA2021}
+
+\subsection{Products}
+
+Three types of climatologies were produced:
+1. All European Seas – monthly maps on a domain covering all the regional seas
+2. Sea region – at seasonal scale and for periods of 6 years, using a moving 6-year window
+seasonal maps
+3. Coastal area maps - at seasonal scale
+
+EMODnet Chemistry Regional climatologies have been produced at seasonal scale and for periods of 6 years,
+using a moving 6-year window. The season definitions used are defined specifically for each basin. 6-year
+periods span from 1980-1985 until 2013-2018 (but highly depending on data availability for each sea/each
+parameter/each season). 
 
 \subsection{Product descriptions}
 
@@ -192,6 +235,35 @@ DIVAnd is written in Julia \citep{Bezanson2017}, a fast, dynamically-type progra
 
 The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993}, making use of the NCDatasets.jl library \citep{Barth2024}.
 
+\subsubsection{Gridded variables}
+
+MODnet Chemistry climatologies are provided as masked fields using relative error threshold 0.3 and
+0.5, i.e., the gridded field is not shown at locations where the relative error is above 0.3 (or 0.5). Doing
+so, areas where no data are available (thus extrapolation has to be performed) are not displayed. DIVAnd
+settings are specific for each type of climatology/sea region and are detailed in the following chapters
+
+EASME/EMFF/2018/1.3.1.8 – EMODnet Thematic Lot 4 - Chemistry
+EMODnet Chemistry maps produced with
+Data-Interpolating Variational Analysis (DIVA)
+5
+The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation
+(EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and
+Fisheries Fund.
+Figure 1.1 - EMODnet Chemistry Regional climatologies.
+For each Regional climatology, at least, the following WMS layers are available (Fig. 1.2):
+❖ Water body gridded map of the parameters listed in Tab. 1, masked using relative error
+threshold 0.5
+❖ Interpolated observations: station positions used to build the Water body gridded map
+Additional fields:
+❖ Water body gridded map
+❖ Error standard deviation of the gridded map
+❖ Water body gridded map masked using relative error threshold 0.3
+❖ Relative error of gridded map
+❖ Logarithm10 of number of data in bins
+❖ Logarithm10 of number of outliers data in bins
+❖ Deepest value of water body gridded map
+❖ Deepest value of water body gridded map masked using relative error threshold 0.3
+❖ Deepest value of water body gridded map masked using relative error threshold 0.5
 
 \conclusions  %% \conclusions[modified heading if necessary]
 TEXT
@@ -209,7 +281,7 @@ The merged data sets are provided at …, while the griddied fields are made ava
 \disclaimer{The data coverage obtained with the in situ measurements is heterogeneous, leading in higher uncertainties in the gridded field. The information contained in the gridded field believed to be trustworthy. However its accuracy and completeness cannot be guaranteed.  Whilst every effort has been made to ensure its reliability within the limits of present knowledge, no responsibility can be accepted by those involved in its compilation or publication for any consequential loss or damage arising from its use.
 } 
 \begin{acknowledgements}
-The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis.
+The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4.
 \end{acknowledgements}
 
 \bibliography{emodnet.bib}
