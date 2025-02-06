@@ -21,6 +21,13 @@ domains = OrderedDict(
     "North Sea" => [-20., 25., 47., 63.]
 )
 
+domainrivers = OrderedDict(
+    "Loire river" => [-4., -1., 46.25, 48.],
+    "Gulf of Riga" => [22.3, 25.0, 56.8, 58.4],
+    "Po river" => [12., 14., 44., 46.],
+    "Danube" => [28.5, 30.5, 43.7, 45.6]
+)
+
 varlist = [
     "Water_body_ammonium",
     "Water_body_chlorophyll-a",
@@ -49,6 +56,13 @@ domaincolors = OrderedDict(
     "Black Sea" => "#984ea3",
     "Mediterranean Sea" => "#ff7f00",
     "North Sea" => "#ffff33"
+)
+
+domainriverscolors = OrderedDict(
+    "Loire river" => domaincolors["Northeast Atlantic Ocean"],
+    "Gulf of Riga" => domaincolors["Baltic Sea"],
+    "Po river" => domaincolors["Mediterranean Sea"],
+    "Danube" => domaincolors["Black Sea"]
 )
 
 """
@@ -229,5 +243,21 @@ function edit_mask!(xi, yi, mask::BitMatrix, coordinatelist::Vector{Any})
             end
         end
     end
+    return nothing
+end
+
+"""
+
+"""
+function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor)
+    poly = GeoInterface.LineString([
+        (coords[1], coords[3]),
+        (coords[2], coords[3]),
+        (coords[2], coords[4]),
+        (coords[1], coords[4]),
+        (coords[1], coords[3]),
+    ])
+    spoly = GeometryOps.segmentize(poly, max_distance = 1)
+    lines!(ga, GeoMakie.geo2basic(spoly), color = thecolor, linewidth = 5)
     return nothing
 end
