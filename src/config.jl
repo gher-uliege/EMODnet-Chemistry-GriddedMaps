@@ -1,5 +1,7 @@
+
 using GeoJSON
 using PolygonOps
+using OrderedCollections
 
 deltalon = 0.25
 deltalat = 0.25
@@ -9,6 +11,15 @@ latr = 24.:deltalat:83.
 
 datadir = "/home/ctroupin/data/EMODnet-Chemistry/Eutrophication2024/netCDF"
 figdir = "/home/ctroupin/Projects/EMODnet/EMODnet-Chemistry-GriddedMaps/figures/paper/"
+
+domains = OrderedDict(
+    "Arctic Ocean" => [-42, 54, 62, 83.5],
+    "Northeast Atlantic Ocean" => [-42., -0.1, 25., 47.9],
+    "Baltic Sea" => [9.4, 30.9, 53, 65.39],
+    "Black Sea" => [26.5, 42., 40., 48.],
+    "Mediterranean Sea" => [-7, 36.5, 30, 46],
+    "North Sea" => [-20., 25., 47., 63.]
+)
 
 varlist = [
     "Water_body_ammonium",
@@ -29,9 +40,25 @@ regionnames = [
 ]
 
 colorlist = ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f"]
-colorlist = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#ffff33"]
 
+
+domaincolors = OrderedDict(
+    "Arctic Ocean" => "#e41a1c",
+    "Northeast Atlantic Ocean" => "#377eb8",
+    "Baltic Sea" => "#4daf4a",
+    "Black Sea" => "#984ea3",
+    "Mediterranean Sea" => "#ff7f00",
+    "North Sea" => "#ffff33"
+)
+
+"""
+    make_scatter(datafilelist, varname)
+"""
 function make_scatter(datafilelist::Array, varname::String)
+
+    local colorlist = collect(values(domaincolors))
+    local domainlist = collect(keys(domaincolors))
+
     varname_ = replace(varname, "_" => " ")
     fig = Figure(size = (600, 600))
     ga = GeoAxis(
@@ -60,7 +87,7 @@ function make_scatter(datafilelist::Array, varname::String)
             [NaN],
             markersize = 5,
             color = colorlist[iii],
-            label = regionnames[iii],
+            label = domainlist[iii]
         )
         plot!(ga, obslon, obslat, markersize = 2, color = colorlist[iii])
     end
@@ -153,6 +180,7 @@ function make_histogram(
     hidespines!(ax2, :t, :r)
     return fig
 end
+
 
 """
     read_polygon_json(contourfile)
