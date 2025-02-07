@@ -2,6 +2,11 @@
 % If you’re familiar with LaTeX, don’t hesitate to modify the commands, otherwise treat this document as a normal word document.
 
 \documentclass[essd, manuscript]{copernicus}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    citecolor= blue
+    }
 \graphicspath{{../figures/paper/}}
 
 
@@ -62,28 +67,43 @@
 
 
 \begin{abstract}
-TEXT
+We present high-resolution, regional climatologies of eutrophication variables covering the European seas. The variables consist of ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate and silicate concentrations. The in situ observations are prepared and quality controlled following a standardised procedure. They are then interpolated using the Data-Interpolating Variational Analysis in n dimensions (DIVAnd) to create the climatologies. They are generated on a spatial domain covering all the Europeans seas, on 6 regional domains (Arctic Ocean, Northeast Atlantic Ocean, Baltic Sea, Black Sea, Mediterranean Sea and North Sea) as well as 4 coastal zones (Loire River, Gulf of Riga, Po River and Danube Delta).
+
+The spatial resolution and the analysis parameters are adapted to each domain.
 \end{abstract}
 
 
 \introduction  %% \introduction[modified heading if necessary]
-TEXT
 
-The rest of the manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, since they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the obsertations; finally we describe the final product (climatologies). 
+EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. According to \citet{Shepherd2018}, The key features of EMODnet are : 1. The focus on marine data: EMODnet does not deal with satellite data or fisheries survey; 2. The design and distribution of multi-purpose data products, based on the raw data; 3. the preservation of the data origin and ownership (both for the raw data and for the products); 4. The division into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
+
+The web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
+
+
+One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are initially collected with a single purpose: this can a scientific project or a monitoring campaign. The combination of those observations with other sources of measurements or other parameters has the potential for the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
+\begin{enumerate}
+\item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements general undergo a suite of checks to ensure that their quality is good enough (depending on the final purpose).
+\item The climatologies (or atlas): they consist of various gridded fields at different depth levels and for different time periods, obtained by interpolating the in situ observations on a regular grid.
+\end{enumerate}
+
+Both types of products are accompanied with metadata, which indicate how, when and by who the data were collected. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. 
+
+The rest of the manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, since they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the observations; finally we describe the final product (climatologies). 
 
 
 \section{In situ datasets\label{sec:insitu}}
+%-------------------------------------------
 
-- Describe EMODnet \citep{MartinMiguez2019} 
+
 - Describe EMODnet Chemistry \citep{Giorgetti2018}
 
 Two main types of data are considered: the profiles and the time series. They are processed separately but then used together for the production of the climatologies. Six variables (concentrations) were considered (Sec.~ref{}): ammonium, chlorophyll-a, dissolved oxygen, dissolved inorganic nitrogen, phosphate and silicate.
 
 
-%\begin{figure}[t]
-%\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-%\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
-%\end{figure}
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
+\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
+\end{figure}
 %
 %\begin{figure}[t]
 %\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
@@ -92,24 +112,44 @@ Two main types of data are considered: the profiles and the time series. They ar
 
 \subsection{Variables}
 
+Eutrophication variables are those related to nutrients and their accumulation in the water column. In this work and for the sake of simplicity, the focus is placed on 6 of these variables, as summarised in Table~\ref{tab:variables}.
+
 \begin{table}
 \caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
 \begin{tabular}{llr}
 \tophline
-Variable 						& CF standard name															& Units			\\ 
+Variable 					& CF standard name														& Units		\\ 
 \middlehline
-Ammonium						& \verb#mole_concentration_of_ammonium_in_sea_water#						& $\mu$mol/l	\\
-Chlorophyll - a 				& \verb#mass_concentration_of_chlorophyll_a_in_sea_water#					& mg/m$^3$		\\
-Dissolved inorganic nitrogen 	& \verb#mole_concentration_of_dissolved_inorganic_nitrogen_in_sea_water# 	& $\mu$mol/l	\\
-Dissolved oxygen 				& \verb#mole_concentration_of_dissolved_molecular_oxygen_in_sea_water#		& $\mu$mol/l	\\
-Phosphate 						& \verb#moles_of_phosphate_per_unit_mass_in_sea_water#						& $\mu$mol/l	\\
-Silicate 						& \verb#mole_concentration_of_silicate_in_sea_water# 						& $\mu$mol/l	\\
+Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
+Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
+Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
+Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
+Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
+Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
 \bottomhline
 \end{tabular}
 \end{table}
 
 \subsection{Domains}
-The 6 regional domains are illustrated in Fig.~\ref{fig:phosphatedata} and were defined as follows:
+
+The phosphate measurements corresponding to the 6~regional domains are presented in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}.
+
+\begin{table}
+\caption{Spatial extend of the 6 regions.\label{tab:regions}}
+\begin{tabular}{llr}
+\tophline
+Region	 					& West	& East	& South 	 & North 	\\ 
+\middlehline
+Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
+Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
+Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
+Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
+Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
+Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
+\bottomhline
+\end{tabular}
+\end{table}
+
 \begin{description}
 \item[Black Sea:] from 26.5°E to 42°E and from 40°N to 48°N;
 \item[Mediterranean Sea:] from 6°W to 36.375°E and from 30°N to 46.375°N;
@@ -191,8 +231,9 @@ While temperature and salinity (T and S) climatologies have been produced for va
 
 \subsection{Method}
 
-DIVAnd is an analysis method designed to generate fields on a curvilinear grid grid from a set of in situ measurements \citep{BARTH2014}. It is a new version of the DIVA tool (REFERENCES) that was previously limited to 2 dimensions (usually longitude and latitude). With DIVAnd, it is now possible to perform the analysis on an arbitrary number of dimensions, typically the horizontal dimension (longitudes and latitudes), the vertical dimension (depth or pressure) and the time. With the previous version of  the DIVA tool, climatologies were obtained by stacking 2-dimensional layers computed for different depths and time periods. 
-One of the main advantages of the method over widely used methods such as the Optimal Interpolation (OI, REFERENCE) is that DIVAnd (and DIVA) naturally takes into account physical obstacles, typically the presence of land separating two bodies of water.  
+DIVAnd is an analysis method designed to generate fields on a curvilinear grid grid from a set of in situ measurements \citep{BARTH2014}. It is a new version of the DIVA tool \citep{TROUPIN2012,BECKERS2014} that was previously limited to 2 dimensions (usually longitude and latitude). With DIVAnd, it is now possible to perform the analysis on an arbitrary number of dimensions, typically the horizontal dimension (longitudes and latitudes), the vertical dimension (depth or pressure) and the time. With the previous version of  the DIVA tool, climatologies were obtained by stacking 2-dimensional layers computed for different depths and time periods. 
+One of the main advantages of the method over widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} is that DIVAnd (and DIVA) naturally takes into account physical obstacles, typically the presence of land separating two bodies of water.  
+
 DIVAnd is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. While the previous code was written in Fortran, Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
 
 \subsection{Implementation}
@@ -200,16 +241,16 @@ DIVAnd is written in Julia \citep{Bezanson2017}, a fast, dynamically-type progra
 \citep{TROUPIN2025}
 A set of Jupyter-notebooks \citep[https://jupyter.org][]{KLUYVER2016} is
 provided as guidelines explaining all the steps related to the creation of a climatology:
-1. Data reading;
-2. Creation of the land-sea mask based on the bathymetry;
-3. Parameter optimisation;
-4. Analysis;
-5. Creation of figures.
+\begin{enumerate}
+\item Data reading;
+\item Creation of the land-sea mask based on the bathymetry;
+\item Parameter optimisation;
+\item Analysis;
+\item Creation of figures.
+\end{enumerate}
 
-
-The GEBCO bathymetry (GEBCO 2021) was used with a resolution reduced by a factor 4 (file
-gebco_30sec_4.nc) with respect to the original was used for the creation of the land-sea mask
-needed by DIVAnd (Figure 2.3)
+The GEBCO bathymetry (GEBCO 2021) was used with a resolution reduced by a factor 4 with respect to the original, was used for the creation of the land-sea mask
+needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
 
 
 %----------------------------------------------
@@ -217,6 +258,12 @@ needed by DIVAnd (Figure 2.3)
 %----------------------------------------------
 
 \citep{BUGA2021}
+
+
+\begin{figure*}[t]
+\includegraphics[width=12cm]{gebco_bathy_mask_domains3}
+\caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
+\end{figure*}
 
 \subsection{Products}
 
@@ -266,6 +313,15 @@ Additional fields:
 ❖ Deepest value of water body gridded map
 ❖ Deepest value of water body gridded map masked using relative error threshold 0.3
 ❖ Deepest value of water body gridded map masked using relative error threshold 0.5
+
+
+\subsubsection{A posteriori quality control}
+
+The initial data collections, presented in Sec.~\ref{sec:insitu}, underwent rigorous quality checks that ensure the final quality of the datasets. When performing analysis, it is also possible to detect suspicious data based on the residuals. The residual of a given data point is computed as the difference between the observed value and the analysed field at the location of the data point. In general, forcing the residuals to be small, i.e., to have an analysed field closed to the observations, does not guarantee good results: the field obtained will be noisy an not representative of a long-term mean state. Still, in an analysis performed with realistic parameters (here: correlation length and noise-to-signal ratio), large residuals might be the signal of either suspect data, or data not compatible with the climatology (HERE, NEED TO BETTER EXPLAIN).
+
+The residuals for the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. The locations of those discarded observations is presented in Fig.~\ref{fig:residuals}. 
+
+
 
 \conclusions  %% \conclusions[modified heading if necessary]
 TEXT

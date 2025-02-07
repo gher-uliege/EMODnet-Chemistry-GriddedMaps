@@ -22,10 +22,10 @@ domains = OrderedDict(
 )
 
 domainrivers = OrderedDict(
-    "Loire river" => [-4., -1., 46.25, 48.],
+    "Loire River" => [-4., -1., 46.25, 48.],
     "Gulf of Riga" => [22.3, 25.0, 56.8, 58.4],
-    "Po river" => [12., 14., 44., 46.],
-    "Danube" => [28.5, 30.5, 43.7, 45.6]
+    "Po River" => [12., 14., 44., 46.],
+    "Danube Delta" => [28.5, 30.5, 43.7, 45.6]
 )
 
 varlist = [
@@ -59,10 +59,10 @@ domaincolors = OrderedDict(
 )
 
 domainriverscolors = OrderedDict(
-    "Loire river" => domaincolors["Northeast Atlantic Ocean"],
+    "Loire River" => domaincolors["Northeast Atlantic Ocean"],
     "Gulf of Riga" => domaincolors["Baltic Sea"],
-    "Po river" => domaincolors["Mediterranean Sea"],
-    "Danube" => domaincolors["Black Sea"]
+    "Po River" => domaincolors["Mediterranean Sea"],
+    "Danube Delta" => domaincolors["Black Sea"]
 )
 
 """
@@ -249,7 +249,7 @@ end
 """
 
 """
-function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor)
+function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor, name::String="", linestyle=:solid)
     poly = GeoInterface.LineString([
         (coords[1], coords[3]),
         (coords[2], coords[3]),
@@ -258,6 +258,6 @@ function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor)
         (coords[1], coords[3]),
     ])
     spoly = GeometryOps.segmentize(poly, max_distance = 1)
-    lines!(ga, GeoMakie.geo2basic(spoly), color = thecolor, linewidth = 5)
+    lines!(ga, GeoMakie.geo2basic(spoly); linestyle = linestyle, color = thecolor, linewidth = 2, label = name)
     return nothing
 end
