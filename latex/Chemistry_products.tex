@@ -75,10 +75,16 @@ The spatial resolution and the analysis parameters are adapted to each domain.
 
 \introduction  %% \introduction[modified heading if necessary]
 
-EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. According to \citet{Shepherd2018}, The key features of EMODnet are : 1. The focus on marine data: EMODnet does not deal with satellite data or fisheries survey; 2. The design and distribution of multi-purpose data products, based on the raw data; 3. the preservation of the data origin and ownership (both for the raw data and for the products); 4. The division into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
+EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet is articulated according to the following features \citet{Shepherd2018}: 
+\begin{enumerate}
+\item The focus is on marine data; satellite data or fisheries survey are not considered; 
+\item Multi-purpose data products, based on the raw data, are created and distributed; 
+\item The data origin and ownership are preserved, both for the raw data and for the products; 
+\item The observations are divided into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
+\end{enumerate} 
 
-The web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
-
+The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, following the
+FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
 
 One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are initially collected with a single purpose: this can a scientific project or a monitoring campaign. The combination of those observations with other sources of measurements or other parameters has the potential for the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
@@ -94,15 +100,29 @@ The rest of the manuscript is organised as follows: first we describe the in sit
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
+EMODnet Chemistry is made up of 46 National Oceanographic Data Centres (NODCs) and focus on three main topics: eutrophication, marine contaminants and marine litter. The data management is governed by the SeaDataNet standards \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
+y involves around
+100 institutes (nodes) from 35 countries 
+
+Main goal = collection, harmonization and Quality Control of data gathered from national monitoring efforts and from research activities.
++ ensure Good Environmental Status \citep{Vinci2017}
+
+ 
+The selected chemicals are relevant for the Marine Strategy Framework Directive (MSFD). 
+Parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search}
 - Describe EMODnet Chemistry \citep{Giorgetti2018}
 
-Two main types of data are considered: the profiles and the time series. They are processed separately but then used together for the production of the climatologies. Six variables (concentrations) were considered (Sec.~ref{}): ammonium, chlorophyll-a, dissolved oxygen, dissolved inorganic nitrogen, phosphate and silicate.
-
+Two main types of data are considered: 
+\begin{description}
+\item[the profiles,] for which the primary variable is the depth;
+\item[the time series:] for which the primary variable is the time (while the depth is generally fixed).
+\end{description}
+They are initially separated but then used together for the production of the climatologies. 
 
 \begin{figure}[t]
 \includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
+\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
 \end{figure}
 %
 %\begin{figure}[t]
@@ -110,7 +130,23 @@ Two main types of data are considered: the profiles and the time series. They ar
 %\caption{Data locations corresponding for the phosphate concentration measurements.\label{fig:phosphatedata}}
 %\end{figure}
 
+\subsection{Metadata}
+
+Common Data Index (CDI) Metadata profiles, based upon ISO 19115–19139 standards and supported by SeaDataNet Common Vocabularies
+
+ne CDI (Common Data Index)
+identifies a series of observations made at sea in the water column
+(vertical profile) or in time (time series), with granularity defined by
+data originator, sometimes in consultation with data managers. The
+increase in total number of CDIs is shown i
+
 \subsection{Variables}
+
+ datasets on chemical substances
+relevant for the assessment of Good Environmental Status (GES) ac-
+cording to the MSFD Descriptors 5 (Eutrophication)
+
+
 
 Eutrophication variables are those related to nutrients and their accumulation in the water column. In this work and for the sake of simplicity, the focus is placed on 6 of these variables, as summarised in Table~\ref{tab:variables}.
 
@@ -132,44 +168,52 @@ Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$m
 
 \subsection{Domains}
 
-The phosphate measurements corresponding to the 6~regional domains are presented in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}.
+The regional domains have been delimited in order to avoid overlay:
+\begin{itemize}
+\item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar.
+\item The Sea of Marmara is assigned to the Mediterranean Sea region.
+\item The North Sea and the NE Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
+\item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
+\end{itemize}
+
+The phosphate measurements corresponding to the 6~regional domains are presented in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. 
 
 \begin{table}
-\caption{Spatial extend of the 6 regions.\label{tab:regions}}
-\begin{tabular}{llr}
+\caption{Spatial extend of the sea regions and the coastal areas.\label{tab:regions}}
+\begin{tabular}{lrrrr}
 \tophline
-Region	 					& West	& East	& South 	 & North 	\\ 
-\middlehline
-Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
-Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
-Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
-Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
-Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
-Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
+Region	 					& West		& East		& South 		& North 	 	\\ 
+\middlehline	
+Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	\\
+Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	\\
+Baltic Sea					& 9.4°E		& 30.9°E		& 53°N		& 66°N		\\
+North Sea 					& 5.4°W 		& 13°E		& 48°N		& 62°N		\\
+Arctic Sea 					& 45°W 		& 70°E		& 62°N		& 83°N		\\
+North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		\\
+\middlehline	
+Danube delta					& 28.5°E		& 30.5°E		& 43.7°N 	& 45.6°N		\\
+Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N		\\
+Loire estuary				& 4°W		& 1°W 		& 6.25°N		& 48°N		\\
+Po river						& 12°E		& 14.0°E		& 44°N		& 46.0°N		\\
 \bottomhline
 \end{tabular}
 \end{table}
 
-\begin{description}
-\item[Black Sea:] from 26.5°E to 42°E and from 40°N to 48°N;
-\item[Mediterranean Sea:] from 6°W to 36.375°E and from 30°N to 46.375°N;
-\item[Baltic Sea:] from 9.4°E to 30.9°E and from 53°N, to 66°N
-\item[North Sea:] from 5.4°W to 13°E and from 48°N to 62°N;
-\item[Arctic Sea:] from 45°W to 80°E and from 62°N to 83°N;  62-83°N, and from 45°W - 70°
-\item[North-East Atlantic Ocean:] from 42°W to 0° and from 24°N to 48°N.
-\end{description}
 
-Danube 28.5-30.5°E, Lat N43.7-45.6°N
-Gulf of Riga 22.3° E - 25.0° E and 56.8° N - 58.4° N
 		
-The domains have been prepared so that there is no overlay between them, in particular: 
-\begin{itemize}
-\item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar;
-\item The Sea of Marmara is assigned to the Mediterranean Sea region;
-\item The North Sea and the NE Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
-\item The Baltic Sea and the North Sea have their limit located 
-\end{itemize}
-We can see the almost straight lines corresponding to oceanographic campaigns and also the availability of coastal data, with the exception of the northern coast of Africa. 
+
+\subsection{}
+
+validation procedure to ensure the quality of the published datasets \citep{Barth2015,Lipizer2021}
+involving the following checks
+\begin{enumerate}
+\item metadata completeness and dataset format; temporal and spatial (position, sampling depth, station bottom depth) information
+must be present
+\item harmonization of unit and parameter naming; this step is performed with ODV; a given variable is always expressed with the same units
+\item quality flagging of data and metadata;
+\item checks for clearly impossible data ranges.?
+\end{enumerate} 
+
 
 \subsection{File preparation}
 
@@ -180,6 +224,22 @@ EDMO code and CDI \citep{Schaap2010}
 With this format change, the files can be read in less than one minute (versus several hours for the ODV collections or ODV netCDF).
 
 These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
+
+\begin{table}
+\begin{tabular}{lrr}
+\tophline
+Region			& Profiles		& Time series	\\
+\middlehline
+Arctic Ocean		& 145417			& 0				\\
+Atlantic	 Ocean	& 389738			& 559			\\
+Baltic Sea		& 211608			& 98				\\
+Black Sea		& 75730			& 0				\\
+Caribbean Sea	& 2863			& 91				\\
+Mediterranean Sea & 253282		& 0				\\
+North Sea		& 30804			& 134			\\
+\bottomhline
+\end{tabular}
+\end{table}
  
 
 \subsection{Spatial distribution}
@@ -187,13 +247,6 @@ These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
 The hexbin plot (Fig. ) provides another view on the data density. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
 
 The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large subdomains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
-
-
-
-
-
-
-
 
 
 
@@ -212,7 +265,7 @@ The value distribution (Fig. ) shows different patterns according to the variabl
 
 
 \subsection{File format}
-The original data collections are provided as ODV \citep[Ocean Data View,][]{SCHLITZER2002} data collections. Such collections are easily read then exported to another format using the ODV software tool. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
+The original data collections are provided as ODV (Ocean Data View) data collections \citep{Lowry2023}. Such collections are easily read then exported to another format using the ODV software tool {SCHLITZER2002}. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
 \section{The interpolation method}
@@ -440,6 +493,4 @@ The European Marine Observation and Data Network (EMODnet) is financed by the Eu
 
 
 \end{document}
-
-
 

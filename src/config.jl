@@ -2,15 +2,27 @@
 using GeoJSON
 using PolygonOps
 using OrderedCollections
+using Dates
+using ColorSchemes
+using NCDatasets
+using CairoMakie, GeoMakie
+using GeoDatasets
+using GeometryOps, GeoInterface
 
 deltalon = 0.25
 deltalat = 0.25
 lonr = -45.:deltalon:70.
 latr = 24.:deltalat:83.
 
-
+# Files and directories
 datadir = "/home/ctroupin/data/EMODnet-Chemistry/Eutrophication2024/netCDF"
 figdir = "/home/ctroupin/Projects/EMODnet/EMODnet-Chemistry-GriddedMaps/figures/paper/"
+woadir = "/home/ctroupin/data/WOA/"
+
+# Land/sea mask and coastline
+lon_landsea, lat_landsea, landsea = GeoDatasets.landseamask(; resolution = 'i', grid = 5)
+landsea[landsea.==2] .= 1;
+coordscoast = GeoDatasets.gshhg("i", 1);
 
 domains = OrderedDict(
     "Arctic Ocean" => [-42, 54, 62, 83.5],
@@ -36,6 +48,15 @@ varlist = [
     "Water_body_phosphate",
     "Water_body_dissolved_oxygen_concentration",
 ]
+
+varunits = Dict(
+    "Water_body_ammonium" => "umol/l",
+    "Water_body_chlorophyll-a" => "mg/m{^3}",
+    "Water_body_dissolved_inorganic_nitrogen" => "umol/l",
+    "Water_body_silicate" => "umol/l",
+    "Water_body_phosphate" => "umol/l",
+    "Water_body_dissolved_oxygen_concentration" => "umol/l"
+    )
 
 regionnames = [
     "Arctic Ocean",
@@ -247,6 +268,11 @@ function edit_mask!(xi, yi, mask::BitMatrix, coordinatelist::Vector{Any})
 end
 
 """
+    draw_domain(ga, coords, thecolor, name, linestyle)
+
+Draw the domain on the map.
+
+# Example
 
 """
 function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor, name::String="", linestyle=:solid)
@@ -260,4 +286,149 @@ function draw_domain(ga::GeoAxis, coords::Vector{Float64}, thecolor, name::Strin
     spoly = GeometryOps.segmentize(poly, max_distance = 1)
     lines!(ga, GeoMakie.geo2basic(spoly); linestyle = linestyle, color = thecolor, linewidth = 2, label = name)
     return nothing
+end
+
+"""
+    read_results(resultfile, varname, depth2plot, month2plot)
+
+Read the results obtained with `DIVAnd`
+
+# Example
+```julia-repl
+julia> lon, lat, depth, dates, field, error = read_results(resultfile, "Water_body_phosphate", 20, 4);
+```
+"""
+function read_results(
+    resultfile::String,
+    varname::String,
+    depth2plot::Int64,
+    month2plot::Int64,
+)
+    NCDataset(resultfile) do ds
+        lon = ds["lon"][:]
+        lat = ds["lat"][:]
+        depth = ds["depth"][:]
+        dates = ds["time"][:]
+
+        # Subsetting
+        depthindex = findfirst(depth .== depth2plot)
+        timeindex = findfirst(Dates.month.(dates) .== month2plot)
+        # Read gridded field and error
+        field = coalesce.(ds[varname][:, :, depthindex, timeindex], NaN)
+        error = coalesce.(ds[varname*"_relerr"][:, :, depthindex, timeindex], NaN)
+
+        return lon::Vector{Float64},
+        lat::Vector{Float64},
+        depth::Vector{Float64},
+        dates::Vector{DateTime},
+        field::Matrix{AbstractFloat},
+        error::Matrix{AbstractFloat}
+    end
+end
+
+"""
+    read_woa(woafile, varname, depth2plot, lonr, latr)
+
+Read data from the World Ocean Atlas
+
+# Example
+```julia-repl
+julia> lonwoa, latwoa, depthwoa, dateswoa, fieldwoa, errorwoa =
+    read_woa("woa23_all_i10_01.nc", "Water_body_phosphate", 20, lonr, latr)
+```
+"""
+function read_woa(woafile::String, varname::String, depth2plot::Int64, lonr::StepRangeLen, latr::StepRangeLen)
+    NCDataset(woafile, "r") do ds
+        lon = ds["lon"][:]
+        lat = ds["lat"][:]
+        depth = ds["depth"][:]
+        dates = ds["time"][:]
+
+        # Subsetting
+        goodlon = findall((lon .<= lonr[end]) .& (lon .>= lonr[1]))
+        goodlat = findall((lat .<= latr[end]) .& (lat .>= latr[1]))
+        depthindex = findfirst(depth .== depth2plot)
+        timeindex = 1
+
+        if varname == "Water_body_phosphate"
+            varnamenc = "p_an"
+            errnamenc = "p_se"
+        elseif varname == "Water_body_silicate"
+            varnamenc = "i_an"
+            errnamenc = "i_se"
+        end
+
+        # Read gridded field and error
+        field = coalesce.(ds[varnamenc][goodlon, goodlat, depthindex, 1], NaN)
+        error = coalesce.(ds[errnamenc][goodlon, goodlat, depthindex, 1], NaN)
+
+        return lon[goodlon]::Vector{Float32},
+        lat[goodlat]::Vector{Float32},
+        depth::Vector{Float32},
+        dates::Vector{DateTime},
+        field::Matrix{AbstractFloat},
+        error::Matrix{AbstractFloat}
+    end
+end
+
+"""
+    add_coast!(ga, coordscoast)
+
+Add the coast read from GSHHG to the plot
+
+# Example
+```julia-repl
+julia> coordscoast = GeoDatasets.gshhg("i", 1)
+julia> fig = Figure(); ga = GeoAxis(fig[1,1])
+julia> add_coast!(ga, coordscoast)
+```
+"""
+function add_coast!(ga::GeoAxis, coordscoast::Vector{Tuple{Vector{Float64}, Vector{Float64}}})
+    for iii = 1:length(coordscoast)
+        lonc = coordscoast[iii][1]
+        latc = coordscoast[iii][2]
+        lonc[lonc.>=lonr[end]] .= NaN
+        lonc[lonc.<=lonr[1]] .= NaN
+        latc[latc.>=latr[end]] .= NaN
+        latc[latc.<=latr[1]] .= NaN
+        lines!(ga, lonc, latc, color = :black, linewidth = 0.5)
+    end
+    return nothing
+end
+
+function plot_field_var(
+    varname::String,
+    lon,
+    lat,
+    field,
+    depth2plot,
+    month2plot,
+    source::String = "DIVAnd",
+    cmap = cgrad(:RdYlBu, rev = true),
+)
+    fig = Figure()
+    ga = GeoAxis(
+        fig[1, 1],
+        title = "$(source) $(varname) field\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm = heatmap!(
+        ga,
+        lon,
+        lat,
+        field,
+        colorrange = (0, 1.0),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    add_coast!(ga, coordscoast)
+
+    xlims!(ga, lonr[1], lonr[end])
+    ylims!(ga, latr[1], latr[end])
+    Colorbar(fig[1, 2], hm)
+    return fig
 end
