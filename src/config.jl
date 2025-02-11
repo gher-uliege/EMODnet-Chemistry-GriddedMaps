@@ -430,5 +430,40 @@ function plot_field_var(
     xlims!(ga, lonr[1], lonr[end])
     ylims!(ga, latr[1], latr[end])
     Colorbar(fig[1, 2], hm)
-    return fig
+    return fig, ga, hm
+end
+
+function plot_field_var_fast(
+    varname::String,
+    lon,
+    lat,
+    field,
+    depth2plot,
+    month2plot,
+    source::String = "DIVAnd",
+    cmap = cgrad(:RdYlBu, rev = true),
+)
+    fig = Figure()
+    ga = GeoAxis(
+        fig[1, 1],
+        title = "$(source) $(varname) field \nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm = heatmap!(
+        ga,
+        lon,
+        lat,
+        field,
+        colorrange = (0., 1.0),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    xlims!(ga, lonr[1], lonr[end])
+    ylims!(ga, latr[1], latr[end])
+    Colorbar(fig[1, 2], hm)
+    return fig, ga, hm
 end
