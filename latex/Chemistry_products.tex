@@ -120,10 +120,13 @@ Two main types of data are considered:
 \end{description}
 They are initially separated but then used together for the production of the climatologies. 
 
-\begin{figure}[t]
-\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
-\end{figure}
+Unhomomegenety
+- variables
+- spatially
+- tempoerally
+
+these features make it necessaryt to have an indication of the error fgield
+
 %
 %\begin{figure}[t]
 %\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
@@ -176,7 +179,7 @@ The regional domains have been delimited in order to avoid overlay:
 \item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
 \end{itemize}
 
-The phosphate measurements corresponding to the 6~regional domains are presented in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. 
+The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. Along with the regional seas, 4 coastal regions are also defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}). The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
 
 \begin{table}
 \caption{Spatial extend of the sea regions and the coastal areas.\label{tab:regions}}
@@ -246,22 +249,27 @@ North Sea		& 30804			& 134			\\
 
 The hexbin plot (Fig. ) provides another view on the data density. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
 
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
+\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
+\end{figure}
+
 The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large subdomains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
 
 
 
 
 \subsection{Temporal distribution}
-TEXT
+
+\begin{figure}[t]
+\includegraphics[width=12cm]{stacked_histogram_Water_body_phosphate.png}
+\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
+\end{figure}
+
 
 \subsection{Value distributions}
 
 The value distribution (Fig. ) shows different patterns according to the variable considered. The dissolved oxygen concentration is the closest to a Gaussian. Ammonium, chlorophyll-a, nitrogen and silicate distributions are all characterised by a dominant number of measurements for small concentrations (close to zero) and few observations of high concentration. The case of phosphate seems to be a superposition of the two previous cases, where the lar
-
-
-
-
-
 
 
 \subsection{File format}
@@ -339,34 +347,12 @@ The output of the analysis is a set of netCDF files storing the gridded fields g
 
 \subsubsection{Gridded variables}
 
-MODnet Chemistry climatologies are provided as masked fields using relative error threshold 0.3 and
-0.5, i.e., the gridded field is not shown at locations where the relative error is above 0.3 (or 0.5). Doing
-so, areas where no data are available (thus extrapolation has to be performed) are not displayed. DIVAnd
-settings are specific for each type of climatology/sea region and are detailed in the following chapters
+The main variable stores the 4-dimension gridded field for each of the 6 selected variables. In addition, a relative error field informs about the confidence one can have in the results. It typically exhibit large values in region void of data, while the value are the lowest where the coverage is most dense. The error field is used to mask out the gridded field in regions where the error is considered to be too high. In practice, gridded fields masked using relative error threshold of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no data are available. 
 
-EASME/EMFF/2018/1.3.1.8 – EMODnet Thematic Lot 4 - Chemistry
-EMODnet Chemistry maps produced with
-Data-Interpolating Variational Analysis (DIVA)
-5
-The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation
-(EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and
-Fisheries Fund.
-Figure 1.1 - EMODnet Chemistry Regional climatologies.
-For each Regional climatology, at least, the following WMS layers are available (Fig. 1.2):
-❖ Water body gridded map of the parameters listed in Tab. 1, masked using relative error
-threshold 0.5
-❖ Interpolated observations: station positions used to build the Water body gridded map
-Additional fields:
-❖ Water body gridded map
-❖ Error standard deviation of the gridded map
-❖ Water body gridded map masked using relative error threshold 0.3
-❖ Relative error of gridded map
-❖ Logarithm10 of number of data in bins
-❖ Logarithm10 of number of outliers data in bins
-❖ Deepest value of water body gridded map
-❖ Deepest value of water body gridded map masked using relative error threshold 0.3
-❖ Deepest value of water body gridded map masked using relative error threshold 0.5
+Other variables containing the deepest values, masked with the same relative error thresholds, are also computed. 
 
+
+% ADD plot of a given variable showing error field and masked field and deepest
 
 \subsubsection{A posteriori quality control}
 
@@ -379,20 +365,19 @@ The residuals for the pan-European gridded fields were provided to each regional
 \conclusions  %% \conclusions[modified heading if necessary]
 TEXT
 
-\codedataavailability{The DIVAnd code, written in Julia language, is available from \url{https://github.com/gher-uliege/DIVAnd.jl}, under the GNU General Public License v2.0.
-The merged data sets are provided at …, while the griddied fields are made available from the Sextant Catalog (\url{https://sextant.ifremer.fr/eng}).}
+\codedataavailability{The DIVAnd source code is available at \url{https://github.com/gher-uliege/DIVAnd.jl} (\doi{10.5281/zenodo.1303229}, under the GNU General Public License v2.0. The Jupyter notebooks explaining how to create a climatology with DIVAnd are available at \url{https://github.com/gher-uliege/Diva-Workshops} (\doi{10.5281/zenodo.1248029}) under the MIT license. The merged data sets are provided at …, while the gridded fields are made available from the Sextant Catalog (\url{https://sextant.ifremer.fr/eng}). All the figures of this paper were produced with Makie and GeoMakie \citep{Danisch2021}.}
 
 
 
 
 
-\authorcontribution{CT prepared the manuscript. ME and EQ coordinated the management of metadata (catalog and DOI). AB and CT: prepare the pan-European sea products; SI and MT: Mediterranean Sea. K.W. Baltic Sea; MML and JKR: North Sea; LB and GS: Black Sea; AKO: Arctic Sea; JG and NP: North Atlantic Ocean.} 
+\authorcontribution{CT prepared the manuscript. ME and EQ coordinated the management of metadata (catalog and DOI). AB and CT: prepared the pan-European sea products; SI and MT: Mediterranean Sea. K.W. Baltic Sea; MML and JKR: North Sea; LB and GS: Black Sea; AKO: Arctic Sea; JG and NP: North Atlantic Ocean.} 
 
 \competinginterests{The authors declare that there is no competing interest.}
 \disclaimer{The data coverage obtained with the in situ measurements is heterogeneous, leading in higher uncertainties in the gridded field. The information contained in the gridded field believed to be trustworthy. However its accuracy and completeness cannot be guaranteed.  Whilst every effort has been made to ensure its reliability within the limits of present knowledge, no responsibility can be accepted by those involved in its compilation or publication for any consequential loss or damage arising from its use.
 } 
 \begin{acknowledgements}
-The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4.
+The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. 
 \end{acknowledgements}
 
 \bibliography{emodnet.bib}
