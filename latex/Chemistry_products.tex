@@ -18,6 +18,7 @@
 \Author[1]{Alexander}{Barth}
 \Author[1]{Jean-Marie}{Beckers}
 \Author[2]{Karin}{Wesslander}
+\Author[2]{Lotta}{Fyrberg}
 \Author[3]{Julie}{Gatti}
 \Author[3]{Amandine}{Thomas}
 \Author[3]{Erwann}{Quimpert}
@@ -28,6 +29,8 @@
 \Author[7]{Sissy}{Iona}
 \Author[7]{Marilena}{Tsompanou}
 \Author[8]{Ann Kristin}{Ostrem}
+\Author[10]{Neil}{Holdsworth}
+\Author[10]{Hans Mose}{Jensen}
 \Author[4]{Maria Eugenia}{Molina Jack}
 \Author[4]{Marina}{Lipizer}
 \Author[9]{Dick}{Schaap}
@@ -35,7 +38,7 @@
 
 
 \affil[1]{University of Liège, FOCUS Research Unit, GeoHydrodynamics and Environment Research group (GHER), Allée du 6-Août, 17, 4000 Liège 1, Belgium} 
-\affil[2]{Swedish Meteorological and Hydrological Institute Oceanographic Laboratory 2020-01-17 Dnr S/Gbg-2020-1 Address Sven Källfelts Gata 15 426 71 Västra Frölunda}
+\affil[2]{Swedish Meteorological and Hydrological Institute (SMHI), Oceanographic Laboratory 2020-01-17 Dnr S/Gbg-2020-1 Address Sven Källfelts Gata 15 426 71 Västra Frölunda}
 \affil[3]{French Institute for Ocean Science (IFREMER), 1625 Route de Sainte-Anne, 29280 Plouzané, France}
 \affil[5]{Aarhus University, Department of Bioscience - Marine Diversity and Experimental Ecology, Frederiksborgvej 399 building 7411, B1.21, 4000 Roskilde, Denmark}
 \affil[7]{Hellenic National Oceanographic Data Centre, 46,7 km Athens Sounio, Mavro Lithari P.O. BOX 712 19013 Anavissos, Attica, Greece}
@@ -43,6 +46,7 @@
 \affil[8]{Institute of Marine Research, P.O box 1870 Nordnes NO-5817 Bergen, Norway}
 \affil[4]{Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS Borgo Grotta Gigante 42/C, 34010 Sgonico (TS), Italy}
 \affil[9]{MARIS BV, Gildeweg 7 A BD Nootdorp, The Netherlands} %0000-0001-6562-068X
+\affil[10]{International Council for the Exploration of the Sea (ICES), Copenhagen, Denmark}
 
 \correspondence{Charles Troupin (ctroupin@uliege.be)}
 
@@ -102,6 +106,15 @@ The rest of the manuscript is organised as follows: first we describe the in sit
 
 EMODnet Chemistry is made up of 46 National Oceanographic Data Centres (NODCs) and focus on three main topics: eutrophication, marine contaminants and marine litter. The data management is governed by the SeaDataNet standards \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
+deal with contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants), marine litter and eutrophication, which is the focus of the present work.
+\citep{Giorgetti2020}
+
+considerable efforts in terms of harmonization, standardization
+and validation  correction and metadata completion
+
+45 marine research and
+monitoring institutes and oceanographic data management experts from 27 countries
+
 y involves around
 100 institutes (nodes) from 35 countries 
 
@@ -110,7 +123,7 @@ Main goal = collection, harmonization and Quality Control of data gathered from 
 
  
 The selected chemicals are relevant for the Marine Strategy Framework Directive (MSFD). 
-Parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search}
+Parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search} -> achieve consistency and interoperability
 - Describe EMODnet Chemistry \citep{Giorgetti2018}
 
 Two main types of data are considered: 
@@ -185,19 +198,19 @@ The phosphate measurements corresponding to the 6~regional domains are shown in 
 \caption{Spatial extend of the sea regions and the coastal areas.\label{tab:regions}}
 \begin{tabular}{lrrrr}
 \tophline
-Region	 					& West		& East		& South 		& North 	 	\\ 
+Region	 					& West		& East		& South 	& North 	\\ 
 \middlehline	
 Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	\\
 Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	\\
-Baltic Sea					& 9.4°E		& 30.9°E		& 53°N		& 66°N		\\
-North Sea 					& 5.4°W 		& 13°E		& 48°N		& 62°N		\\
+Baltic Sea					& 9.4°E		& 30.9°E	& 53°N		& 66°N		\\
+North Sea 					& 5.4°W 	& 13°E		& 48°N		& 62°N		\\
 Arctic Sea 					& 45°W 		& 70°E		& 62°N		& 83°N		\\
 North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		\\
 \middlehline	
-Danube delta					& 28.5°E		& 30.5°E		& 43.7°N 	& 45.6°N		\\
-Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N		\\
-Loire estuary				& 4°W		& 1°W 		& 6.25°N		& 48°N		\\
-Po river						& 12°E		& 14.0°E		& 44°N		& 46.0°N		\\
+Danube delta				& 28.5°E	& 30.5°E	& 43.7°N 	& 45.6°N	\\
+Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N	\\
+Loire estuary				& 4°W		& 1°W 		& 6.25°N	& 48°N		\\
+Po river					& 12°E		& 14.0°E	& 44°N		& 46.0°N	\\
 \bottomhline
 \end{tabular}
 \end{table}
@@ -231,15 +244,15 @@ These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
 \begin{table}
 \begin{tabular}{lrr}
 \tophline
-Region			& Profiles		& Time series	\\
+Region						& Profiles		& Time series	\\
 \middlehline
-Arctic Ocean		& 145417			& 0				\\
-Atlantic	 Ocean	& 389738			& 559			\\
-Baltic Sea		& 211608			& 98				\\
-Black Sea		& 75730			& 0				\\
-Caribbean Sea	& 2863			& 91				\\
-Mediterranean Sea & 253282		& 0				\\
-North Sea		& 30804			& 134			\\
+Arctic Sea					& 145417		& 0				\\
+North-East Atlantic Ocean	& 389738		& 559			\\
+Baltic Sea					& 211608		& 98			\\
+Black Sea					& 75730			& 0				\\
+Caribbean Sea				& 2863			& 91			\\
+Mediterranean Sea 			& 253282		& 0				\\
+North Sea					& 30804			& 134			\\
 \bottomhline
 \end{tabular}
 \end{table}
@@ -273,7 +286,8 @@ The value distribution (Fig. ) shows different patterns according to the variabl
 
 
 \subsection{File format}
-The original data collections are provided as ODV (Ocean Data View) data collections \citep{Lowry2023}. Such collections are easily read then exported to another format using the ODV software tool {SCHLITZER2002}. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
+The original data collections are provided as ODV (Ocean Data View) data collections, which is one of the standard format promoted by SeaDataNet marine data
+infrastructure \citep{Lowry2023}. Such collections are easily read then exported to another format using the ODV software tool \citep{SCHLITZER2002}. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
 \section{The interpolation method}
@@ -326,28 +340,22 @@ needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
 \caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
 \end{figure*}
 
-\subsection{Products}
+\subsection{Product types\label{sec:products}}
 
-Three types of climatologies were produced:
-1. All European Seas – monthly maps on a domain covering all the regional seas
-2. Sea region – at seasonal scale and for periods of 6 years, using a moving 6-year window
-seasonal maps
-3. Coastal area maps - at seasonal scale
+Three sets of climatologies were produced, grouped according to their spatial extent (see Tab.~\ref{tab:regions}): 
+\begin{enumerate}
+\item The \textit{All European Seas} products: they consist of monthly fields (considering all the available years), computed over a spatial domain covering all the regional seas
+\item The \textit{Sea region} products: the are computed on a seasonal scale and for periods of 6 years, using a moving 6-year window. The definition of the seasons and the 6-year time periods are not the same for all the regions. 
+\item The \textit{Coastal Area} products: they are computed over small areas near river mouth, and at seasonal scale.
+\end{enumerate}
 
-EMODnet Chemistry Regional climatologies have been produced at seasonal scale and for periods of 6 years,
-using a moving 6-year window. The season definitions used are defined specifically for each basin. 6-year
-periods span from 1980-1985 until 2013-2018 (but highly depending on data availability for each sea/each
-parameter/each season). 
+\subsection{File format}
 
-\subsection{Product descriptions}
+The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993}, making use of the NCDatasets.jl library \citep{Barth2024}. The file sizes depend on the type of product (as defined in Sect.~\ref{sec:products}) and the region of interest. The largest files are for the Northeast Atlantic
 
-\subsubsection{File format}
+\subsection{Gridded variables}
 
-The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993}, making use of the NCDatasets.jl library \citep{Barth2024}.
-
-\subsubsection{Gridded variables}
-
-The main variable stores the 4-dimension gridded field for each of the 6 selected variables. In addition, a relative error field informs about the confidence one can have in the results. It typically exhibit large values in region void of data, while the value are the lowest where the coverage is most dense. The error field is used to mask out the gridded field in regions where the error is considered to be too high. In practice, gridded fields masked using relative error threshold of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no data are available. 
+The main variable stores the 4-dimension gridded field for each of the 6 selected variables. In addition, a relative error field informs about the confidence one can have in the results. It typically exhibits larger values in regions with where no observations were collected, while the value are the lowest where the coverage is most dense. The error field is used to mask out the gridded field in regions where the error is considered to be too high. In practice, gridded fields masked using relative error threshold of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no data are available. 
 
 Other variables containing the deepest values, masked with the same relative error thresholds, are also computed. 
 
@@ -368,16 +376,13 @@ TEXT
 \codedataavailability{The DIVAnd source code is available at \url{https://github.com/gher-uliege/DIVAnd.jl} (\doi{10.5281/zenodo.1303229}, under the GNU General Public License v2.0. The Jupyter notebooks explaining how to create a climatology with DIVAnd are available at \url{https://github.com/gher-uliege/Diva-Workshops} (\doi{10.5281/zenodo.1248029}) under the MIT license. The merged data sets are provided at …, while the gridded fields are made available from the Sextant Catalog (\url{https://sextant.ifremer.fr/eng}). All the figures of this paper were produced with Makie and GeoMakie \citep{Danisch2021}.}
 
 
-
-
-
 \authorcontribution{CT prepared the manuscript. ME and EQ coordinated the management of metadata (catalog and DOI). AB and CT: prepared the pan-European sea products; SI and MT: Mediterranean Sea. K.W. Baltic Sea; MML and JKR: North Sea; LB and GS: Black Sea; AKO: Arctic Sea; JG and NP: North Atlantic Ocean.} 
 
 \competinginterests{The authors declare that there is no competing interest.}
 \disclaimer{The data coverage obtained with the in situ measurements is heterogeneous, leading in higher uncertainties in the gridded field. The information contained in the gridded field believed to be trustworthy. However its accuracy and completeness cannot be guaranteed.  Whilst every effort has been made to ensure its reliability within the limits of present knowledge, no responsibility can be accepted by those involved in its compilation or publication for any consequential loss or damage arising from its use.
 } 
 \begin{acknowledgements}
-The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union’s Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the pan-European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. 
+The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union's Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the All European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. We wish to thank the CINECA staff, in particular Angelo Neri​, for managing the server where the products are hosted.
 \end{acknowledgements}
 
 \bibliography{emodnet.bib}
