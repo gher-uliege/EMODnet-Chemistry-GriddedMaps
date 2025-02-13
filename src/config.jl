@@ -50,12 +50,12 @@ varlist = [
 ]
 
 varunits = Dict(
-    "Water_body_ammonium" => "umol/l",
+    "Water_body_ammonium" => "µmol/l",
     "Water_body_chlorophyll-a" => "mg/m{^3}",
-    "Water_body_dissolved_inorganic_nitrogen" => "umol/l",
-    "Water_body_silicate" => "umol/l",
-    "Water_body_phosphate" => "umol/l",
-    "Water_body_dissolved_oxygen_concentration" => "umol/l"
+    "Water_body_dissolved_inorganic_nitrogen" => "µmol/l",
+    "Water_body_silicate" => "µmol/l",
+    "Water_body_phosphate" => "µmol/l",
+    "Water_body_dissolved_oxygen_concentration" => "µmol/l"
     )
 
 regionnames = [
@@ -292,7 +292,7 @@ end
     read_results(resultfile, varname, depth2plot, month2plot)
 
 Read the results obtained with `DIVAnd`
-
+colors
 # Example
 ```julia-repl
 julia> lon, lat, depth, dates, field, error = read_results(resultfile, "Water_body_phosphate", 20, 4);
@@ -432,6 +432,125 @@ function plot_field_var(
     Colorbar(fig[1, 2], hm)
     return fig, ga, hm
 end
+
+function plot_additional_field(
+    varname::String,
+    varunits::String,
+    lon,
+    lat,
+    fielddeepest, fieldL1, fieldL2, fielderror,
+    depth2plot,
+    month2plot,
+    cmap = cgrad(:RdYlBu, rev = true),
+    cmaperror = cgrad(:RdYlGn_10, 10, rev = true, categorical = true)
+)
+    varname_ = replace(varname, "_" => " ")
+
+    fig = Figure(size=(1000, 700))
+
+    ga1 = GeoAxis(
+        fig[1, 1],
+        title = "(a) $(varname_) masked\nusing a 50% relative error threshold\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm1 = heatmap!(
+        ga1,
+        lon,
+        lat,
+        fieldL2,
+        colorrange = (0, 1.0),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    #add_coast!(ga1, coordscoast)
+
+    xlims!(ga1, lonr[1], lonr[end])
+    ylims!(ga1, latr[1], latr[end])
+    Colorbar(fig[1, 2], hm1, label = varunits, labelrotation = 0)
+
+    ga2 = GeoAxis(
+        fig[1, 3],
+        title = "(b) $(varname_) masked\nusing a 30% relative error threshold\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm2 = heatmap!(
+        ga2,
+        lon,
+        lat,
+        fieldL1,
+        colorrange = (0, 1.0),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    #add_coast!(ga2, coordscoast)
+
+    xlims!(ga2, lonr[1], lonr[end])
+    ylims!(ga2, latr[1], latr[end])
+    Colorbar(fig[1, 4], hm2, label = varunits, labelrotation = 0)
+
+    ga3 = GeoAxis(
+        fig[2, 1],
+        title = "(c) Depest value of $(varname_)\nin $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm3 = heatmap!(
+        ga3,
+        lon,
+        lat,
+        fielddeepest,
+        colorrange = (0, 5.0),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    #add_coast!(ga1, coordscoast)
+
+    xlims!(ga3, lonr[1], lonr[end])
+    ylims!(ga3, latr[1], latr[end])
+    Colorbar(fig[2, 2], hm1, label = varunits, labelrotation = 0)
+   
+
+    ga4 = GeoAxis(
+        fig[2, 3],
+        title = "(d) $(varname_) relative error\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm4 = heatmap!(
+        ga4,
+        lon,
+        lat,
+        fielderror * 100.0,
+        colorrange = (0, 100.0),
+        colormap = cmaperror,
+        highclip = cmap.colors[end],
+    )
+
+    #add_coast!(ga4, coordscoast)
+
+    xlims!(ga4, lonr[1], lonr[end])
+    ylims!(ga4, latr[1], latr[end])
+    Colorbar(fig[2, 4], hm4, label = "%", labelrotation = 0)
+
+    resize_to_layout!(fig)
+    return fig
+
+end
+
+
 
 function plot_field_var_fast(
     varname::String,
