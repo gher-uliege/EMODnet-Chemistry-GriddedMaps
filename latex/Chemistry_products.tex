@@ -79,16 +79,15 @@ The spatial resolution and the analysis parameters are adapted to each domain.
 
 \introduction  %% \introduction[modified heading if necessary]
 
-EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet is articulated according to the following features \citet{Shepherd2018}: 
+EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citet{Shepherd2018}: 
 \begin{enumerate}
 \item The focus is on marine data; satellite data or fisheries survey are not considered; 
 \item Multi-purpose data products, based on the raw data, are created and distributed; 
-\item The data origin and ownership are preserved, both for the raw data and for the products; 
+\item The data origin and ownership are preserved, both in the raw data and in the products; 
 \item The observations are divided into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
 \end{enumerate} 
 
-The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, following the
-FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
+The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
 
 One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are initially collected with a single purpose: this can a scientific project or a monitoring campaign. The combination of those observations with other sources of measurements or other parameters has the potential for the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
@@ -104,27 +103,9 @@ The rest of the manuscript is organised as follows: first we describe the in sit
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
-EMODnet Chemistry is made up of 46 National Oceanographic Data Centres (NODCs) and focus on three main topics: eutrophication, marine contaminants and marine litter. The data management is governed by the SeaDataNet standards \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
+The main goal of EMODnet Chemistry is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, hence proviging relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. To this end, the network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is articula  and is centered on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
 
-deal with contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants), marine litter and eutrophication, which is the focus of the present work.
-\citep{Giorgetti2020}
-
-considerable efforts in terms of harmonization, standardization
-and validation  correction and metadata completion
-
-45 marine research and
-monitoring institutes and oceanographic data management experts from 27 countries
-
-y involves around
-100 institutes (nodes) from 35 countries 
-
-Main goal = collection, harmonization and Quality Control of data gathered from national monitoring efforts and from research activities.
-+ ensure Good Environmental Status \citep{Vinci2017}
-
- 
-The selected chemicals are relevant for the Marine Strategy Framework Directive (MSFD). 
-Parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search} -> achieve consistency and interoperability
-- Describe EMODnet Chemistry \citep{Giorgetti2018}
+Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonization, standardization and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
 Two main types of data are considered: 
 \begin{description}
@@ -156,15 +137,15 @@ identifies a series of observations made at sea in the water column
 data originator, sometimes in consultation with data managers. The
 increase in total number of CDIs is shown i
 
-\subsection{Variables}
+\subsection{Variables\label{sec:variables}}
 
- datasets on chemical substances
-relevant for the assessment of Good Environmental Status (GES) ac-
-cording to the MSFD Descriptors 5 (Eutrophication)
+Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6 chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive (MSFD), in particular its Descriptors no.~5 and the assessment of Good Environmental Status (GES). 
+
+The parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search}, which allows one to achieve consistency and interoperability.
 
 
 
-Eutrophication variables are those related to nutrients and their accumulation in the water column. In this work and for the sake of simplicity, the focus is placed on 6 of these variables, as summarised in Table~\ref{tab:variables}.
+
 
 \begin{table}
 \caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
@@ -172,12 +153,12 @@ Eutrophication variables are those related to nutrients and their accumulation i
 \tophline
 Variable 					& CF standard name														& Units		\\ 
 \middlehline
-Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
-Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
-Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
+Ammonium					& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
+Chlorophyll - a 			& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water				& mg/m$^3$		\\
+Dissolved inorganic nitrogen& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
 Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
 Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
-Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
+Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 					& $\mu$mol/l	\\
 \bottomhline
 \end{tabular}
 \end{table}
@@ -382,7 +363,7 @@ TEXT
 \disclaimer{The data coverage obtained with the in situ measurements is heterogeneous, leading in higher uncertainties in the gridded field. The information contained in the gridded field believed to be trustworthy. However its accuracy and completeness cannot be guaranteed.  Whilst every effort has been made to ensure its reliability within the limits of present knowledge, no responsibility can be accepted by those involved in its compilation or publication for any consequential loss or damage arising from its use.
 } 
 \begin{acknowledgements}
-The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union's Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the All European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. We wish to thank the CINECA staff, in particular Angelo Neri​, for managing the server where the products are hosted.
+%The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union's Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the All European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. We wish to thank the CINECA staff, in particular Angelo Neri​, for managing the server where the products are hosted.
 \end{acknowledgements}
 
 \bibliography{emodnet.bib}
