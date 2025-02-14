@@ -498,7 +498,7 @@ function plot_additional_field(
 
     ga3 = GeoAxis(
         fig[2, 1],
-        title = "(c) Depest value of $(varname_)\nin $(Dates.monthname(month2plot))\n\n",
+        title = "(c) Deepest value of $(varname_)\nin $(Dates.monthname(month2plot))\n\n",
         dest = "+proj=laea +lon_0=15 +lat_0=45",
         xticks = (-50:20.0:70),
         yticks = (20:10.0:85),
