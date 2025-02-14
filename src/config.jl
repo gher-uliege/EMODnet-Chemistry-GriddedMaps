@@ -429,7 +429,7 @@ function plot_field_var(
 
     xlims!(ga, lonr[1], lonr[end])
     ylims!(ga, latr[1], latr[end])
-    Colorbar(fig[1, 2], hm)
+    Colorbar(fig[1, 2], hm, label = varunits[varname], labelrotation = 0)
     return fig, ga, hm
 end
 
@@ -446,7 +446,7 @@ function plot_additional_field(
 )
     varname_ = replace(varname, "_" => " ")
 
-    fig = Figure(size=(1000, 700))
+    fig = Figure(size=(1000, 650))
 
     ga1 = GeoAxis(
         fig[1, 1],
@@ -466,7 +466,7 @@ function plot_additional_field(
         highclip = cmap.colors[end],
     )
 
-    #add_coast!(ga1, coordscoast)
+    add_coast!(ga1, coordscoast)
 
     xlims!(ga1, lonr[1], lonr[end])
     ylims!(ga1, latr[1], latr[end])
@@ -490,7 +490,7 @@ function plot_additional_field(
         highclip = cmap.colors[end],
     )
 
-    #add_coast!(ga2, coordscoast)
+    add_coast!(ga2, coordscoast)
 
     xlims!(ga2, lonr[1], lonr[end])
     ylims!(ga2, latr[1], latr[end])
@@ -514,7 +514,7 @@ function plot_additional_field(
         highclip = cmap.colors[end],
     )
 
-    #add_coast!(ga1, coordscoast)
+    add_coast!(ga1, coordscoast)
 
     xlims!(ga3, lonr[1], lonr[end])
     ylims!(ga3, latr[1], latr[end])
@@ -539,7 +539,7 @@ function plot_additional_field(
         highclip = cmap.colors[end],
     )
 
-    #add_coast!(ga4, coordscoast)
+    add_coast!(ga4, coordscoast)
 
     xlims!(ga4, lonr[1], lonr[end])
     ylims!(ga4, latr[1], latr[end])

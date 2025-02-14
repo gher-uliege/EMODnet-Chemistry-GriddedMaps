@@ -77,7 +77,7 @@ The spatial resolution and the analysis parameters are adapted to each domain.
 \end{abstract}
 
 
-\introduction  %% \introduction[modified heading if necessary]
+\introduction 
 
 EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citet{Shepherd2018}: 
 \begin{enumerate}
@@ -87,25 +87,92 @@ EMODnet (European Marine Observation and Data Network) is the in situ, marine da
 \item The observations are divided into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
 \end{enumerate} 
 
-The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth. 
+The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
 
 One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are initially collected with a single purpose: this can a scientific project or a monitoring campaign. The combination of those observations with other sources of measurements or other parameters has the potential for the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
 \item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements general undergo a suite of checks to ensure that their quality is good enough (depending on the final purpose).
-\item The climatologies (or atlas): they consist of various gridded fields at different depth levels and for different time periods, obtained by interpolating the in situ observations on a regular grid.
+\item The climatologies (also called atlas): they consist of various gridded fields at different depth levels and for different time periods, obtained by interpolating the in situ observations on a regular grid.
 \end{enumerate}
 
-Both types of products are accompanied with metadata, which indicate how, when and by who the data were collected. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. 
+Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. 
 
-The rest of the manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, since they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the observations; finally we describe the final product (climatologies). 
+The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, as they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the observations; finally we describe the final product (climatologies) and its validation. 
 
 
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
-The main goal of EMODnet Chemistry is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, hence proviging relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. To this end, the network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is articula  and is centered on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
+The main goal of EMODnet Chemistry is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, hence providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
 
 Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonization, standardization and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
+
+The aggregated datasets, described in this section and used for the creation of gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. They are separated by geographical regions (as described in Section~\ref{sec:domains}).
+
+All the data collections have in common the strong heterogeneity, which will be illustrated in the next sections: 
+\begin{itemize}
+\item spatially: while some regions are density covered by observations, other regions have been barely sampled (or the existing observations have not made their ways to the NODCs);
+\item temporally: the improvements in ocean observing systems helped increased the quantity of collected observations in the last decades;
+\item by variables: some variables, for instance oxygen concentration, are much more available than the others.
+\end{itemize}
+This heterogeneity has to considered in the gridded fields: the interpolation method is expected to provide an estimation of the error on the analysis, based on the availability of observations. 
+
+
+\subsection{Variables\label{sec:variables}}
+
+Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6 chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive (MSFD), in particular the Descriptors no.~5, and the assessment of Good Environmental Status (GES). 
+%The parameter names are based on the P01 Parameter Usage Vocabulary (\url{https://vocab.seadatanet.org/p01-facet-search}), which allows one to achieve consistency and interoperability. 
+
+\begin{table}
+\caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
+\begin{tabular}{llr}
+\tophline
+Variables					& Climate and Forecast standard names									& Units		\\ 
+\middlehline
+Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
+Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
+Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
+Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
+Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
+Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
+\bottomhline
+\end{tabular}
+\end{table}
+
+\subsection{Domains\label{sec:domains}}
+
+The regional domains have been delimited in order to avoid overlay between them. :
+\begin{itemize}
+\item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar.
+\item The Sea of Marmara is assigned to the Mediterranean Sea region.
+\item The North Sea and the NE Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
+\item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
+\end{itemize}
+
+The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. Along with the regional seas, 4 coastal regions are also defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}). The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
+
+\begin{table*}[h!]
+\caption{Spatial extend of the regional seas and the coastal areas.\label{tab:regions}}
+\begin{tabular}{lrrrrll}
+\tophline
+Region	 					& West		& East		& South 		& North 		& Number of profiles	& Number of time series\\ 
+\middlehline	
+Arctic Sea 					& 45°W 		& 70°E		& 62°N		& 83°N		& 145417		& 0		\\
+Baltic Sea					& 9.4°E		& 30.9°E		& 53°N		& 66°N		& 211608		& 98		\\
+Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	& 75730		& 0		\\
+Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	& 253282		& 0		\\
+North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		& 389738		& 559	\\
+North Sea 					& 5.4°W 		& 13°E		& 48°N		& 62°N		& 30804		& 134	\\
+% Caribbean Sea				&          	& 			& 			& 			& 2863		& 91		\\
+\middlehline	
+Danube delta					& 28.5°E		& 30.5°E		& 43.7°N 	& 45.6°N		&			& \\
+Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N		&			& \\
+Loire estuary				& 4°W		& 1°W 		& 6.25°N		& 48°N		&			& \\
+Po river						& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
+\bottomhline
+\end{tabular}
+\end{table*}
+
 
 Two main types of data are considered: 
 \begin{description}
@@ -114,12 +181,6 @@ Two main types of data are considered:
 \end{description}
 They are initially separated but then used together for the production of the climatologies. 
 
-Homogeneity
-- variables
-- spatially
-- temporally
-
-these features make it necessary to have an indication of the error field
 
 %
 %\begin{figure}[t]
@@ -137,71 +198,11 @@ identifies a series of observations made at sea in the water column
 data originator, sometimes in consultation with data managers. The
 increase in total number of CDIs is shown i
 
-\subsection{Variables\label{sec:variables}}
-
-Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6 chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive (MSFD), in particular its Descriptors no.~5 and the assessment of Good Environmental Status (GES). 
-
-The parameter names are based on the P01 Parameter Usage Vocabulary \url{https://vocab.seadatanet.org/p01-facet-search}, which allows one to achieve consistency and interoperability.
 
 
+\subsection{Quality control\label{sec:dataqualitycontrol}}
 
-
-
-\begin{table}
-\caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
-\begin{tabular}{llr}
-\tophline
-Variable 					& CF standard name														& Units		\\ 
-\middlehline
-Ammonium					& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
-Chlorophyll - a 			& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water				& mg/m$^3$		\\
-Dissolved inorganic nitrogen& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
-Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
-Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
-Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 					& $\mu$mol/l	\\
-\bottomhline
-\end{tabular}
-\end{table}
-
-\subsection{Domains}
-
-The regional domains have been delimited in order to avoid overlay:
-\begin{itemize}
-\item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar.
-\item The Sea of Marmara is assigned to the Mediterranean Sea region.
-\item The North Sea and the NE Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
-\item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
-\end{itemize}
-
-The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. Along with the regional seas, 4 coastal regions are also defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}). The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
-
-\begin{table}
-\caption{Spatial extend of the sea regions and the coastal areas.\label{tab:regions}}
-\begin{tabular}{lrrrr}
-\tophline
-Region	 					& West		& East		& South 	& North 	\\ 
-\middlehline	
-Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	\\
-Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	\\
-Baltic Sea					& 9.4°E		& 30.9°E	& 53°N		& 66°N		\\
-North Sea 					& 5.4°W 	& 13°E		& 48°N		& 62°N		\\
-Arctic Sea 					& 45°W 		& 70°E		& 62°N		& 83°N		\\
-North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		\\
-\middlehline	
-Danube delta				& 28.5°E	& 30.5°E	& 43.7°N 	& 45.6°N	\\
-Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N	\\
-Loire estuary				& 4°W		& 1°W 		& 6.25°N	& 48°N		\\
-Po river					& 12°E		& 14.0°E	& 44°N		& 46.0°N	\\
-\bottomhline
-\end{tabular}
-\end{table}
-
-
-		
-
-\subsection{}
-
-validation procedure to ensure the quality of the published datasets \citep{Barth2015,Lipizer2021}
+validation procedure to ensure the quality of the published datasets \citep{Barth2015,Lipizer2021,Lipizer2023}
 involving the following checks
 \begin{enumerate}
 \item metadata completeness and dataset format; temporal and spatial (position, sampling depth, station bottom depth) information
@@ -210,34 +211,6 @@ must be present
 \item quality flagging of data and metadata;
 \item checks for clearly impossible data ranges.?
 \end{enumerate} 
-
-
-\subsection{File preparation}
-
-The original files are provided in the form of ODV \citep[Ocean Data View,][]{SCHLITZER2002} collections. There are then converted to ODV netCDF, keeping the relevant metadata (i.e. those relative to the originators) in the exported files. Finally, the files are converted to ragged array netCDF using a script in Julia. The goal is to decrease the time needed to read the observations from the different regions: in the ODV netCDF files, the observations are organised by profile, and reading all of them means we have to loop over each profile. Meanwhile, for the creation of the gridded products, the information about the profile is not needed anymore and the data can be stored as vectors.
-
-EDMO code and CDI \citep{Schaap2010}
-
-With this format change, the files can be read in less than one minute (versus several hours for the ODV collections or ODV netCDF).
-
-These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
-
-\begin{table}
-\begin{tabular}{lrr}
-\tophline
-Region						& Profiles		& Time series	\\
-\middlehline
-Arctic Sea					& 145417		& 0				\\
-North-East Atlantic Ocean	& 389738		& 559			\\
-Baltic Sea					& 211608		& 98			\\
-Black Sea					& 75730			& 0				\\
-Caribbean Sea				& 2863			& 91			\\
-Mediterranean Sea 			& 253282		& 0				\\
-North Sea					& 30804			& 134			\\
-\bottomhline
-\end{tabular}
-\end{table}
- 
 
 \subsection{Spatial distribution}
 
@@ -272,6 +245,7 @@ infrastructure \citep{Lowry2023}. Such collections are easily read then exported
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
 \section{The interpolation method}
+%---------------------------------
 
 In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times.
 The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For the sake of simplicity, we will not review all of them but will insist on the distintion between two groups of tecniques:
@@ -281,7 +255,7 @@ The creation of gridded fields using sparse, in situ observations can be perform
 \end{enumerate}
 
 The climatologies, consisting of a set of gridded fields for different depths and time periods, are produced by applying the Data Interpolating Variational Analysis in n dimensions (DIVAnd, see next Section) to the datasets presented in Section~\ref{sec:insitu}. Such gridded fields are frequently used in oceanography, for different purposes ranging from data visualisation to model initialisation or validation of measurements.  
-While temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate+nitrite, silicate][]{Garcia2024b} at a resolution of 1° by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it  possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
+While temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate+nitrite, silicate][]{Garcia2024b} at a resolution of 1° by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
 
 % Check this → https://briochemc.github.io/WorldOceanAtlasTools.jl/stable/
 
@@ -321,6 +295,16 @@ needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
 \caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
 \end{figure*}
 
+\subsection{File preparation}
+
+The original files are provided in the form of ODV \citep[Ocean Data View,][]{SCHLITZER2002} collections. There are then converted to ODV netCDF, keeping the relevant metadata (i.e. those relative to the originators) in the exported files. Finally, the files are converted to ragged array netCDF using a script in Julia. The goal is to decrease the time needed to read the observations from the different regions: in the ODV netCDF files, the observations are organised by profile, and reading all of them means we have to loop over each profile. Meanwhile, for the creation of the gridded products, the information about the profile is not needed anymore and the data can be stored as vectors.
+
+EDMO code and CDI \citep{Schaap2010}
+
+With this format change, the files can be read in less than one minute (versus several hours for the ODV collections or ODV netCDF).
+
+These operations were performed with ODV version 5.7.2 \citep{Schlitzer2024}.
+
 \subsection{Product types\label{sec:products}}
 
 Three sets of climatologies were produced, grouped according to their spatial extent (see Tab.~\ref{tab:regions}): 
@@ -332,16 +316,35 @@ Three sets of climatologies were produced, grouped according to their spatial ex
 
 \subsection{File format}
 
-The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993}, making use of the NCDatasets.jl library \citep{Barth2024}. The file sizes depend on the type of product (as defined in Sect.~\ref{sec:products}) and the region of interest. The largest files are for the Northeast Atlantic
+The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993,Rew2006}, making use of the NCDatasets.jl Julia library \citep{Barth2024}. The file sizes depend on the type of product (as defined in Sect.~\ref{sec:products}) and the region of interest. The largest files are for the Northeast Atlantic
 
 \subsection{Gridded variables}
 
 The main variable stores the 4-dimension gridded field for each of the 6 selected variables. In addition, a relative error field informs about the confidence one can have in the results. It typically exhibits larger values in regions with where no observations were collected, while the value are the lowest where the coverage is most dense. The error field is used to mask out the gridded field in regions where the error is considered to be too high. In practice, gridded fields masked using relative error threshold of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no data are available. 
 
+
+\begin{figure*}[t]
+\includegraphics[width=12cm]{Water_body_phosphate_depth-100_month-10_additional_fields.png}
+\caption{Additional fields computed along with the main analysis.\label{fig:additionalfields}}
+\end{figure*}
+
 Other variables containing the deepest values, masked with the same relative error thresholds, are also computed. 
 
+\subsection{Validation}
 
-% ADD plot of a given variable showing error field and masked field and deepest
+The quality and the validation of the final products rely on the assessment of the different steps of the processing:
+\begin{enumerate}
+\item The quality control of the aggregated datasets used as the input to the DIVAnd tool (Section~\ref{sec:dataqualitycontrol});
+\item The overall capability of DIVAnd to generate interpolated fields consistent with the observations;
+\item The absence of unrealistic features in the gridded product.
+\end{enumerate}
+
+An additional step frequently performed for the validation consists in comparing the results with an existing climatology. Here, the most obvious candidate is the World Ocean Atlas, which provides climatologies for the oxygen concentration 
+\citep{Garcia2024} and for dissolved inorganic nutrients \citep{Garcia2024b}. Since the EMODnet climatologies are set to be regional, they have the advantage to offer finer spatial resolutions. Another advantage of the EMODnet products is the relative error field (see for instance Fig.~\ref{fig:additionalfields}) computed by DIVAnd. The WOA also provides the standard error of analysis, based on the differences between the objectively
+analyzed and statistical mean fields \citep{Levitus2012}, but this variable is not available for the eutrophication climatologies.
+
+% Add comparison WOA vs DIVAnd for a common period → need to be together in the figure
+
 
 \subsubsection{A posteriori quality control}
 
@@ -349,12 +352,31 @@ The initial data collections, presented in Sec.~\ref{sec:insitu}, underwent rigo
 
 The residuals for the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. The locations of those discarded observations is presented in Fig.~\ref{fig:residuals}. 
 
+\subsection{Result exploitation}
+
+
+% A "normal" is defined by the World Meteorological Organization (WMO) as the 30-year average of data for a particular variable, calculated for a uniform time period. Normals provide long-term means for initializing models, environmental studies, checking in situ observations, etc.
 
 
 \conclusions  %% \conclusions[modified heading if necessary]
 TEXT
 
-\codedataavailability{The DIVAnd source code is available at \url{https://github.com/gher-uliege/DIVAnd.jl} (\doi{10.5281/zenodo.1303229}, under the GNU General Public License v2.0. The Jupyter notebooks explaining how to create a climatology with DIVAnd are available at \url{https://github.com/gher-uliege/Diva-Workshops} (\doi{10.5281/zenodo.1248029}) under the MIT license. The merged data sets are provided at …, while the gridded fields are made available from the Sextant Catalog (\url{https://sextant.ifremer.fr/eng}). All the figures of this paper were produced with Makie and GeoMakie \citep{Danisch2021}.}
+\codedataavailability{The DIVAnd source code is available at \url{https://github.com/gher-uliege/DIVAnd.jl} (\doi{10.5281/zenodo.1303229}, under the GNU General Public License v2.0. The Jupyter notebooks explaining how to create a climatology with DIVAnd are available at \url{https://github.com/gher-uliege/Diva-Workshops} (\doi{10.5281/zenodo.1248029}) under the MIT license. The aggregated datasets and the climatologies are available from the EMODnet Central Portal, with their DOIs listed in the next table. 
+
+\begin{table*}[h!]
+\caption{DOIs for the aggregated datasets.}
+\begin{tabular}{ll}
+Arctic Sea 					& \doi{10.13120/7937cf99-f2a8-44d6-8a72-1732e09e8570}\\
+Baltic Sea					& \doi{10.13120/fddf7d69-3787-4c7f-a8b9-c2eef2b7624b}\\
+Black Sea					& \doi{10.13120/7b7a4443-3135-4fc8-ad48-664b8dfd7e75}\\
+Mediterranean Sea			& \doi{10.13120/5b74efe9-5885-4dea-8d99-527e447de4ab}\\
+North-East Atlantic Ocean 	& \doi{10.13120/b197d366-ca6c-4356-93d1-49fb61a7c90b}\\
+North Sea 					& \doi{10.13120/d8b0c090-a878-4c24-bef7-75abe6fa5a51}\\
+\end{tabular}
+\end{table*}
+
+All the figures of this paper were produced with Makie and GeoMakie \citep{Danisch2021}.
+}
 
 
 \authorcontribution{CT prepared the manuscript. ME and EQ coordinated the management of metadata (catalog and DOI). AB and CT: prepared the pan-European sea products; SI and MT: Mediterranean Sea. K.W. Baltic Sea; MML and JKR: North Sea; LB and GS: Black Sea; AKO: Arctic Sea; JG and NP: North Atlantic Ocean.} 
