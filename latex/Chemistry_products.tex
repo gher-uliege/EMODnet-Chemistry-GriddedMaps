@@ -193,14 +193,10 @@ They are initially separated but then used together for the production of the cl
 
 \subsection{Metadata}
 
-Common Data Index (CDI) Metadata profiles, based upon ISO 19115–19139 standards and supported by SeaDataNet Common Vocabularies
+Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. 
+The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). Thanks to the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2019}.
 
-ne CDI (Common Data Index)
-identifies a series of observations made at sea in the water column
-(vertical profile) or in time (time series), with granularity defined by
-data originator, sometimes in consultation with data managers. The
-increase in total number of CDIs is shown i
-
+Another relevant metadata is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
 
 
 \subsection{Quality control\label{sec:dataqualitycontrol}}
@@ -224,7 +220,7 @@ The hexbin plot (Fig. ) provides another view on the data density. The regions w
 \caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
 \end{figure}
 
-The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large subdomains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
+The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large sub-domains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
 
 
 
@@ -253,7 +249,7 @@ Along with the data (coordinates, time, depth and observed values), a set of met
 In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times.
 The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For the sake of simplicity, we will not review all of them but will insist on the distintion between two groups of tecniques:
 \begin{enumerate}
-\item The interpolation techniques: the field has to contain (or pass through) all the data points. For two-dimensional cases, an example of such a method is the bi-linear interpolation. Due to the different types of noise affecting the measurements in the ocean (instrumental, representativity, \ldots), such techniques are not the most suitable.
+\item The interpolation techniques: the field has to contain (or pass through) all the data points. For two-dimensional cases, an example of such a method is the bi-linear interpolation. Due to the different types of noise affecting the measurements in the ocean (instrumental, representativeness, \ldots), such techniques are not the most suitable.
 \item The approximation 
 \end{enumerate}
 

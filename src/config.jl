@@ -356,6 +356,9 @@ function read_woa(woafile::String, varname::String, depth2plot::Int64, lonr::Ste
         elseif varname == "Water_body_silicate"
             varnamenc = "i_an"
             errnamenc = "i_se"
+        elseif varname == "Water_body_dissolved_oxygen_concentration"
+            varnamenc = "o_an"
+            errnamenc = "o_se"
         end
 
         # Read gridded field and error
@@ -404,7 +407,9 @@ function plot_field_var(
     depth2plot,
     month2plot,
     source::String = "DIVAnd",
-    cmap = cgrad(:RdYlBu, rev = true),
+    cmap = cgrad(:RdYlBu, rev = true);
+    vmin::Float64=0.,
+    vmax::Float64=1.
 )
     fig = Figure()
     ga = GeoAxis(
@@ -420,7 +425,7 @@ function plot_field_var(
         lon,
         lat,
         field,
-        colorrange = (0, 1.0),
+        colorrange = (vmin, vmax),
         colormap = cmap,
         highclip = cmap.colors[end],
     )
