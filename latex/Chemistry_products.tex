@@ -72,35 +72,36 @@
 
 
 \begin{abstract}
-We present high-resolution, regional climatologies of eutrophication variables covering the European seas. The variables consist of ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate and silicate concentrations. The in situ observations are prepared and quality controlled following a standardised procedure. They are then interpolated using the Data-Interpolating Variational Analysis in n dimensions (DIVAnd) to create the climatologies. The different climatologies have different spatial extents: a large domain covering all the Europeans seas, 6~regional domains (Arctic Ocean, North-east Atlantic Ocean, Baltic Sea, Black Sea, Mediterranean Sea and North Sea) and 4~coastal zones (Loire River, Gulf of Riga, Po River and Danube Delta).
 
-The spatial resolution and the analysis parameters required by DIVAnd are adapted to each domain.
+An ocean climatology is made up of gridded fields representing the long-term average state of a given variable for different time periods and at different depth levels. They are used for model initialiation, data visualisation, and also for informing about the mean state of the ocean over the period of interest. They can be global (i.e., covering the World Ocean) or regional. Most of the climatologies deal with temperature and salinity, while chemical and biological variables are less frequently addressed, often because of the sparser data coverage.
 
-The climatologies 
+We present a set of high-resolution, regional climatologies for six eutrophication variables covering different sub-domains of the European seas. The variables consist of ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate and silicate concentrations. The climatologies are generated with the Data-Interpolating Variational Analysis in n dimensions (DIVAnd), a software tools that implements a multi-dimensional interpolation based on a variational method. The in situ observations used as input to DIVAnd are prepared and quality controlled by regional experts, following a standardised procedure. 
+
+The different climatologies have different spatial extents: a large domain covering all the Europeans seas, 6~regional domains (Arctic Ocean, North-east Atlantic Ocean, Baltic Sea, Black Sea, Mediterranean Sea and North Sea) and 4~coastal zones (Loire River, Gulf of Riga, Po River and Danube Delta). The spatial resolution and the analysis parameters required by DIVAnd are adapted according to the specificities of each domain. The climatologies can be visualised through the EMODnet Central Portal viewer and are made available free of charge as netCDF files following the Climate and Forecast (CF) conventions. 
 \end{abstract}
 
 
 \introduction 
 
-EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate-General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citet{Shepherd2018}: 
+EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate - General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citet{Shepherd2018}: 
 \begin{enumerate}
-\item The focus is on marine data; satellite data or fisheries survey are not considered; 
-\item Multi-purpose data products, based on the raw data, are created and distributed; 
-\item The data origin and ownership are preserved, both in the raw data and in the products; 
-\item The observations are divided into thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
+\item The focus is on marine data; satellite data or fisheries survey are not considered. 
+\item Multi-purpose data products, based on the raw data, are created and distributed. 
+\item The data origin and ownership are preserved, both in the raw data and in the products. 
+\item The observations are divided into 7~thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
 \end{enumerate} 
 
-The EMODnet web portal has the objective of delivering marine data, products and metadata in a uniform and seamless way, thanks to common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Thanks to the always improving data access, a wider range of users can be reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
+The EMODnet portal (\url{https://emodnet.ec.europa.eu}) delivers marine data and products, along with their associated metadata in a uniform and seamless way, by relying on common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. With the continuously improving data access, a wider range of users is reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
 
-One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are initially collected with a single purpose: this can a scientific project or a monitoring campaign. The combination of those observations with other sources of measurements or other parameters has the potential for the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
+One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations made their way to centralised data portals, they can be re-used and combined with other measurements or other parameters, thus triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
-\item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements general undergo a suite of checks to ensure that their quality is good enough (depending on the final purpose).
-\item The climatologies (also called atlas): they consist of various gridded fields at different depth levels and for different time periods, obtained by interpolating the in situ observations on a regular grid.
+\item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of checks to assess their quality: a flag, representing the quality of the observation, is assigned to it. Thereby, users have the choice to select data according to their final purpose, for instance keeping only the observations that were set as good.
+\item The climatologies, sometimes referred to as (hydrographic) atlas \citep[e.g.][]{soton16209,Iona_2018}: they consist of a collection of gridded fields containing the averaged values of the variable of interest, at different depth levels and for different time periods, obtained by interpolating the in situ observations onto a regular grid.
 \end{enumerate}
 
-Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. 
+Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. These pieces of information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
 
-The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products, as they already constitute a useful product; then we present the gridded technique, DIVAnd, applied to the observations; finally we describe the final product (climatologies) and its validation. 
+The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products; then we present the gridded technique, DIVAnd, that will be applied to the observations; finally we describe the final products (the climatologies) and their validation. 
 
 
 \section{In situ datasets\label{sec:insitu}}
