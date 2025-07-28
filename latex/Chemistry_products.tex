@@ -101,41 +101,42 @@ One of the underlying principle of EMODnet can be summarised by the motto "\text
 
 Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. These pieces of information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
 
-The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products; then we present the gridded technique, DIVAnd, that will be applied to the observations; finally we describe the final products (the climatologies) and their validation. 
+The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products; then we present the gridded technique, DIVAnd, that will be applied to the observations; finally we describe the final products (the climatologies) and their validation against existing products. 
 
 
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
-The main goal of EMODnet Chemistry is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, hence providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
+The main goal of Chemistry thematic lot of EMODnet is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
 
 Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonization, standardization and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
-The aggregated datasets, described in this section and used for the creation of gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. They are separated by geographical regions (as described in Section~\ref{sec:domains}).
+The aggregated datasets, described in this section and used for the creation of the gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. They are separated by geographical regions (as described in Section~\ref{sec:domains}).
 
 All the data collections have in common the strong heterogeneity, which will be illustrated in the next sections: 
 \begin{itemize}
 \item spatially: while some regions are density covered by observations, other regions have been barely sampled (or the existing observations have not made their ways to the NODCs);
 \item temporally: the improvements in ocean observing systems helped increased the quantity of collected observations in the last decades;
-\item by variables: some variables, for instance oxygen concentration, are much more available than the others.
+\item by variables: some variables, for instance oxygen concentration, are collected more frequently than the others.
 \end{itemize}
-This heterogeneity has to considered in the gridded fields: the interpolation method is expected to provide an estimation of the error on the analysis, based on the availability of observations. 
+This multiple heterogeneity has to considered in the gridded fields: the interpolation method is expected to provide an estimation of the error on the analysis, based on the availability of observations. 
 
 
 \subsection{Variables\label{sec:variables}}
 
-Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6 chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive (MSFD), in particular the Descriptors no.~5, and the assessment of Good Environmental Status (GES). 
-%The parameter names are based on the P01 Parameter Usage Vocabulary (\url{https://vocab.seadatanet.org/p01-facet-search}), which allows one to achieve consistency and interoperability. 
+Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6~chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive \citep[MSFD,][]{EURO2008}, in particular the Descriptors no.~5, and the assessment of Good Environmental Status (GES). 
+
+The parameter names are based on the P01 Parameter Usage Vocabulary (\url{https://vocab.seadatanet.org/p01-facet-search}), which ensures consistency and interoperability \citep{iocmanualsguides54}. 
 
 \begin{table}
-\caption{List of variables with their corresponding standard name and units; used to produce EMODnet Chemistry products.\label{tab:variables}}
+\caption{List of variables with their corresponding standard name and units, used to produce EMODnet Chemistry products.\label{tab:variables}}
 \begin{tabular}{llr}
 \tophline
 Variables					& Climate and Forecast standard names									& Units		\\ 
 \middlehline
-Ammonium						& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
-Chlorophyll - a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
-Dissolved inorganic nitrogen	& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
+Ammonium					& mole\_concentration\_of\_ammonium\_in\_sea\_water						& $\mu$mol/l	\\
+Chlorophyll - a 			& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& mg/m$^3$	\\
+Dissolved inorganic nitrogen& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water & $\mu$mol/l	\\
 Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& $\mu$mol/l	\\
 Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& $\mu$mol/l	\\
 Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$mol/l	\\
@@ -145,15 +146,20 @@ Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& $\mu$m
 
 \subsection{Domains\label{sec:domains}}
 
-The regional domains have been delimited in order to avoid overlay between them. :
+The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions} and Fig.~\ref{fig:gebco_bathy_mask_domains3}). The regional domains have been delimited in order to avoid overlay between them:
 \begin{itemize}
 \item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar.
 \item The Sea of Marmara is assigned to the Mediterranean Sea region.
-\item The North Sea and the NE Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
+\item The North Sea and the Northeast Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
 \item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
 \end{itemize}
 
-The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}. Along with the regional seas, 4 coastal regions are also defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}). The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
+\begin{figure*}[t]
+\includegraphics[width=12cm]{gebco_bathy_mask_domains3}
+\caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
+\end{figure*}
+
+Along with the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}) with a finer spatial resolution. Therefore, there is a total of 11~spatial regions for which the climatologies are created.
 
 \begin{table*}[h!]
 \caption{Spatial extend of the regional seas and the coastal areas.\label{tab:regions}}
@@ -166,53 +172,45 @@ Baltic Sea					& 9.4°E		& 30.9°E		& 53°N		& 66°N		& 211608		& 98		\\
 Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	& 75730		& 0		\\
 Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	& 253282		& 0		\\
 North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		& 389738		& 559	\\
-North Sea 					& 5.4°W 		& 13°E		& 48°N		& 62°N		& 30804		& 134	\\
+North Sea 					& 5.4°W 	& 13°E		& 48°N		& 62°N		& 30804		& 134	\\
 % Caribbean Sea				&          	& 			& 			& 			& 2863		& 91		\\
 \middlehline	
-Danube delta					& 28.5°E		& 30.5°E		& 43.7°N 	& 45.6°N		&			& \\
+Danube delta				& 28.5°E	& 30.5°E		& 43.7°N 	& 45.6°N		&			& \\
 Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N		&			& \\
 Loire estuary				& 4°W		& 1°W 		& 6.25°N		& 48°N		&			& \\
-Po river						& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
+Po river					& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
 \bottomhline
 \end{tabular}
 \end{table*}
 
-
 Two main types of data are considered: 
 \begin{description}
 \item[the profiles,] for which the primary variable is the depth;
-\item[the time series:] for which the primary variable is the time (while the depth is generally fixed).
+\item[the time series,] for which the primary variable is the time (while the depth is generally fixed).
 \end{description}
 They are initially separated but then used together for the production of the climatologies. 
 
-
-%
-%\begin{figure}[t]
-%\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-%\caption{Data locations corresponding to the phosphate concentration measurements.\label{fig:phosphatedata}}
-%\end{figure}
-
 \subsection{Metadata}
 
-Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. 
-The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). Thanks to the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2019}.
+Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). 
+
+By using the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the final product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2019}.
 
 Another relevant metadata is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
 
-
 \subsection{Quality control\label{sec:dataqualitycontrol}}
 
-validation procedure to ensure the quality of the published datasets \citep{Barth2015,Lipizer2021,Lipizer2023}
-involving the following checks
+One of the main added value of the aggregaded datasets is the validation procedure applied to assess the quality of the measurements \citep{Barth2015,Lipizer2021,Lipizer2023}. The EMODnet Chemistry quality control chain involves the following steps:
 \begin{enumerate}
-\item metadata completeness and dataset format; temporal and spatial (position, sampling depth, station bottom depth) information
-must be present
-\item harmonization of unit and parameter naming; this step is performed with ODV; a given variable is always expressed with the same units
-\item quality flagging of data and metadata;
-\item checks for clearly impossible data ranges.?
+\item Metadata completeness: it ensures that temporal and spatial information (longitude, latitude, sampling depth, station bottom depth, time) is present.
+\item Harmonization of unit and parameter naming: it ensures that a given variable is always expressed with the same units and has always the same name. 
+\item Quality flagging of data and metadata: a quality flag is assigned to their measurements and to the metadata.
+\item Checks for clearly impossible data ranges: observations with values outside 
 \end{enumerate} 
 
 \subsection{Spatial distribution}
+
+The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}.  The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
 
 The hexbin plot (Fig. ) provides another view on the data density. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
 
@@ -222,8 +220,6 @@ The hexbin plot (Fig. ) provides another view on the data density. The regions w
 \end{figure}
 
 The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large sub-domains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
-
-
 
 
 \subsection{Temporal distribution}
@@ -289,11 +285,6 @@ needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
 
 \citep{BUGA2021}
 
-
-\begin{figure*}[t]
-\includegraphics[width=12cm]{gebco_bathy_mask_domains3}
-\caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
-\end{figure*}
 
 \subsection{File preparation}
 
@@ -362,7 +353,7 @@ Climatologies can be used to display ocean properties, for instance in a teachin
 
 \subsubsection{Quality control of new observations}
 
-They are several criteria to detect bad data, or to be more accurate: to assign a quality flag to measurements \citep{Cummings2011,Cabanes2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such range can be global, i.e. the same for any region, any depth or any time period. A possible refinement of the criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies is larger than a select threshold (based on the standard deviation for example), then that observations can be considered as suspect.
+They are several criteria to detect uncorrect data, or to be more accurate, to assign a quality flag to measurements \citep{CUMMINGS2011,CABANES2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such range can be global, i.e. the same for any region, any depth or any time period. A possible refinement of the criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies is larger than a select threshold (based on the standard deviation for example), then that observations can be considered as suspect.
 
 This application was performed in this work, as described in Sect.~\ref{sec:posterioriQC}.
 
