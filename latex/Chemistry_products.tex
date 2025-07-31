@@ -128,8 +128,10 @@ Eutrophication variables are those related to nutrients and their accumulation i
 
 The parameter names are based on the P01 Parameter Usage Vocabulary (\url{https://vocab.seadatanet.org/p01-facet-search}), which ensures consistency and interoperability \citep{iocmanualsguides54}. 
 
+Two main types of data are considered: the profiles, for which the primary variable is the depth; the time series, for which the primary variable is the time (while the depth is generally fixed. They are initially separated but then used together for the production of the climatologies. 
+
 \begin{table}
-\caption{List of variables with their corresponding standard name and units, used to produce EMODnet Chemistry products.\label{tab:variables}}
+\caption{List of variables with their corresponding standard name and units, used to generate EMODnet Chemistry products.\label{tab:variables}}
 \begin{tabular}{llr}
 \tophline
 Variables					& Climate and Forecast standard names									& Units		\\ 
@@ -156,10 +158,10 @@ The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions
 
 \begin{figure*}[t]
 \includegraphics[width=12cm]{gebco_bathy_mask_domains3}
-\caption{Bathymetry, surface land-sea mask and regional domains for the gridded products.\label{fig:gebco_bathy_mask_domains3}}
+\caption{Regional domains (colored lines) for the gridded products overlaid on the GEBCO bathymetry and the surface land-sea mask, used to delimit the region where the interpolation is performed.\label{fig:gebco_bathy_mask_domains3}}
 \end{figure*}
 
-Along with the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouth (see Sect.~\ref{sec:clim}) with a finer spatial resolution. Therefore, there is a total of 11~spatial regions for which the climatologies are created.
+Along with the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouths (see Sect.~\ref{sec:clim}) with a finer spatial resolution. Therefore, there is a total of 11~spatial regions where climatologies are created.
 
 \begin{table*}[h!]
 \caption{Spatial extend of the regional seas and the coastal areas.\label{tab:regions}}
@@ -183,40 +185,38 @@ Po river					& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
 \end{tabular}
 \end{table*}
 
-Two main types of data are considered: 
-\begin{description}
-\item[the profiles,] for which the primary variable is the depth;
-\item[the time series,] for which the primary variable is the time (while the depth is generally fixed).
-\end{description}
-They are initially separated but then used together for the production of the climatologies. 
-
 \subsection{Metadata}
 
 Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). 
 
 By using the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the final product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2019}.
 
-Another relevant metadata is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
+Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
 
 \subsection{Quality control\label{sec:dataqualitycontrol}}
 
 One of the main added value of the aggregaded datasets is the validation procedure applied to assess the quality of the measurements \citep{Barth2015,Lipizer2021,Lipizer2023}. The EMODnet Chemistry quality control chain involves the following steps:
 \begin{enumerate}
 \item Metadata completeness: it ensures that temporal and spatial information (longitude, latitude, sampling depth, station bottom depth, time) is present.
-\item Harmonization of unit and parameter naming: it ensures that a given variable is always expressed with the same units and has always the same name. 
-\item Quality flagging of data and metadata: a quality flag is assigned to their measurements and to the metadata.
-\item Checks for clearly impossible data ranges: observations with values outside 
+\item Harmonization of units and parameter names: it ensures that a given variable is always expressed with the same units and has always the same name (Tab.~\ref{tab:variables}). 
+\item Quality flagging of data and metadata: a quality flag is assigned to the measurements and to their corresponding metadata.
 \end{enumerate} 
+The last step is described in details in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains.
 
 \subsection{Spatial distribution}
 
-The phosphate measurements corresponding to the 6~regional domains are shown in Fig.~\ref{fig:phosphatedata}, with the region boundaries defined in Tab.~\ref{tab:regions}.  The phosphate distribution illustrates well the inherent lack of uniformity encountered with the measurements: most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exb 
-
-The hexbin plot (Fig. ) provides another view on the data density. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
+As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. To illustrate this feature, Fig.~\ref{fig:phosphatedata} shows the phosphate data points in the 6~regional domains, with the region boundaries defined in Tab.~\ref{tab:regions}. Most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exhibits obvious differences between the western and eastern parts of the domain, the latter displaying a better data coverage. 
 
 \begin{figure}[t]
 \includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
 \caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
+\end{figure}
+
+The hexbin plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations in hexagonal cells, it provides another view on the data coverage. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
+
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
+\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedatahexbin}}
 \end{figure}
 
 The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large sub-domains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
