@@ -89,6 +89,28 @@ domainriverscolors = OrderedDict(
     "Po River" => domaincolors["Mediterranean Sea"],
     "Danube Delta" => domaincolors["Black Sea"]
 )
+"""
+    get_unique_coordinates(filelist)
+"""
+function get_unique_coordinates(filelist::Vector{String})
+    obslonvec = Float64[]
+    obslatvec = Float64[]
+
+    for (iii, datafile) in enumerate(filelist)
+        @debug("Reading data from $(basename(datafile))")
+        obsvalue, obslon, obslat, obsdepth, obstime, obsids =
+            loadobs(Float64, datafile, varname)
+
+        append!(obslonvec, obslon)
+        append!(obslatvec, obslat)
+       
+    end
+    coordinates = tuple.(obslonvec, obslatvec)
+    unique!(coordinates)
+    lon_u = first.(coordinates)
+    lat_u = last.(coordinates)
+    return lon_u::Array{Float64}, lat_u::Array{Float64}
+end
 
 """
     make_scatter(datafilelist, varname)
@@ -143,30 +165,17 @@ function make_scatter(datafilelist::Array, varname::String)
     return fig
 end
 
-function make_hexbin(datafilelist::Array, varname::String)
+function make_hexbin(obslonvec::Array{Float64}, obslatvec::Array{Float64}, varname::String)
     varname_ = replace(varname, "_" => " ")
     fig = Figure(size = (600, 600))
     ga = GeoAxis(
         fig[1, 1],
-        title = "Observations of $(varname_)",
+        title = "Profiles of $(varname_)",
         dest = "+proj=ortho +lon_0=15 +lat_0=35",
     )
     
     xlims!(-180, 180.0)
     ylims!(-90.0, 90.0)
-
-    obslonvec = Float64[]
-    obslatvec = Float64[]
-
-    for (iii, datafile) in enumerate(datafilelist)
-        @debug("Reading data from $(basename(datafile))")
-        obsvalue, obslon, obslat, obsdepth, obstime, obsids =
-            loadobs(Float64, datafile, varname)
-
-        append!(obslonvec, obslon)
-        append!(obslatvec, obslat)
-       
-    end
     
     hexbin!(ga, obslonvec, obslatvec, bins = 75, colormap = Reverse(:RdYlBu), colorscale = log10)
     
