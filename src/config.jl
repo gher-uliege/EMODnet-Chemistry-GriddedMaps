@@ -16,12 +16,16 @@ latr = 24.:deltalat:83.
 
 # Files and directories
 datadir = "/home/ctroupin/data/EMODnet-Chemistry/Eutrophication2024/netCDF"
-figdir = "/home/ctroupin/Projects/EMODnet/EMODnet-Chemistry-GriddedMaps/figures/paper/"
+datadir = "/home/ctroupin/data/EMODnet/EMODnet-Chemistry/2024/netCDF"
+figdir = "../figures/paper"
 woadir = "/home/ctroupin/data/WOA/"
 
 # Land/sea mask and coastline
 lon_landsea, lat_landsea, landsea = GeoDatasets.landseamask(; resolution = 'i', grid = 5)
 landsea[landsea.==2] .= 1;
+landsea = Float64.(landsea)
+landsea[landsea.==0] .= NaN;
+
 coordscoast = GeoDatasets.gshhg("i", 1);
 
 domains = OrderedDict(
@@ -147,14 +151,7 @@ function make_hexbin(datafilelist::Array, varname::String)
         title = "Observations of $(varname_)",
         dest = "+proj=ortho +lon_0=15 +lat_0=35",
     )
-    heatmap!(
-        ga,
-        lon_landsea,
-        lat_landsea,
-        landsea,
-        colormap = Reverse(:greys),
-        colorrange = [0, 2],
-    )
+    
     xlims!(-180, 180.0)
     ylims!(-90.0, 90.0)
 
@@ -171,7 +168,16 @@ function make_hexbin(datafilelist::Array, varname::String)
        
     end
     
-    hexbin!(ga, obslonvec, obslatvec, bins = 50)
+    hexbin!(ga, obslonvec, obslatvec, bins = 75, colormap = Reverse(:RdYlBu), colorscale = log10)
+    
+    heatmap!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea,
+        colormap = Reverse(:greys),
+        colorrange = [0, 2],
+    )
     hidedecorations!(ga)
     return fig
 end
