@@ -89,10 +89,14 @@ domainriverscolors = OrderedDict(
     "Po River" => domaincolors["Mediterranean Sea"],
     "Danube Delta" => domaincolors["Black Sea"]
 )
+
 """
     get_unique_coordinates(filelist)
+
+Read the coordinates from a list of netCDF files and keep the unique pairs of coordinates.
 """
-function get_unique_coordinates(filelist::Vector{String})
+function get_unique_coordinates(filelist::Vector{String}, varname::AbstractString)
+
     obslonvec = Float64[]
     obslatvec = Float64[]
 
@@ -114,6 +118,8 @@ end
 
 """
     make_scatter(datafilelist, varname)
+
+Plot the locations of the `varname` observations by region using the list of file `datafilelist` 
 """
 function make_scatter(datafilelist::Array, varname::String)
 
@@ -165,20 +171,34 @@ function make_scatter(datafilelist::Array, varname::String)
     return fig
 end
 
-function make_hexbin(obslonvec::Array{Float64}, obslatvec::Array{Float64}, varname::String)
-    varname_ = replace(varname, "_" => " ")
-    fig = Figure(size = (600, 600))
+"""
+    make_hexbin(obslon, obslat, varname)
+
+Create a hexbin plot using the coordinate vectors `obslon`, `obslat`.     
+The variable `varname` is used for the figure title.
+"""
+function make_hexbin(obslonvec::Array{Float64}, obslatvec::Array{Float64}, varname::String="")
+    
+    if length(varname) > 0
+        varname_ = replace(varname, "_" => " ")
+        figtitle = "$(varname_)"
+    else
+        figtitle = ""
+    end
+    fig = Figure(size = (800, 600))
     ga = GeoAxis(
         fig[1, 1],
-        title = "Profiles of $(varname_)",
+        title = figtitle,
         dest = "+proj=ortho +lon_0=15 +lat_0=35",
     )
     
     xlims!(-180, 180.0)
     ylims!(-90.0, 90.0)
     
-    hexbin!(ga, obslonvec, obslatvec, bins = 75, colormap = Reverse(:RdYlBu), colorscale = log10)
+    hb = hexbin!(ga, obslonvec, obslatvec, bins = 75, colormap = Reverse(:RdYlBu), strokewidth = 0.5,
+        strokecolor = :gray50, threshold = 1,colorscale = log10)
     
+    Colorbar(fig[1,2], hb, vertical = true, label = "Number \nof profiles\nper cell", labelrotation=0)
     heatmap!(
         ga,
         lon_landsea,

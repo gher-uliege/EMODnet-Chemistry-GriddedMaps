@@ -80,10 +80,9 @@ We present a set of high-resolution, regional climatologies for six eutrophicati
 The different climatologies have different spatial extents: a large domain covering all the Europeans seas, 6~regional domains (Arctic Ocean, North-east Atlantic Ocean, Baltic Sea, Black Sea, Mediterranean Sea and North Sea) and 4~coastal zones (Loire River, Gulf of Riga, Po River and Danube Delta). The spatial resolution and the analysis parameters required by DIVAnd are adapted according to the specificities of each domain. The climatologies can be visualised through the EMODnet Central Portal viewer and are made available free of charge as netCDF files following the Climate and Forecast (CF) conventions. 
 \end{abstract}
 
-
 \introduction 
 
-EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate - General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citet{Shepherd2018}: 
+EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate - General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citep{Shepherd2018}: 
 \begin{enumerate}
 \item The focus is on marine data; satellite data or fisheries survey are not considered. 
 \item Multi-purpose data products, based on the raw data, are created and distributed. 
@@ -101,7 +100,7 @@ One of the underlying principle of EMODnet can be summarised by the motto "\text
 
 Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also have to include information about all the individual data providers who contributed to the final products. These pieces of information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
 
-The manuscript is organised as follows: first we describe the in situ observations used for the creation of the gridded products; then we present the gridded technique, DIVAnd, that will be applied to the observations; finally we describe the final products (the climatologies) and their validation against existing products. 
+The manuscript is organised according to the following structure: Section~\ref{sec:insitu}: description of the in situ observations; Section~\ref{sec:method}: description of the griddng technique (DIVAnd); Section~\ref{sec:clim}: presentation and validation of the the final products (climatologies). 
 
 
 \section{In situ datasets\label{sec:insitu}}
@@ -170,17 +169,17 @@ Along with the regional seas, 4~coastal regions have been defined. They are used
 Region	 					& West		& East		& South 		& North 		& Number of profiles	& Number of time series\\ 
 \middlehline	
 Arctic Sea 					& 45°W 		& 70°E		& 62°N		& 83°N		& 145417		& 0		\\
-Baltic Sea					& 9.4°E		& 30.9°E		& 53°N		& 66°N		& 211608		& 98		\\
+Baltic Sea					& 9.4°E		& 30.9°E	& 53°N		& 66°N		& 211608		& 98		\\
 Black Sea					& 26.5°E 	& 42°E		& 40°N		& 48°N	 	& 75730		& 0		\\
 Mediterranean Sea			& 6°W		& 36.375°E	& 30°N		& 46.375°N	& 253282		& 0		\\
 North-East Atlantic Ocean 	& 42°W		& 0° 		& 24°N		& 48°N		& 389738		& 559	\\
 North Sea 					& 5.4°W 	& 13°E		& 48°N		& 62°N		& 30804		& 134	\\
 % Caribbean Sea				&          	& 			& 			& 			& 2863		& 91		\\
 \middlehline	
-Danube delta				& 28.5°E	& 30.5°E		& 43.7°N 	& 45.6°N		&			& \\
+Danube delta				& 28.5°E	& 30.5°E	& 43.7°N 	& 45.6°N		&			& \\
 Gulf of Riga 				& 22.3°E 	& 25.0°E 	& 56.8°N 	& 58.4°N		&			& \\
-Loire estuary				& 4°W		& 1°W 		& 6.25°N		& 48°N		&			& \\
-Po river					& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
+Loire estuary				& 4°W		& 1°W 		& 6.25°N	& 48°N			&			& \\
+Po river					& 12°E		& 14.0°E	& 44°N		& 46.0°N		&			& \\
 \bottomhline
 \end{tabular}
 \end{table*}
@@ -205,21 +204,22 @@ The last step is described in details in \citet{Lipizer2023}, where the quality 
 
 \subsection{Spatial distribution}
 
-As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. To illustrate this feature, Fig.~\ref{fig:phosphatedata} shows the phosphate data points in the 6~regional domains, with the region boundaries defined in Tab.~\ref{tab:regions}. Most of the coastal zones are well sampled, with the exception of the southern part of the Mediterranean Sea east of Tunisia. The North Sea also exhibits obvious differences between the western and eastern parts of the domain, the latter displaying a better data coverage. 
+As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. To illustrate this feature, Fig.~\ref{fig:phosphatedata} shows the phosphate and the ammonium data points, in the 6~regional domains. The two variables clearly display distinct distributions, with the ammonium mostly sampled in coastal areas, whereas the phosphate observations have a more extended spatial coverage.
+
+
+\begin{figure*}[t]
+\includegraphics[width=.49\textwidth]{observations_Water_body_phosphate.png}\includegraphics[width=.49\textwidth]{observations_Water_body_ammonium.png}
+\caption{Locations of the phosphate concentration and the dissolved inorganic nitrogen concentration profiles.\label{fig:phosphatedata}}
+\end{figure*}
+
+The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
 
 \begin{figure}[t]
-\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
+\includegraphics[width=8.3cm]{observations_Water_body_phosphate_hex.png}
+\caption{Hexbin plot corresponding to the phosphate concentration profiles.\label{fig:phosphatedatahexbin}}
 \end{figure}
 
-The hexbin plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations in hexagonal cells, it provides another view on the data coverage. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
-
-\begin{figure}[t]
-\includegraphics[width=8.3cm]{observations_Water_body_phosphate.png}
-\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedatahexbin}}
-\end{figure}
-
-The panels of Fig. x also highlights the differences between the variables: for phosphate, silicate and oxygen, most of the domain is covered, whereas for ammonium, dissolved organic nitrogen and, to a lesser extent, chlorophyll, large sub-domains are almost void of measurements. This will impact the quality of the interpolated field (Section …), which depends on the quality of the measurements and their availability.
+The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:climS}), which depends on the quality of the measurements and their availability.
 
 
 \subsection{Temporal distribution}
@@ -236,11 +236,12 @@ The value distribution (Fig. ) shows different patterns according to the variabl
 
 
 \subsection{File format}
+
 The original data collections are provided as ODV (Ocean Data View) data collections, which is one of the standard format promoted by SeaDataNet marine data
 infrastructure \citep{Lowry2023}. Such collections are easily read then exported to another format using the ODV software tool \citep{SCHLITZER2002}. In the present work we exported the collections to netCDF files, which are in turn are used as input files for the preparation of the climatologies (next Section). 
 Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. The complete list of metadata items is provided in the Appendix. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
-\section{The interpolation method}
+\section{The gridding method\label{sec:method}}
 %---------------------------------
 
 In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times.
@@ -255,12 +256,15 @@ While temperature and salinity (T and S) climatologies have been produced for va
 
 % Check this → https://briochemc.github.io/WorldOceanAtlasTools.jl/stable/
 
-\subsection{Method}
+\subsection{DIVAnd}
 
-DIVAnd is an analysis method designed to generate fields on a curvilinear grid grid from a set of in situ measurements \citep{BARTH2014}. It is a new version of the DIVA tool \citep{TROUPIN2012,BECKERS2014} that was previously limited to 2 dimensions (usually longitude and latitude). With DIVAnd, it is now possible to perform the analysis on an arbitrary number of dimensions, typically the horizontal dimension (longitudes and latitudes), the vertical dimension (depth or pressure) and the time. With the previous version of  the DIVA tool, climatologies were obtained by stacking 2-dimensional layers computed for different depths and time periods. 
-One of the main advantages of the method over widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} is that DIVAnd (and DIVA) naturally takes into account physical obstacles, typically the presence of land separating two bodies of water.  
+The Data-Interpolating Variational Anlysis in n dimensions method \citep[DIVAnd][]{BARTH2014} is designed to grid arbitrarily located observations in two or more dimensions, typically the position (longitude and latitude), the depth and the time of the observations, onto a curvilinear grid. DIVAnd in an evolution of the DIVA tool \citep{TROUPIN2012,BECKERS2014}, which was limited to 2-dimensional interpolations. 
 
-DIVAnd is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. While the previous code was written in Fortran, Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
+The technique is based on the minimisation of a cost function, in which the deviation from the observations, the deviation from a first guess (also called background or reference field) and abruptly varying fields are taken into account. The main strengths of the method with respect to widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} are its capacity to deal with very large datasets, as the numerical cost is almost independent from the number of observations, and the natural decoupling of regions based the topography. In other words, a basin separated from another by land is not affected by the observations located in the other basin.
+
+The source code is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
+
+DIVAnd has already been applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. 
 
 \subsection{Implementation}
 
@@ -307,7 +311,7 @@ Three sets of climatologies were produced, grouped according to their spatial ex
 
 \subsection{File format}
 
-The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993,Rew2006}, making use of the NCDatasets.jl Julia library \citep{Barth2024}. The file sizes depend on the type of product (as defined in Sect.~\ref{sec:products}) and the region of interest. The largest files are for the Northeast Atlantic
+The output of the analysis is a set of netCDF files storing the gridded fields generated by the analysis are written in netCDF \citep{Rew1990,Brown1993,Rew2006}, making use of the NCDatasets.jl Julia library \citep{Barth2024}. The file sizes depend on the type of product (as defined in Section~\ref{sec:products}) and the region of interest. The largest files are for the Northeast Atlantic
 
 \subsection{Gridded variables}
 
@@ -339,7 +343,7 @@ analyzed and statistical mean fields \citep{Levitus2012}, but this variable is n
 
 \subsubsection{A posteriori quality control\label{sec:posterioriQC}}
 
-The initial data collections, presented in Sec.~\ref{sec:insitu}, underwent rigorous quality checks that ensure the final quality of the datasets. When performing analysis, it is also possible to detect suspicious data based on the residuals. The residual of a given data point is computed as the difference between the observed value and the analysed field at the location of the data point. In general, forcing the residuals to be small, i.e., to have an analysed field closed to the observations, does not guarantee good results: the field obtained will be noisy an not representative of a long-term mean state. Still, in an analysis performed with realistic parameters (here: correlation length and noise-to-signal ratio), large residuals might be the signal of either suspect data, or data not compatible with the climatology (HERE, NEED TO BETTER EXPLAIN).
+The initial data collections, presented in Section~\ref{sec:insitu}, underwent rigorous quality checks that ensure the final quality of the datasets. When performing analysis, it is also possible to detect suspicious data based on the residuals. The residual of a given data point is computed as the difference between the observed value and the analysed field at the location of the data point. In general, forcing the residuals to be small, i.e., to have an analysed field closed to the observations, does not guarantee good results: the field obtained will be noisy an not representative of a long-term mean state. Still, in an analysis performed with realistic parameters (here: correlation length and noise-to-signal ratio), large residuals might be the signal of either suspect data, or data not compatible with the climatology (HERE, NEED TO BETTER EXPLAIN).
 
 The residuals for the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. The locations of those discarded observations is presented in Fig.~\ref{fig:residuals}. 
 
@@ -355,7 +359,7 @@ Climatologies can be used to display ocean properties, for instance in a teachin
 
 They are several criteria to detect uncorrect data, or to be more accurate, to assign a quality flag to measurements \citep{CUMMINGS2011,CABANES2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such range can be global, i.e. the same for any region, any depth or any time period. A possible refinement of the criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies is larger than a select threshold (based on the standard deviation for example), then that observations can be considered as suspect.
 
-This application was performed in this work, as described in Sect.~\ref{sec:posterioriQC}.
+This application was performed in this work, as described in Section~\ref{sec:posterioriQC}.
 
 \subsubsection{Assessment of marine ecosystems}
 
