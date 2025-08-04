@@ -1,0 +1,9 @@
+[deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
+GeoDatasets = "ddc7317b-88db-5cb5-a849-8449e5df04f9"
+GeoInterface = "cf35fbd7-0cd7-5166-be24-54bfbe79505f"
+GeoMakie = "db073c08-6b98-4ee5-b6a4-5efafb3259c6"
+GeometryOps = "3251bfac-6a57-4b6d-aa61-ac1fef2975ab"
+Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+NCDatasets = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
