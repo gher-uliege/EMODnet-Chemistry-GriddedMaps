@@ -188,7 +188,7 @@ Po river					& 12°E		& 14.0°E	& 44°N		& 46.0°N		&			& \\
 
 Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). 
 
-By using the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the final product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2019}.
+By using the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the final product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2021}.
 
 Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
 
@@ -334,9 +334,7 @@ The quality and the validation of the final products rely on the assessment of t
 \item The absence of unrealistic features in the gridded product.
 \end{enumerate}
 
-An additional step frequently performed for the validation consists in comparing the results with an existing climatology. Here, the most obvious candidate is the World Ocean Atlas, which provides climatologies for the oxygen concentration 
-\citep{Garcia2024} and for dissolved inorganic nutrients \citep{Garcia2024b}. Since the EMODnet climatologies are set to be regional, they have the advantage to offer finer spatial resolutions. Another advantage of the EMODnet products is the relative error field (see for instance Fig.~\ref{fig:additionalfields}) computed by DIVAnd. The WOA also provides the standard error of analysis, based on the differences between the objectively
-analyzed and statistical mean fields \citep{Levitus2012}, but this variable is not available for the eutrophication climatologies.
+An additional step frequently performed for the validation consists in comparing the results with an existing climatology. For our products, the most obvious candidate is the World Ocean Atlas, which provides climatologies for the oxygen concentration \citep{Garcia2024} and for dissolved inorganic nutrients \citep{Garcia2024b}. Since the EMODnet climatologies consist of regional gridded fields, they have the advantage to offer finer spatial resolutions than global products. Another advantage of the EMODnet products is the relative error field (see for instance Fig.~\ref{fig:additionalfields}) computed by DIVAnd. The WOA also provides the standard error of analysis, based on the differences between the objectively analyzed and statistical mean fields \citep{Levitus2012}, but this variable is not available for the eutrophication climatologies.
 
 % Add comparison WOA vs DIVAnd for a common period → need to be together in the figure
 
