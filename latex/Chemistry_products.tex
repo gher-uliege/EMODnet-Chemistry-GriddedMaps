@@ -192,35 +192,31 @@ By using the CDI records, it is possible to keep track of the information regard
 
 Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
 
-\subsection{Quality control\label{sec:dataqualitycontrol}}
+\subsection{Quality assessment\label{sec:dataqualitycontrol}}
 
-One of the main added value of the aggregaded datasets is the validation procedure applied to assess the quality of the measurements \citep{Barth2015,Lipizer2021,Lipizer2023}. The EMODnet Chemistry quality control chain involves the following steps:
+One of the main added value of the aggregated datasets is the validation procedure applied to assess the quality of the measurements \citep{Barth2015,Lipizer2021,Lipizer2023}. The EMODnet Chemistry quality control chain involves the following steps:
 \begin{enumerate}
 \item Metadata completeness: it ensures that temporal and spatial information (longitude, latitude, sampling depth, station bottom depth, time) is present.
 \item Harmonization of units and parameter names: it ensures that a given variable is always expressed with the same units and has always the same name (Tab.~\ref{tab:variables}). 
 \item Quality flagging of data and metadata: a quality flag is assigned to the measurements and to their corresponding metadata.
 \end{enumerate} 
-The last step is described in details in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains.
+The last step is described in details in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~$mg/m{^3}$, while this range is narrower in other sub-regions.
 
 \subsection{Spatial distribution}
 
-As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. To illustrate this feature, Fig.~\ref{fig:phosphatedata} shows the phosphate and the ammonium data points, in the 6~regional domains. The two variables clearly display distinct distributions, with the ammonium mostly sampled in coastal areas, whereas the phosphate observations have a more extended spatial coverage.
-
+As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. Figure~\ref{fig:phosphatedata} illustrates this features by displaying the phosphate and the ammonium data points, in the 6~regional domains from Tab.~\ref{tab:regions}. The differences between the spatial distributions of the two variables is obvious, with the ammonium mostly sampled in coastal areas, whereas the phosphate observations have a more extended spatial coverage.
 
 \begin{figure*}[t]
 \includegraphics[width=.49\textwidth]{observations_Water_body_phosphate.png}\includegraphics[width=.49\textwidth]{observations_Water_body_ammonium.png}
 \caption{Locations of the phosphate concentration and the dissolved inorganic nitrogen concentration profiles.\label{fig:phosphatedata}}
 \end{figure*}
 
-The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sean while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. 
+The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sea while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:climS}).
 
 \begin{figure}[t]
-%\includegraphics[width=8.3cm]{observations_Water_body_phosphate_hex.png}
+\includegraphics[width=8.3cm]{observations_Water_body_phosphate_hex.png}
 \caption{Hexbin plot corresponding to the phosphate concentration profiles.\label{fig:phosphatedatahexbin}}
 \end{figure}
-
-The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:climS}), which depends on the quality of the measurements and their availability.
-
 
 \subsection{Temporal distribution}
 
@@ -244,40 +240,38 @@ Along with the data (coordinates, time, depth and observed values), a set of met
 \section{The gridding method\label{sec:method}}
 %---------------------------------
 
-In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times.
-The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For the sake of simplicity, we will not review all of them but will insist on the distintion between two groups of tecniques:
+In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times. The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For the sake of simplicity, we will not review all of them but will insist on the distinction between two groups of techniques:
 \begin{enumerate}
 \item The interpolation techniques: the field has to contain (or pass through) all the data points. For two-dimensional cases, an example of such a method is the bi-linear interpolation. Due to the different types of noise affecting the measurements in the ocean (instrumental, representativeness, \ldots), such techniques are not the most suitable.
 \item The approximation 
 \end{enumerate}
 
 The climatologies, consisting of a set of gridded fields for different depths and time periods, are produced by applying the Data Interpolating Variational Analysis in n dimensions (DIVAnd, see next Section) to the datasets presented in Section~\ref{sec:insitu}. Such gridded fields are frequently used in oceanography, for different purposes ranging from data visualisation to model initialisation or validation of measurements.  
-While temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate+nitrite, silicate][]{Garcia2024b} at a resolution of 1° by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
-
-% Check this → https://briochemc.github.io/WorldOceanAtlasTools.jl/stable/
+While temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation,][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate + nitrite, silicate,][]{Garcia2024b} at a resolution of 1°by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
 
 \subsection{DIVAnd}
 
-The Data-Interpolating Variational Anlysis in n dimensions method \citep[DIVAnd][]{BARTH2014} is designed to grid arbitrarily located observations in two or more dimensions, typically the position (longitude and latitude), the depth and the time of the observations, onto a curvilinear grid. DIVAnd in an evolution of the DIVA tool \citep{TROUPIN2012,BECKERS2014}, which was limited to 2-dimensional interpolations. 
+The Data-Interpolating Variational Analysis in n dimensions method \citep[DIVAnd][]{BARTH2014} is designed to grid arbitrarily located observations in two or more dimensions, onto a curvilinear grid. Typically the dimensions are the longitude, the latitude, the depth and the time of the observations. DIVAnd in an evolution of the DIVA tool \citep{TROUPIN2012,BECKERS2014}, which was limited to 2-dimensional interpolations (hence climatologies were build by stacking 2D layers at different depths and for different periods). 
 
-The technique is based on the minimisation of a cost function, in which the deviation from the observations, the deviation from a first guess (also called background or reference field) and abruptly varying fields are taken into account. The main strengths of the method with respect to widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} are its capacity to deal with very large datasets, as the numerical cost is almost independent from the number of observations, and the natural decoupling of regions based the topography. In other words, a basin separated from another by land is not affected by the observations located in the other basin.
-
-The source code is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
+Mathematically, the DIVAnd technique is based on the minimisation of a cost function, in which the deviation from the observations, the deviation from a first guess (also called background or reference field) and abruptly varying fields are taken into account. The main strengths of the method with respect to widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} are its capacity to deal with very large datasets, as the numerical cost is almost independent from the number of observations, and the natural decoupling of regions based the topography. In other words, a basin separated from another by land is not affected by the observations located in the other basin.
 
 DIVAnd has already been applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. 
 
+The source code is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
+
+
 \subsection{Implementation}
 
-\citep{TROUPIN2025}
-A set of Jupyter-notebooks \citep[https://jupyter.org][]{KLUYVER2016} is
-provided as guidelines explaining all the steps related to the creation of a climatology:
+For the creation of the gridded maps, regional leaders are provided with a set of Jupyter notebooks \citep[https://jupyter.org][]{KLUYVER2016}, which serve as guidelines explaining all the steps to perform for the creation of a climatology:
 \begin{enumerate}
-\item Data reading;
+\item Data reading and file format conversion;
 \item Creation of the land-sea mask based on the bathymetry;
 \item Parameter optimisation;
 \item Analysis;
-\item Creation of figures.
+\item Creation of figures;
+\item Creation of metadata for the inclusion in catalogue.
 \end{enumerate}
+The relevant notebooks (those dealing with the analysis) are then modified according to the specificities of each domain. They have been submitted for publication \citep{TROUPIN2025}.
 
 The GEBCO bathymetry (GEBCO 2021) was used with a resolution reduced by a factor 4 with respect to the original, was used for the creation of the land-sea mask
 needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
@@ -287,7 +281,7 @@ needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}).
 \section{Gridded climatologies\label{sec:clim}}
 %----------------------------------------------
 
-\citep{BUGA2021}
+For the sake of conciseness, the present section will focus on the "All European Seas" products. The procedure applied for the creation of the other climatologies is similar, and details can be found in the technical report by \citep{BUGA2021}. The URLs of the netCDF files storing the climatologies are provided at the end of the paper.
 
 
 \subsection{File preparation}

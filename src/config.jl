@@ -13,9 +13,19 @@ deltalat = 0.25
 lonr = -45.:deltalon:70.
 latr = 24.:deltalat:83.
 
+# Parameters for plotting
+inch = 96
+pt = 4 / 3
+cm = inch / 2.54
+
 # Files and directories
-datadir = "/home/ctroupin/data/EMODnet-Chemistry/Eutrophication2024/netCDF"
-datadir = "/home/ctroupin/data/EMODnet/EMODnet-Chemistry/2024/netCDF"
+hostname = gethostname()
+if hostname == "ctroupin-PRIME-A320M-C-R2-0"
+    datadir = "/home/ctroupin/data/EMODnet-Chemistry/Eutrophication2024/netCDF"
+else
+    datadir = "/home/ctroupin/data/EMODnet/EMODnet-Chemistry/2024/netCDF"
+end
+
 figdir = "../figures/paper"
 woadir = "/home/ctroupin/data/WOA/"
 
@@ -60,6 +70,17 @@ varunits = Dict(
     "Water_body_phosphate" => "µmol/l",
     "Water_body_dissolved_oxygen_concentration" => "µmol/l"
     )
+
+# Acceptable range for the variables
+# (used for the histograms)
+varrange = Dict(
+    "Water_body_ammonium" => [0., 30.],
+    "Water_body_chlorophyll-a" => [0., 5.],
+    "Water_body_dissolved_inorganic_nitrogen" => [0., 50.],
+    "Water_body_silicate" => [0., 100.],
+    "Water_body_phosphate" => [0., 5.],
+    "Water_body_dissolved_oxygen_concentration" => [0., 400.]
+)
 
 regionnames = [
     "Arctic Ocean",
@@ -195,7 +216,7 @@ function make_hexbin(obslonvec::Array{Float64}, obslatvec::Array{Float64}, varna
     ylims!(-90.0, 90.0)
     
     hb = hexbin!(ga, obslonvec, obslatvec, bins = 75, colormap = Reverse(:RdYlBu), strokewidth = 0.5,
-        strokecolor = :gray50, threshold = 1,colorscale = log10)
+        strokecolor = :gray50, threshold = 1, colorscale = log10)
     
     Colorbar(fig[1,2], hb, vertical = true, label = "Number \nof profiles\nper cell", labelrotation=0)
     heatmap!(
@@ -386,13 +407,13 @@ function read_woa(woafile::String, varname::String, depth2plot::Int64, lonr::Ste
 
         if varname == "Water_body_phosphate"
             varnamenc = "p_an"
-            errnamenc = "p_se"
+            errnamenc = "p_sea"
         elseif varname == "Water_body_silicate"
             varnamenc = "i_an"
-            errnamenc = "i_se"
+            errnamenc = "i_sea"
         elseif varname == "Water_body_dissolved_oxygen_concentration"
             varnamenc = "o_an"
-            errnamenc = "o_se"
+            errnamenc = "o_sea"
         end
 
         # Read gridded field and error
@@ -433,6 +454,12 @@ function add_coast!(ga::GeoAxis, coordscoast::Vector{Tuple{Vector{Float64}, Vect
     return nothing
 end
 
+"""
+    plot_field_var(varname, lon, lat, field, depth2plot, month2plot)
+
+Plot the 2D field corresponding to the coordinates `lon` and `lat`, 
+at the depth level `depth2plot` and the time period `month2plot`.
+"""
 function plot_field_var(
     varname::String,
     lon,
@@ -472,6 +499,46 @@ function plot_field_var(
     return fig, ga, hm
 end
 
+function plot_error_field(varname, lon, lat, fielderror, depth2plot, month2plot, source::String = "DIVAnd",
+    cmaperror = cgrad(:RdYlGn_10, 10, rev = true, categorical = true);
+    vmin::Float64=0.,
+    vmax::Float64=1.
+    )
+
+    varname_ = replace(varname, "_" => " ")
+    fig = Figure()
+
+    ga = GeoAxis(
+        fig[1, 1],
+        title = "$(source) $(varname_) relative error\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    hm = heatmap!(
+        ga,
+        lon,
+        lat,
+        fielderror * 100.0,
+        colorrange = (0, 100.0),
+        colormap = cmaperror,
+        highclip = cmap.colors[end],
+    )
+
+    add_coast!(ga, coordscoast)
+
+    xlims!(ga, lonr[1], lonr[end])
+    ylims!(ga, latr[1], latr[end])
+    Colorbar(fig[1, 2], hm, label = "%", labelrotation = 0)
+    return fig, ga, hm
+end
+
+"""
+    plot_additional_field(varname, varunits, lon, lat, fielddeepest, fieldL2, fielderror, depth2plot, month2plot)
+
+Plot the additional fields: masked gridded field, error field, field at deepest depth.
+"""
 function plot_additional_field(
     varname::String,
     varunits::String,
