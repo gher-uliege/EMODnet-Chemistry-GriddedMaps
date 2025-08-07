@@ -1,5 +1,4 @@
-
-using GeoJSON
+    using GeoJSON
 using PolygonOps
 using OrderedCollections
 using Dates
