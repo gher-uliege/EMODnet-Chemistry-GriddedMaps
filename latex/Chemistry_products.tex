@@ -200,7 +200,11 @@ One of the main added value of the aggregated datasets is the validation procedu
 \item Harmonization of units and parameter names: it ensures that a given variable is always expressed with the same units and has always the same name (Tab.~\ref{tab:variables}). 
 \item Quality flagging of data and metadata: a quality flag is assigned to the measurements and to their corresponding metadata.
 \end{enumerate} 
+<<<<<<< HEAD
 The last step is described in details in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~$mg/m{^3}$, while this range is narrower in other sub-regions.
+=======
+The last step is described in details in \citet{Lipizer2023}. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains.
+>>>>>>> 602d79b (update histogram)
 
 \subsection{Spatial distribution}
 
@@ -211,7 +215,7 @@ As stated in Sect.~\ref{sec:insitu}, the datasets are characterised by their str
 \caption{Locations of the phosphate concentration and the dissolved inorganic nitrogen concentration profiles.\label{fig:phosphatedata}}
 \end{figure*}
 
-The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sea while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage. The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:climS}).
+The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sea, while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage; with zones with almost no measurements at all (coastal zones of Tunisia and Lybia). The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:climS}).
 
 \begin{figure}[t]
 \includegraphics[width=8.3cm]{observations_Water_body_phosphate_hex.png}
@@ -220,9 +224,15 @@ The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) display
 
 \subsection{Temporal distribution}
 
+The number of phosphate concentration observations per year and per months are shown in Fig.~\ref{fig:phosphatetime}. The first subplot exhibits an overall positive trend from 1960 oto 1990 approximately, followed by a more stationnary period. The last years have less observations, due to the typical time lag between the data collection and their inclusion into the international databases. Another striking feature visible in the histogram is the contributions by the different regions. For instance, the phosphate concentration in the North Sea only appear in the mid 1990's. The Baltic sea stands out as the largest contributor for this variable, despite its reduced geographical extension.
+
+The second subplot shows the seasonal, with a factor 2 between the number of available of observations in the most sampled month (May) and in the least sample month (December). 
+
+The histograms for the other variables are not included in the paper, but they also display similar heterogeneities in the temporal distribution, along with variations related to the variables themselves. 
+
 \begin{figure*}[t]
-\includegraphics[width=12cm]{stacked_histogram_Water_body_phosphate.png}
-\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatedata}}
+\includegraphics[width=\textwidth]{stacked_histogram_Water_body_phosphate.png}
+\caption{Locations of the phosphate concentration profiles.\label{fig:phosphatetime}}
 \end{figure*}
 
 
@@ -247,7 +257,9 @@ In this paper, we refer to \textit{gridding} as the process of computing the val
 \end{enumerate}
 
 The climatologies, consisting of a set of gridded fields for different depths and time periods, are produced by applying the Data Interpolating Variational Analysis in n dimensions (DIVAnd, see next Section) to the datasets presented in Section~\ref{sec:insitu}. Such gridded fields are frequently used in oceanography, for different purposes ranging from data visualisation to model initialisation or validation of measurements.  
-While temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation,][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate + nitrite, silicate,][]{Garcia2024b} at a resolution of 1°by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
+
+Temperature and salinity (T and S) climatologies have been produced for various regions of the World Ocean using different interpolation techniques, yet climatologies for eutrophication-related variables are less frequent. The World Ocean Atlas (WOA) makes climatologies available for oxygen \citep[Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation,][]{Garcia2024} and for dissolved inorganic nutrients \citep[phosphate, nitrate and nitrate + nitrite, silicate,][]{Garcia2024b} at a resolution of 1°by 1° for the global ocean. The availability of measurements from the EMODnet Chemistry data collections makes it possible to increase the spatial resolution in certain domains, hence the interest of the regional products presented in this paper.
+
 
 \subsection{DIVAnd}
 
@@ -255,10 +267,9 @@ The Data-Interpolating Variational Analysis in n dimensions method \citep[DIVAnd
 
 Mathematically, the DIVAnd technique is based on the minimisation of a cost function, in which the deviation from the observations, the deviation from a first guess (also called background or reference field) and abruptly varying fields are taken into account. The main strengths of the method with respect to widely used methods such as the Optimal Interpolation \citep[OI,][]{GANDIN1966,BRETHERTON1976} are its capacity to deal with very large datasets, as the numerical cost is almost independent from the number of observations, and the natural decoupling of regions based the topography. In other words, a basin separated from another by land is not affected by the observations located in the other basin.
 
-DIVAnd has already been applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. 
-
 The source code is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
 
+DIVAnd has already been applied successfuly applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. In this work, the version v2.7.12 of the code \citep{BARTH2024DIVAnd} is used.
 
 \subsection{Implementation}
 

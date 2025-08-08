@@ -239,8 +239,9 @@ function make_histogram(
     nobs_month::Vector{Int64},
     varname::String
 )
+    varname_ = replace(varname, "_" => " ")
     fig = Figure(size = (1200, 400))
-    ax = Axis(fig[1, 1], title = "Number of $(varname) observations per year", xticks=1960:10:2020)
+    ax = Axis(fig[1, 1], title = "Number of $(varname_) observations per year", xticks=1960:10:2020)
     barplot!(
         ax,
         yearmin:yearmax,
@@ -257,7 +258,7 @@ function make_histogram(
         xticks = 1:12,
         xtickformat = x -> Dates.monthname.(Int.(x)),
         xticklabelrotation = pi / 6,
-        title = "Number of $(varname) observations per month",
+        title = "Number of $(varname_) observations per month",
     )
     barplot!(
         ax2,
