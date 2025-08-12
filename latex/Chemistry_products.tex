@@ -336,6 +336,10 @@ The error field is used to mask out the gridded field in regions where the error
 
 Other variables containing the deepest values, masked with the same relative error thresholds, are also computed. These variables were also created following discussions with group of experts, thus underlying the user-driven developments of the code.
 
+\subsection{Metadata and product publication}
+
+Complete and standardised metadata are essential when it comes to share the data or data products to a wider audience, especially in the light of the FAIR principles. This is why the EMODnet Chemistry climatologies are filled with many pieces of information concerning the parameters (through parameter and search keywords), the data provenance, the creators of the product, links to the documentation etc. They are stored as global attributes in the netCDF.  files.
+
 \subsection{Validation}
 
 The quality and the validation of the final products rely on the assessment of the different steps of the processing:
@@ -367,7 +371,14 @@ Climatologies can be used to display ocean properties, for instance in a teachin
 
 They are several criteria to detect incorrect data, or to be more accurate, to assign a quality flag to measurements \citep{CUMMINGS2011,CABANES2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such range can be global, i.e. the same for any region, any depth or any time period. A more elaborated criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies (called the residual) is larger than a select threshold (based on the standard deviation, for example), then that observations can be considered as suspect.
 
-For the EMODnet-Chemistry climatologies, the residuals obtained from the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. The residuals corresponding to phosphare are shown in Fig.~\ref{fig:residuals}. 
+For the EMODnet-Chemistry climatologies, the residuals obtained from the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. Figure~\ref{fig:residuals}) shows the phosphate residuals which have a value larger than 10~$\mu$mol/l. Those points are mostly distributed along the coast, which is where the variability is the strongest. 
+
+A large value for the residual is not synonym of bad data point: the suspect observation has to be reported back to the corresponding regional leader, who will then contact the data provider before deciding if the measurement is correct or not. This process highlights the need to always keep the data provider in the loop, as they have the local expertise in terms of processes taking place in the region of interest, as well as the conditions during which the data acquisition was performed. 
+
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{residuals_Water_body_phosphate.png}
+\caption{Hexbin plot corresponding to the phosphate concentration profiles.\label{fig:histogram_value_Water_body_phosphate}}
+\end{figure}
 
 \subsubsection{Assessment of marine ecosystems}
 
@@ -375,11 +386,15 @@ Combining information about the nutrient and the oxygen in a given region allows
 
 Concretely, since 2009, EMODnet Chemistry has interacted with the stakeholders involved in the Regional Seas Conventions (OSPAR, HELCOM, \ldots) and the Marine Strategy Framework Directive (MSFD). A Board of experts on the MSFD, formed in 2017, aims to advise the consortium on the products and services: parameters, spatial and temporal resolutions of the data products. Doing so, it is expected that the data collections and the climatologies will contribute to the MSFD Descriptors D5 (eutrophication), among others.
 
+\conclusions  
+This paper describes the creation of climatologies for eutrophication variables (ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate and silicate) in 11 regional domains. Three groups of regions are considered: All European Seas, Regional Seas and Coastal Zones. The climatologies are based on in situ measurements which underwent quality control. Those datasets are then fed as in input to the DIVAnd software tool. 
 
-\conclusions  %% \conclusions[modified heading if necessary]
-This paper describes the creation of climatologies for eutrophication variables (ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate and silicate) in 11 regional domains using the DIVAnd software tool. 
+The products consist of netCDF files storing the gridded fields for the specified time periods and depth levels. They can be downloaded and reused for many purposed: visualisation, improved quality control, validation of new measurements, \ldots. 
 
-Possible improvements rely on the increased availability of data, coming from the acquisition of new measurements, but also from initiatives such as EMODnet Data Ingestion \citep{IONA2024}, which strives to  
+Possible improvements rely on the increased availability of data, coming from the acquisition of new measurements, but also from initiatives such as EMODnet Data Ingestion \citep{IONA2024}. This initiative strives to reach out, motivate and support potential data providers, in order to make sure that the data they collected can make their way to centralised portal with standardised and complete metadata, hence strengthening the "Collect once, use many times" mentioned in the introduction. 
+
+The interpolation technique can also be improved, for instance by allowing the interpolation along isopycnal, rather than at fixed depths. This would reduce the mixing effects and allow for a better representation of the water masses. Most of the recent developments of DIVAnd are driven by issues or suggestions raised by the user community, and the future developments will continue to follow that principle. Finally, a fundamental aspect of the climatology preparation is to make sure that any external user can take an existing piece of code (Julia script or Jupyter notebook), modify it and tune it according to the specificities of their region and their datasets. 
+
 
 \codedataavailability{The DIVAnd source code is available at \url{https://github.com/gher-uliege/DIVAnd.jl} (\doi{10.5281/zenodo.1303229}, under the GNU General Public License v2.0. The Jupyter notebooks explaining how to create a climatology with DIVAnd are available at \url{https://github.com/gher-uliege/Diva-Workshops} (\doi{10.5281/zenodo.1248029}) under the MIT license. The aggregated datasets and the climatologies are available from the EMODnet Central Portal, with their DOIs listed in the next table. 
 
@@ -405,7 +420,7 @@ All the figures of this paper were produced with Makie and GeoMakie \citep{Danis
 \disclaimer{The data coverage obtained with the in situ measurements is heterogeneous, leading in higher uncertainties in the gridded field. The information contained in the gridded field believed to be trustworthy. However its accuracy and completeness cannot be guaranteed.  Whilst every effort has been made to ensure its reliability within the limits of present knowledge, no responsibility can be accepted by those involved in its compilation or publication for any consequential loss or damage arising from its use.
 } 
 \begin{acknowledgements}
-%The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. Computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union's Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the All European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. We wish to thank the CINECA staff, in particular Angelo Neri​, for managing the server where the products are hosted.
+The European Marine Observation and Data Network (EMODnet) is financed by the European Union under Regulation (EU) 2021/1139 of the European Parliament and of the Council of 7 July 2021 establishing the European Maritime, Fisheries and Aquaculture Fund and its predecessor, Regulation (EU) No. 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund. For the DIVA maps, computational resources have been provided by the Consortium des Équipements de Calcul Intensif (CÉCI), funded by the Fonds de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under Grant No. 2.5020.11 and by the Walloon Region. Part of the PHIDIAS project infrastructure (European Union's Connecting Europe Facility under grant agreement No. INEA/CEF/ICT/ A2018/1810854) was used to run the All European Sea analysis. Aggregated data products are generated by EMODnet Chemistry under the support of DG MARE Call for Tenders EASME/EMFF/2016/006-lot4, EASME/2019/OP/0003-lot4. We wish to thank the CINECA staff for managing the server where the products are hosted.
 \end{acknowledgements}
 
 \bibliography{emodnet.bib}
