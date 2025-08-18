@@ -184,13 +184,13 @@ Po river						& 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
 \end{tabular}
 \end{table*}
 
-\subsection{Metadata}
+\subsection{Metadata\label{sec:metadata}}
 
-Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO 19115 and ISO 19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). 
+Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO~19115 and ISO~19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2021}.
 
-By using the CDI records, it is possible to keep track of the information regarding the data originators (\url{https://cdi.seadatanet.org/search}), ensuring that their effort is correctly acknowledged in the final product metadata. The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2021}.
+Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding. 
 
-Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding.
+For each observation, the EDMO code and the CDI are concatenated to form a new variable called \textit{obsids}. This variable is then passed to the final netCDF product, ensuring that the information regarding the data originators is preverved and that their effort is correctly acknowledged in the final products. 
 
 \subsection{Quality assessment\label{sec:dataqualitycontrol}}
 
@@ -237,6 +237,7 @@ The histograms for the other variables are not included in the paper, but they a
 The histogram based on the observation values (Fig.~\ref{fig:histogram_value_Water_body_phosphate}) shows different patterns according to the variable considered. Most of the variables exhibit a distribution characterised by a dominant number of measurements for small concentrations (close to zero), and fewer observations of high concentration. It is relevant to note that the distributions vary from one region to another, as depicted by the different colors in the plot.  
 
 \begin{figure}[t]
+\centering
 \includegraphics[width=8.3cm]{histogram_value_Water_body_phosphate.png}
 \caption{Hexbin plot corresponding to the phosphate concentration profiles.\label{fig:histogram_value_Water_body_phosphate}}
 \end{figure}
@@ -288,13 +289,9 @@ The relevant notebooks (those dealing with the analysis) are then modified accor
 The GEBCO bathymetry \citep[2021 grid,][]{GEBCO2021} was used with a resolution reduced by a factor 4 with respect to the original, was used for the creation of the land-sea mask
 needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}). The role of the land-sea mask is to delimit the region where the interpolation is performed, since the cost function (see previous Section) is only computer over cells corresponding to the sea.  
 
-The differences between each region (as defined in Tab.~\ref{tab:regions}) are:
-\begin{enumerate}
-\item The observations used for the analysis.
-\item The spatial and temporal resolution.
-\item The choice of the analysis parameters.
-\item The computation of the background field.
-\end{enumerate}
+\subsection{Background field}
+
+In the cost function implemented by DIVAnd, the anomalies with respect to a background (also called reference) field are penalised. There are several ways to compute this background field, the most direct option is to take a spatially uniform field, for a given depth level, with the value equal to the mean of all the observations. The strategy adopted to compute the background field for all All European Seas product is to 
 
 %----------------------------------------------
 \section{Gridded climatologies\label{sec:clim}}
@@ -338,7 +335,11 @@ Other variables containing the deepest values, masked with the same relative err
 
 \subsection{Metadata and product publication}
 
-Complete and standardised metadata are essential when it comes to share the data or data products to a wider audience, especially in the light of the FAIR principles. This is why the EMODnet Chemistry climatologies are filled with many pieces of information concerning the parameters (through parameter and search keywords), the data provenance, the creators of the product, links to the documentation etc. They are stored as global attributes in the netCDF.  files.
+Complete and standardised metadata are essential when it comes to share the data and data products with a wider audience, especially in the light of the FAIR principles. This is why the EMODnet Chemistry climatologies are filled with many pieces of information concerning the parameters (through parameter and search keywords), the dataset provenance, the creators of the product, links to the documentation etc. They are stored as global attributes in the netCDF files.
+
+In addition, the \textit{obsid} variable, a vector of strings constructed using the EDMO code, for the identification of the institution, and the CDI for the identification of the observation (Section~\ref{sec:metadata}), is also written in the netCDF file, ensuring that every single observations can be traced back to its originator.
+
+As all the EMODnet products, the climatologies have to be available through the EMODnet product catalog \citep[][https://emodnet.ec.europa.eu/en]{BEJA2024}
 
 \subsection{Validation}
 
