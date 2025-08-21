@@ -89,7 +89,7 @@ EMODnet (European Marine Observation and Data Network) is the in situ, marine da
 
 The EMODnet portal (\url{https://emodnet.ec.europa.eu}) delivers marine data and products, along with their associated metadata in a uniform and seamless way, by relying on common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. With the continuously improving data access, a wider range of users is reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
 
-One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations made their way to centralised data portals, they can be re-used and combined with other measurements or other parameters, thus triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
+One of the underlying principle of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations made their way to centralised data portals, they can be re-used and combined with other measurements or other variables, hence triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
 \item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of checks to assess their quality: a flag, representing the quality of the observation, is assigned to it. Thereby, users have the choice to select data according to their final purpose, for instance keeping only the observations that were set as good.
 \item The climatologies, sometimes referred to as (hydrographic) atlas \citep[e.g.][]{soton16209,Iona_2018}: they consist of a collection of gridded fields containing the averaged values of the variable of interest, at different depth levels and for different time periods, obtained by interpolating the in situ observations onto a regular grid.
@@ -284,11 +284,22 @@ For the creation of the gridded maps, the regional groups are provided with a se
 The relevant notebooks (those dealing with the analysis) are then modified according to the specificities of each domain. They have been submitted for publication \citep{TROUPIN2025}.
 
 The GEBCO bathymetry \citep[2021 grid,][]{GEBCO2021} was used with a resolution reduced by a factor 4 with respect to the original, was used for the creation of the land-sea mask
-needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}). The role of the land-sea mask is to delimit the region where the interpolation is performed, since the cost function (see previous Section) is only computer over cells corresponding to the sea.  
+needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}). The role of the land-sea mask is to delimit the region where the interpolation is performed, since the cost function (see previous Section) is only computer over cells corresponding to the sea. 
+
+\subsection{Analysis parameters}
+
+A brief description of the main analysis parameters is useful to understand how the products are generated.
+
+\subsubsection{The correlation lengths}
+
+This parameter defines the spatial or temporal scales  over which observations are correlated. In general, for a climatology, this parameter can have up to 4 components: longitude, latitude and depth. Usually the meridional and zonal components are assigned the same value. The vertical correlation length 
+Concerning the time dimension, for the products presented in this paper, we did not use a temporal correlation length, meaning that the time periods (months or seasons) are assumed to be uncorrelated. 
+
+
 
 \subsection{Background field}
 
-In the cost function implemented by DIVAnd, the anomalies with respect to a background (also called reference) field are penalised. There are several ways to compute this background field, the most direct option is to take a spatially uniform field, for a given depth level, with the value equal to the mean of all the observations. The strategy adopted to compute the background field for all All European Seas product is to 
+The cost function implemented by DIVAnd considers the anomalies with respect to a background (also called reference) field. There are several ways to compute this background field, the most direct option is to take a spatially uniform field, for a given depth level, with the value equal to the mean of all the observations. The strategy adopted to compute the background field for all All European Seas product is to create a gridded field using all the available observations (whatever the month or year) and analysis parameters 
 
 %----------------------------------------------
 \section{Gridded climatologies\label{sec:clim}}
