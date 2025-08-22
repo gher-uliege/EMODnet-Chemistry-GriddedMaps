@@ -224,6 +224,7 @@ The second subplot shows the seasonal, with a factor 2 between the number of ava
 The histograms for the other variables are not included in the paper, but they also display similar heterogeneities in the temporal distribution, along with variations related to the variables themselves. 
 
 \begin{figure*}[t]
+\centering
 \includegraphics[width=\textwidth]{stacked_histogram_Water_body_phosphate.png}
 \caption{Locations of the phosphate concentration profiles.\label{fig:phosphatetime}}
 \end{figure*}
@@ -231,12 +232,12 @@ The histograms for the other variables are not included in the paper, but they a
 
 \subsection{Value distributions}
 
-The histogram based on the observation values (Fig.~\ref{fig:histogram_value_Water_body_phosphate}) shows different patterns according to the variable considered. Most of the variables exhibit a distribution characterised by a dominant number of measurements for small concentrations (close to zero), and fewer observations of high concentration. It is relevant to note that the distributions vary from one region to another, as depicted by the different colors in the plot.  
+The histogram based on the observation values (Fig.~\ref{fig:histogram_value_Water_body_phosphate}) shows different patterns according to the variable considered. Most of the variables exhibit a distribution characterised by a dominant number of measurements for small concentrations (close to zero), and fewer observations of higher concentration. It is relevant to note that the distributions vary from one region to another, as depicted by the different colors in the histogram, see for instance the Arctic Ocean.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=8.3cm]{histogram_value_Water_body_phosphate.png}
-\caption{Hexbin plot corresponding to the phosphate concentration profiles.\label{fig:histogram_value_Water_body_phosphate}}
+\includegraphics[width=.5\textwidth]{histogram_value_Water_body_phosphate.png}
+\caption{Histogram corresponding to the phosphate concentration osbervations.\label{fig:histogram_value_Water_body_phosphate}}
 \end{figure}
 
 
@@ -286,26 +287,41 @@ The relevant notebooks (those dealing with the analysis) are then modified accor
 The GEBCO bathymetry \citep[2021 grid,][]{GEBCO2021} was used with a resolution reduced by a factor 4 with respect to the original, was used for the creation of the land-sea mask
 needed by DIVAnd (Fig.~\ref{fig:gebco_bathy_mask_domains3}). The role of the land-sea mask is to delimit the region where the interpolation is performed, since the cost function (see previous Section) is only computer over cells corresponding to the sea. 
 
+For the sake of conciseness, the rest of the maunscript will focus on the "All European Seas" products. The procedure applied for the creation of the other climatologies is similar, and details can be found in the technical report by \citep{BUGA2021}.
+
 \subsection{Analysis parameters}
 
 A brief description of the main analysis parameters is useful to understand how the products are generated.
 
 \subsubsection{The correlation lengths}
 
-This parameter defines the spatial or temporal scales  over which observations are correlated. In general, for a climatology, this parameter can have up to 4 components: longitude, latitude and depth. Usually the meridional and zonal components are assigned the same value. The vertical correlation length 
-Concerning the time dimension, for the products presented in this paper, we did not use a temporal correlation length, meaning that the time periods (months or seasons) are assumed to be uncorrelated. 
+This parameter defines the spatial or temporal scales  over which observations are correlated. In general, for a climatology, this parameter can have up to 4 components: longitude, latitude and depth. Usually the meridional and zonal components are assigned the same value (horizontal isotropy). The vertical correlation length can also be varying vertically and horizontally. For the products presented in this paper, no temporal correlation length was used, i.e. the time periods (months or seasons) are assumed to be uncorrelated. 
 
+For the All European Seas, the horizontal correlation length was set to vary from region to region, with the following strategy: each sub-region is assigned a correlation length; to ensure a smooth transition between those sub-regions, a diffusion filter is applied. Finally, the correlation length is decrease toward the coast, leading to the spatial structure shown in Fig.~\ref{fig:correlation_length}(a). The vertical correlation is increased with depth in order to represent the stronger stratification existing at the surface (Fig.~\ref{fig:correlation_length}(b)).
 
+The netCDF file storing the correlation length on the analysis grid is provided in the Addition Material section.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{correlation_length.pdf}
+\caption{Correlation lengths for the All European Seas: (a) horizontal and (b) vertical.\label{fig:correlation_length}}
+\end{figure*}
+
+\subsubsection{Signal-to-noise ratio}
+
+This parameter is defined as the error variance of the observations normalized by the error variance of the background field. It can be a scalar (all observations have the same error variance and their errors are decorrelated), a vector (all observations can have a different error variance and their errors are decorrelated) or a matrix (all observations can have a different error variance and their errors can be correlated). 
+
+A large value of the noise-to-signal ratio has the effect of smoothing the resulting analysis, removing the spatial variability. For the All European Seas product, the overal noise-to-signal ratio was set to 2.0. Then the weights, based on the distance between osbervations, were computed for every data points. The goal of this step is to decrease the weight of osbervations coming from a high-resolution instrument (for instance glider) or from time series with a high frequency of acquisition. The final noise-to-signal ratio is then a vector obtained by multiplying the initial value (2.0) with the weights.
 
 \subsection{Background field}
 
-The cost function implemented by DIVAnd considers the anomalies with respect to a background (also called reference) field. There are several ways to compute this background field, the most direct option is to take a spatially uniform field, for a given depth level, with the value equal to the mean of all the observations. The strategy adopted to compute the background field for all All European Seas product is to create a gridded field using all the available observations (whatever the month or year) and analysis parameters 
+The cost function implemented by DIVAnd considers the anomalies with respect to a background (also called reference) field. There are several ways to compute this background field, the most direct option is to take a spatially uniform field, for a given depth level, with the value equal to the mean of all the observations. The strategy adopted to compute the background field for all All European Seas product is to create a gridded field using all the available observations (whatever the month or year) and with the correlation length and the noise-to-signal ratio both multiplied by a factor 5. 
 
 %----------------------------------------------
 \section{Gridded climatologies\label{sec:clim}}
 %----------------------------------------------
 
-For the sake of conciseness, the present section will focus on the "All European Seas" products. The procedure applied for the creation of the other climatologies is similar, and details can be found in the technical report by \citep{BUGA2021}. The URLs of the netCDF files storing the climatologies are provided at the end of the paper (Table~\ref{tab:doiProducts}).
+The URLs of the netCDF files storing the climatologies are provided at the end of the paper (Table~\ref{tab:doiProducts}).
 
 \subsection{File preparation}
 
