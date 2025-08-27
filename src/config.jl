@@ -1,4 +1,4 @@
-    using GeoJSON
+using GeoJSON
 using PolygonOps
 using OrderedCollections
 using Dates
@@ -8,10 +8,14 @@ using CairoMakie, GeoMakie
 using GeoDatasets
 using GeometryOps, GeoInterface
 
+# Domain and resolution
 deltalon = 0.25
 deltalat = 0.25
 lonr = -45.:deltalon:70.
 latr = 24.:deltalat:83.
+
+# Vertical levels
+depthr = Float64[ 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 5100, 5200, 5300, 5400, 5500]
 
 # Parameters for plotting
 inch = 96
