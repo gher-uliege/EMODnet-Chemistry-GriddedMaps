@@ -19,7 +19,6 @@
 \Author[2]{Lotta}{Fyrberg}				% not found
 \Author[3]{Julie}{Gatti}					% 0000-0001-9327-4366
 \Author[3]{Amandine}{Thomas}				% 0000-0002-0441-2446
-\Author[3]{Erwann}{Quimbert}				% 0000-0003-3452-1333
 \Author[4]{Jonas}{Koefoed R{\o}mer}		% not found
 \Author[4]{Martin}{M{\o}rk Larsen}		% 0000-0003-4331-8548
 \Author[5]{Luminita}{Buga}				% 0000-0003-2181-6132
@@ -44,7 +43,7 @@
 \affil[7]{Institute of Marine Research, Norwegian Marine Data Centre (NMD), Strandgaten 196 Postboks 1870 Nordnes, N-5817 Bergen, Norway} 		% EDMO: 612
 \affil[8]{International Council for the Exploration of the Sea (ICES), H. C. Andersens Boulevard 44-46, DK-155 Copenhagen, Denmark} 			% EDMO: 730
 \affil[9]{National Institute of Oceanography and Applied Geophysics (OGS), Borgo Grotta Gigante 42/C, 34010 Sgonico (Trieste), Italy}			% EDMO: 150
-\affil[10]{Marine Information Service (MARIS), Gildeweg 7 A, 2632BD Nootdorp, The Netherlands} 													% EDMO: 634
+\affil[10]{Marine Information Service (MARIS), Gildeweg 7 A, 2632BD Nootdorp, Netherlands} 													% EDMO: 634
 		
 \correspondence{Charles Troupin (ctroupin@uliege.be)}
 
@@ -80,7 +79,7 @@ The climatologies span multiple spatial scales: a broad domain encompassing all 
 
 EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate - General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citep{Shepherd2018}: 
 \begin{enumerate}
-\item The focus is on marine data; satellite data or fisheries survey are not considered. 
+\item The focus is on marine data; satellite data or fisheries surveys are not considered. 
 \item Multi-purpose data products, based on the raw data, are created and distributed. 
 \item The data origin and ownership are preserved, both in the raw data and in the products. 
 \item The observations are divided into 7~thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
@@ -96,7 +95,7 @@ One of the underlying principles of EMODnet can be summarised by the motto "\tex
 
 Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also has to include information about all the individual data providers who contributed to the final products. These pieces of information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
 
-The manuscript is organised according to the following structure: Section~\ref{sec:insitu}: description of the in situ observations; Section~\ref{sec:method}: description of the gridding technique (DIVAnd); Section~\ref{sec:clim}: presentation and validation of the the final products (climatologies). 
+The manuscript is organised according to the following structure: Section~\ref{sec:insitu}: description of the in situ observations; Section~\ref{sec:method}: description of the gridding technique (DIVAnd); Section~\ref{sec:clim}: presentation and validation of the final products (climatologies). 
 
 
 \section{In situ datasets\label{sec:insitu}}
@@ -145,7 +144,7 @@ Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& \unit{
 
 The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions} and Fig.~\ref{fig:gebco_bathy_mask_domains3}). The regional domains have been delimited in order to avoid overlay between them:
 \begin{itemize}
-\item The Mediterranean Sea and the Atlantic Ocean have their limit at the longitude of the Strait of Gibraltar.
+\item The Mediterranean Sea and the Atlantic Ocean have their limits at the longitude of the Strait of Gibraltar.
 \item The Sea of Marmara is assigned to the Mediterranean Sea region.
 \item The North Sea and the North-east Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
 \item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
@@ -159,7 +158,7 @@ The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions
 Along with the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouths (see Section~\ref{sec:clim}) with a finer spatial resolution. Therefore, there are 11~spatial regions where climatologies are created.
 
 \begin{table*}[h!]
-\caption{Spatial extend of the regional seas and the coastal areas.\label{tab:regions}}
+\caption{Spatial extent of the regional seas and the coastal areas.\label{tab:regions}}
 \begin{tabular}{lrrrrll}
 \tophline
 Region	 					& West		& East		& South 		& North 		& Number of profiles	& Number of time series\\ 
@@ -347,7 +346,7 @@ In order to reduce the file sizes (optional), advanced compression techniques \c
 
 The main variable stores the 4-dimension gridded field (e.g., longitude, latitude, time and depth) for each of the 6 selected variables. In addition, a relative error field informs about the quality of the results. It typically exhibits larger values in regions where no observations were collected, while the values are the lowest where the coverage is most dense. The term "relative" means that the error field is scaled by the background variance. The reason why the relative error (instead of the absolute error) is provided arises from the difficulty to compute the background variance.  
 
-The error field is used to mask out the gridded field in regions where the error is considered to be too high. The decision to compute those masked fields comes from the discussion among the EMODnet-Chemistry experts, who recommended only displaying the gridded fields where (enough) observations are available. In practice, gridded fields masked using relative error threshold of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no background information exists. 
+The error field is used to mask out the gridded field in regions where the error is considered to be too high. The decision to compute those masked fields comes from the discussion among the EMODnet-Chemistry experts, who recommended only displaying the gridded fields where (enough) observations are available. In practice, gridded fields masked using relative error thresholds of 30\% and 50\% are calculated. The field masked with the 30\% error threshold is displayed as the principal layer in the Web Map Service (WMS). The motivation is to prevent users from interpreting the results where no background information exists. 
 
 \begin{figure*}[t]
 \includegraphics[width=\textwidth]{Water_body_phosphate_depth-100_month-10_additional_fields.png}
@@ -395,11 +394,11 @@ Another aspect of the visualisation is related to the error fields: one can clea
 
 \subsubsection{Quality control of new observations}
 
-They are several criteria to detect incorrect data, or to be more accurate, to assign a quality flag to measurements \citep{CUMMINGS2011,CABANES2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such a range can be global, i.e. the same for any region, any depth or any time period. A more elaborated criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies (called the residual) is larger than a select threshold (based on the standard deviation, for example), then that observation can be considered as suspect.
+There are several criteria to detect incorrect data, or to be more accurate, to assign a quality flag to measurements \citep{CUMMINGS2011,CABANES2021}. The most natural test consists of checking if the observed value falls inside a given range. For a given variable, such a range can be global, i.e. the same for any region, any depth or any time period. A more elaborated criterion relies on a climatology: the comparison is performed with respect to the "normal" values (defined by the World Meteorological Organization as the 30-year average of data). If the difference between the newly acquired observation and the corresponding climatologies (called the residual) is larger than a select threshold (based on the standard deviation, for example), then that observation can be considered as suspect.
 
 For the EMODnet-Chemistry climatologies, the residuals obtained from the pan-European gridded fields were provided to each regional leader. They were then asked to flag out suspect data, basing their decision on the values of the residuals. Finally, a new analysis was performed on a dataset in which the suspect observations were discarded. Figure~\ref{fig:residuals}) shows the phosphate residuals which have a value larger than 10~\unit{\mu~mol/l}. Those points are mostly distributed along the coast, which is where the variability is the strongest. 
 
-A large value for the residual is not synonymous with a bad data: the suspect observation has to be reported back to the corresponding regional leader, who will then contact the data provider before deciding if the measurement is correct or not. This process highlights the need to always keep the data provider in the loop, as they have the local expertise in terms of processes taking place in the region of interest, as well as the conditions during which the data acquisition was performed. 
+A large value for the residual is not synonymous with bad data: the suspect observation has to be reported back to the corresponding regional leader, who will then contact the data provider before deciding if the measurement is correct or not. This process highlights the need to always keep the data provider in the loop, as they have the local expertise in terms of processes taking place in the region of interest, as well as the conditions during which the data acquisition was performed. 
 
 \begin{figure}[t]
 \includegraphics[width=8.3cm]{residuals_Water_body_phosphate.png}
@@ -427,7 +426,7 @@ The interpolation technique can also be improved, for instance by allowing the i
 \caption{DOIs for the aggregated datasets.\label{tab:doiData}}
 \begin{tabular}{ll}
 \tophline
-Region						& Uniquer identifier								 \\	 
+Region						& Unique identifier								 \\	 
 \middlehline
 Arctic Sea 					& \doi{10.13120/7937cf99-f2a8-44d6-8a72-1732e09e8570}\\
 Baltic Sea					& \doi{10.13120/fddf7d69-3787-4c7f-a8b9-c2eef2b7624b}\\
