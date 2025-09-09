@@ -13,4 +13,11 @@ jobs:
           working_directory: latex
           compiler: pdflatex
           args: -interaction=nonstopmode -shell-escape
+      - name: pdflatex main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: Chemistry_products.tex
+          working_directory: latex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
      
