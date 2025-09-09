@@ -5,19 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v2
-      - name: pdflatex main
-        uses: dante-ev/latex-action@latest
+        uses: actions/checkout@v4
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v4
         with:
-          root_file: Chemistry_products.tex
           working_directory: latex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
-      - name: pdflatex main
-        uses: dante-ev/latex-action@latest
+          root_file: Chemistry_products.tex
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v4
         with:
-          root_file: Chemistry_products.tex
-          working_directory: latex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
-     
+          name: PDF
+          path: Chemistry_products.pdf
