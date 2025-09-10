@@ -80,8 +80,8 @@ The climatologies span multiple spatial scales: a broad domain encompassing all 
 
 EMODnet (European Marine Observation and Data Network) is the in situ, marine data service of the European Commission Directorate - General Maritime Affairs and Fisheries \citep{MartinMiguez2019}. Initiated in 2009 as a pilot project, EMODnet adhere to the following principles \citep{Shepherd2018}: 
 \begin{enumerate}
-\item The focus is on marine data; satellite data or fisheries surveys are not considered. 
-\item Multi-purpose data products, based on the raw data, are created and distributed. 
+\item The focus is on marine data; satellite data and fisheries surveys are not considered. 
+\item Multi-purpose data products, based on the original data, are created and distributed. 
 \item The data origin and ownership are preserved, both in the raw data and in the products. 
 \item The observations are divided into 7~thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
 \end{enumerate} 
@@ -90,7 +90,7 @@ The EMODnet portal (\url{https://emodnet.ec.europa.eu}) delivers marine data and
 
 One of the underlying principles of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations made their way to centralised data portals, they can be re-used and combined with other measurements or other variables, hence triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
-\item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of checks to assess their quality: a flag, representing the quality of the observation, is assigned to it. Thereby, users have the choice to select data according to their final purpose, for instance keeping only the observations that were set as good.
+\item The aggregated datasets (e.g. EMODNet Chemistry): they consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of commonly agreed checks to assess their quality and, as a final step of data validation, a flag, representing the quality of the observation, is assigned \citep{Lipizer2023}. Thereby, users have the choice to filter data based on their quality flag, according to the final purpose of the research, for instance keeping only the observations that were flagged as good.
 \item The climatologies, sometimes referred to as (hydrographic) atlas \citep[e.g.][]{soton16209,Iona_2018}: they consist of a collection of gridded fields containing the averaged values of the variable of interest, at different depth levels and for different time periods, obtained by interpolating the in situ observations onto a regular grid.
 \end{enumerate}
 
@@ -102,7 +102,7 @@ The manuscript is organised according to the following structure: Section~\ref{s
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
-The main goal of Chemistry thematic lot of EMODnet is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
+The main goal of EMODnet  Chemistry thematic lot of is the collection, aggregation, harmonization and quality control of data gathered from national monitoring efforts and from research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 research and monitoring institutions, as well as by National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: eutrophication \citep{Giorgetti2020}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and marine litter \citep{Vinci2018}. The first topic is the focus of the present work.
 
 Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonization, standardization and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
@@ -111,7 +111,7 @@ The aggregated datasets, described in this section and used for the creation of 
 All the data collections have in common the strong heterogeneity, which will be illustrated in the next sections: 
 \begin{itemize}
 \item spatially: while some regions are density covered by observations, other regions have been barely sampled (or the existing observations have not made their ways to the NODCs);
-\item temporally: the improvements in ocean observing systems helped increased the quantity of collected observations in the last decades;
+\item temporally: the improvements in ocean observing systems helped increase the quantity of collected observations in the last decades;
 \item by variables: some variables, for instance oxygen concentration, are collected more frequently than the others.
 \end{itemize}
 This multiple heterogeneity has to be considered in the gridded fields: the interpolation method is expected to provide an estimation of the error on the analysis, based on the availability of observations. 
@@ -119,11 +119,11 @@ This multiple heterogeneity has to be considered in the gridded fields: the inte
 
 \subsection{Variables\label{sec:variables}}
 
-Eutrophication variables are those related to nutrients and their accumulation in the water column. The 6~chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive \citep[MSFD,][]{EURO2008}, in particular the Descriptors no.~5, and the assessment of Good Environmental Status (GES). 
+Eutrophication variables include nutrient concentrations, chlorophyll-a as a measure of algal biomass and dissolved oxygen. The 6~chemicals selected for this work, listed in Table~\ref{tab:variables}, are relevant for the Marine Strategy Framework Directive \citep[MSFD,][]{EURO2008}, in particular the Descriptors no.~5, and the assessment of Good Environmental Status (GES).
 
 The parameter names are based on the P01 Parameter Usage Vocabulary (\url{https://vocab.seadatanet.org/p01-facet-search}), which ensures consistency and interoperability \citep{iocmanualsguides54}. 
 
-Two main types of data are considered: the profiles, for which the primary variable is the depth; the time series, for which the primary variable is the time (while the depth is generally fixed. They are initially separated but then used together for the production of the climatologies. 
+Two main types of data are considered: the profiles, for which the primary variable is the depth; the time series, for which the primary variable is the time (while the depth is generally fixed). They are initially separated but then used together for the production of the climatologies. 
 
 \begin{table}
 \caption{List of variables with their corresponding standard name and units, used to generate EMODnet Chemistry products.\label{tab:variables}}
@@ -143,10 +143,11 @@ Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& \unit{
 
 \subsection{Domains\label{sec:domains}}
 
+
 The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions} and Fig.~\ref{fig:gebco_bathy_mask_domains3}). The regional domains have been delimited in order to avoid overlay between them:
 \begin{itemize}
 \item The Mediterranean Sea and the Atlantic Ocean have their limits at the longitude of the Strait of Gibraltar.
-\item The Sea of Marmara is assigned to the Mediterranean Sea region.
+\item The Sea of Marmara and Sea of Azov are assigned to the Black Sea  Sea region.
 \item The North Sea and the North-east Atlantic Ocean are separated by an imaginary line at 48°N, corresponding approximately to the latitude of Brittany (western France);
 \item The Baltic Sea and the North Sea have their limit located in the Kattegat (between Denmark and Sweden).
 \end{itemize}
@@ -268,7 +269,7 @@ Mathematically, the DIVAnd technique is based on the minimisation of a cost func
 
 The source code is written in Julia \citep{Bezanson2017}, a fast, dynamically-type programming language, designed to ensure high-performance computation. Julia ensures that high-resolution analysis using several millions of data points could be run in reasonable times, i.e. maximum a few days for the largest domain. This is necessary as usually to create a regional climatology, it is necessary to repeat the analysis several times in order to adapt the parameters and possibly remove suspect observations.
 
-DIVAnd has already been applied applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. In this work, the version v2.7.12 of the code \citep{BARTH2024DIVAnd} is used.
+DIVAnd has already been applied on a wide range of ocean variables such as temperature, salinity \citep{COATANOAN2021}, sea surface height \citep{DOGLIONI2023}, velocity \citep{TROUPIN2022}, dissolved inorganic nutrients \citep{BELGACEM2021} or oxygen concentration \citep{CLIMATO2023}. In this work, the version v2.7.12 of the code \citep{BARTH2024DIVAnd} is used.
 
 \subsection{Implementation}
 
