@@ -6,6 +6,10 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
+      - name: Download custom template
+        run: |
+          curl -OL https://www.earth-system-science-data.net/Copernicus_LaTeX_Package.zip
+          unzip Copernicus_LaTeX_Package.zip
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v4
         with:
@@ -14,3 +18,7 @@ jobs:
           os: debian
           work_in_root_file_dir: true
           root_file: Chemistry_products.tex
+        env:
+          TEXINPUTS: ".:./Copernicus_LaTeX_Package//:"
+
+          
