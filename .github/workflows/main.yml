@@ -20,5 +20,10 @@ jobs:
           root_file: Chemistry_products.tex
         env:
           TEXINPUTS: ".:./Copernicus_LaTeX_Package//:"
+      - name: PDF upload 
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF
+          path: Chemistry_products.pdf
 
           
