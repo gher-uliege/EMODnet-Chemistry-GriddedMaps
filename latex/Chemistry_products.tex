@@ -69,7 +69,7 @@
 
 Ocean climatologies provide gridded fields of long-term average ocean variables across various time periods and depth levels, supporting model initialization, data visualization, and insights into the ocean's mean state. While global or regional in scope, most climatologies focus on temperature and salinity, with chemical and biological variables less commonly addressed due to sparser data coverage.
 
-We introduce a set of high-resolution regional climatologies for six eutrophication-related variables (ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate, and silicate) covering European seas. These climatologies were generated using the Data-Interpolating Variational Analysis in n dimensions (DIVAnd), a robust multi-dimensional interpolation tool based on variational methods, previously applied to diverse variables and domains. Input data consist of in situ observations, quality-controlled by regional experts following standardized procedures.
+We introduce a set of high-resolution regional climatologies for six eutrophication-related variables (ammonium, chlorophyll-a, dissolved inorganic nitrogen, dissolved oxygen, phosphate, and silicate) covering European seas. These climatologies were generated using the Data-Interpolating Variational Analysis in n dimensions (DIVAnd), a robust multi-dimensional interpolation tool based on variational methods, previously applied to diverse variables and domains. Input data consist of in situ observations, quality-controlled by regional experts following standardised procedures.
 
 The climatologies span multiple spatial scales: a broad domain encompassing all European seas, six regional domains (Arctic Ocean, North-east Atlantic, Baltic Sea, Black Sea, Mediterranean Sea, and North Sea), and four coastal zones (Loire River, Gulf of Riga, Po River, and Danube Delta). Spatial resolution and DIVAnd parameters are tailored to each domain's characteristics. Available as CF-compliant netCDF files, the climatologies can be visualized via the EMODnet Central Portal viewer, enhancing accessibility for research and management applications.
 
@@ -104,7 +104,7 @@ The manuscript is organised according to the following structure: Section~\ref{s
 
 The main goal of EMODnet  Chemistry thematic lot of is the collection, aggregation, harmonization and quality control of data gathered from national monitoring efforts and from research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 research and monitoring institutions, as well as by National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: eutrophication \citep{Giorgetti2020}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and marine litter \citep{Vinci2018}. The first topic is the focus of the present work.
 
-Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonization, standardization and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
+Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonisation, standardisation and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
 The aggregated datasets, described in this section and used for the creation of the gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. They are separated by geographical regions (as described in Section~\ref{sec:domains}).
 
@@ -134,8 +134,8 @@ Variables					& Climate and Forecast standard names										& Units		\\
 Ammonium					& mole\_concentration\_of\_ammonium\_in\_sea\_water							& \unit{\mu~mol/l}	\\
 Chlorophyll-a 				& mass\_concentration\_of\_chlorophyll\_a\_in\_sea\_water					& \unit{mg/m^3}		\\
 Dissolved inorganic nitrogen& mole\_concentration\_of\_dissolved\_inorganic\_nitrogen\_in\_sea\_water	& \unit{\mu~mol/l}	\\
-Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water		& \unit{\mu~mol/l}	\\
-Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water						& \unit{\mu~mol/l}	\\
+Dissolved oxygen 			& mole\_concentration\_of\_dissolved\_molecular\_oxygen\_in\_sea\_water	& \unit{\mu~mol/l}	\\
+Phosphate 					& moles\_of\_phosphate\_per\_unit\_mass\_in\_sea\_water					& \unit{\mu~mol/l}	\\
 Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& \unit{\mu~mol/l}	\\
 \bottomhline
 \end{tabular}
@@ -197,7 +197,7 @@ One of the main added value of the aggregated datasets is the validation procedu
 \item Harmonization of units and parameter names: it ensures that a given variable is always expressed with the same units and has always the same name (Tab.~\ref{tab:variables}). 
 \item Quality flagging of data and metadata: a quality flag is assigned to the measurements and to their corresponding metadata.
 \end{enumerate} 
-The last step is described in details in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~\unit{mg/m{^3}}, while this range is narrower in other sub-regions.
+The last step is described in detail in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~\unit{mg/m{^3}}, while this range is narrower in other sub-regions.
 
 \subsection{Spatial distribution}
 
@@ -295,7 +295,7 @@ A brief description of the main analysis parameters is useful to understand how 
 
 \subsubsection{The correlation lengths}
 
-This parameter defines the spatial or temporal scales  over which observations are correlated. In general, for a climatology, this parameter can have up to 4 components: longitude, latitude and depth. Usually the meridional and zonal components are assigned the same value (horizontal isotropy). The vertical correlation length can also be varying vertically and horizontally. For the products presented in this paper, no temporal correlation length was used, i.e. the time periods (months or seasons) are assumed to be uncorrelated. 
+This parameter defines the spatial or temporal scales  over which observations are correlated. In general, for climatology, this parameter can have up to 4 components: longitude, latitude and depth. Usually the meridional and zonal components are assigned the same value (horizontal isotropy). The vertical correlation length can also be varying vertically and horizontally. For the products presented in this paper, no temporal correlation length was used, i.e. the time periods (months or seasons) are assumed to be uncorrelated. 
 
 For the All European Seas, the horizontal correlation length was set to vary from region to region, with the following strategy: each sub-region is assigned a correlation length; to ensure a smooth transition between those sub-regions, a diffusion filter is applied. Finally, the correlation length is decreased toward the coast, leading to the spatial structure shown in Fig.~\ref{fig:correlation_length}(a). The vertical correlation is increased with depth in order to represent the stronger stratification existing at the surface (Fig.~\ref{fig:correlation_length}(b)).
 
