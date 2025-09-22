@@ -31,7 +31,7 @@
 \Author[9]{Alessandra}{Giorgetti}		% 0000-0002-0914-4831
 
 \affil[1]{University of Liège, FOCUS Research Unit, GeoHydrodynamics and Environment Research (GHER), Allée du 6-Août, 17, 4000 Liège 1, Belgium} % EDMO: 1579
-\affil[2]{Swedish Meteorological and Hydrological Institute (SMHI), Dnr S/Gbg-2020-1, Sven Källfelts Gata 15, 42671 Västra Frölund, Sweden}		% EDMO: 545
+\affil[2]{Swedish Meteorological and Hydrological Institute (SMHI), Göteborgseskaderns Plats 3, 42671 Västra Frölund, Sweden}		% EDMO: 545
 \affil[3]{French Institute for Ocean Science (IFREMER), 1625 Route de Sainte-Anne, 29280 Plouzané, France}										% EDMO: 1054
 \affil[4]{Aarhus University, Department of Bioscience - Marine Diversity and Experimental Ecology, Frederiksborgvej 399 Building 7411, B1.21, 4000 Roskilde, Denmark}	% EDMO: 729
 \affil[5]{National Institute for Marine Research and Development "Grigore Antipa", 300 Mamaia Blvd., 900581 Constanta, Romania} 				% EDMO: 697
@@ -75,15 +75,15 @@ EMODnet (European Marine Observation and Data Network) is the in situ, marine da
 \item The observations are divided into 7~thematic lots: bathymetry, biology, chemistry, geology, human activities, physics and seabed habitats. 
 \end{enumerate} 
 
-The EMODnet portal (\url{https://emodnet.ec.europa.eu}) delivers marine data and products, along with their associated metadata, in a uniform and seamless way, by relying on common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. With the continuously improving data access, a wider range of users is reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
+The EMODnet portal (\url{https://emodnet.ec.europa.eu}) delivers marine data and products, along with their associated metadata, in a uniform and seamless way, by relying on common standards, procedures and vocabularies, and also following the FAIR (Findable, Accessible, Interoperable, Re-usable) principles \citep {Wilkinson2016,Wilkinson2019}. Through the continuously improving data access, a wider range of users is reached, potentially leading to sustainable economic development, often referred to as the Blue Growth \citep{Commission2012}. 
 
-One of the underlying principles of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations made their way to centralised data portals, they can be re-used and combined with other measurements or other variables, hence triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
+One of the underlying principles of EMODnet can be summarised by the motto "\textit{Collect once, use many times}". Indeed, it is frequent that marine data are collected with an initial, single purpose, for instance the study of an oceanographic process or the monitoring of a given area. However, if these observations make their way to centralised data portals, they can be re-used and combined with other measurements or other variables, hence triggering the creation of new, added-value products that were not considered originally. Examples of such added-value products include:
 \begin{enumerate}
-\item The aggregated datasets: they consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of checks to assess their quality: a flag, representing the quality of the observation, is assigned to it. Thereby, users have the choice to select data according to their final purpose, for instance keeping only the observations that were set as good.
-\item The climatologies, sometimes referred to as (hydrographic) atlas \citep[e.g.][]{soton16209,Iona_2018}: they consist of a collection of gridded fields containing the averaged values of the variable of interest, at different depth levels and for different time periods, obtained by interpolating the in situ observations onto a regular grid.
+\item The aggregated datasets: consist of large ensembles of measurements obtained from various data providers; the measurements generally undergo a suite of checks to assess their quality: a flag, representing the quality of the observation, is assigned to it. Thereby, users have the choice to select data according to their final purpose, for instance keeping only the observations that were set as good.
+\item The climatologies, sometimes referred to as (hydrographic) atlases \citep[e.g.][]{soton16209,Iona_2018}: consist of a collection of gridded fields containing the averaged values of the variable of interest, at different depth levels and for different time periods, obtained by interpolating the in situ observations onto a regular grid.
 \end{enumerate}
 
-Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also has to include information about all the individual data providers who contributed to the final products. These pieces of information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
+Both types of products are accompanied with metadata, which indicate how, when and by whom, the data were collected, according to the ISO-19115 and 19139 specifications. For the climatologies, metadata also has to include information about all the individual data providers who contributed to the final products. This information can be visualised in the EMODnet Data Product Catalog (\url{https://emodnet.ec.europa.eu/geonetwork}).
 
 The manuscript is organised according to the following structure: Section~\ref{sec:insitu}: description of the in situ observations; Section~\ref{sec:method}: description of the gridding technique (DIVAnd); Section~\ref{sec:clim}: presentation and validation of the final products (climatologies). 
 
@@ -91,15 +91,15 @@ The manuscript is organised according to the following structure: Section~\ref{s
 \section{In situ datasets\label{sec:insitu}}
 %-------------------------------------------
 
-The main goal of Chemistry thematic lot of EMODnet is the collection, harmonization and quality control of data gathered from national monitoring efforts and from research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
+The main goal of Chemistry thematic lot of EMODnet is the collection, harmonization and quality control of data gathered from national monitoring efforts and research activities, thus providing relevant information for the assessment of the \textit{Good Environmental Status} \citep[GES,][]{Vinci2017}. The underlying network is constituted by more than 45 National Oceanographic Data Centres (NODCs) from 27 countries. The data collection is centred on three main topics: marine litter \citep{Vinci2018}, marine contaminants (e.g., hydrocarbons, pesticides, heavy metals, antifoulants) and eutrophication \citep{Giorgetti2020}, which is the focus of the present work. 
 
-Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonisation, standardisation and validation of the data and metadata. In practice, the data management is governed by the SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
+Throughout the project lifetime, considerable efforts have been undertaken in terms of harmonisation, standardisation and validation of the data and metadata. In practice, the data management is governed by SeaDataNet standards and formats \citep{Schaap2010}, the Infrastructure for Spatial Information in Europe (INSPIRE) rules and the Open Geospatial Consortium (OGC) protocols. 
 
-The aggregated datasets, described in this section and used for the creation of the gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. They are separated by geographical regions (as described in Section~\ref{sec:domains}).
+The aggregated datasets, described in this section and used for the creation of the gridded products (Section~\ref{sec:products}), contain several variables related to eutrophication and acidity of the ocean. These are separated by geographical regions (as described in Section~\ref{sec:domains}).
 
-All the data collections have in common the strong heterogeneity, which will be illustrated in the next sections: 
+All the data collections have in common strong heterogeneity, which will be illustrated in the next sections: 
 \begin{itemize}
-\item spatially: while some regions are densely covered by observations, other regions have been barely sampled (or the existing observations have not made their ways to the NODCs);
+\item spatially: while some regions are densely covered by observations, other regions have barely been sampled (or the existing observations have not made their ways to the NODCs);
 \item temporally: the improvements in ocean observing systems helped increased the quantity of collected observations in the last decades;
 \item by variables: some variables, for instance oxygen concentration, are collected more frequently than the others.
 \end{itemize}
