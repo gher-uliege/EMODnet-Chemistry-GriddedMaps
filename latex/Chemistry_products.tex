@@ -132,7 +132,7 @@ Silicate 					& mole\_concentration\_of\_silicate\_in\_sea\_water 						& \unit{
 
 \subsection{Domains\label{sec:domains}}
 
-The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions} and Fig.~\ref{fig:gebco_bathy_mask_domains3}). The regional domains have been delimited in order to avoid overlay between them:
+The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions} and Fig.~\ref{fig:gebco_bathy_mask_domains3}). The regional domains have been delimited in order to avoid overlap between them:
 \begin{itemize}
 \item The Mediterranean Sea and the Atlantic Ocean have their limits at the longitude of the Strait of Gibraltar.
 \item The Sea of Marmara is assigned to the Mediterranean Sea region.
@@ -145,7 +145,7 @@ The main region of interest encompasses the European Seas (Tab.~\ref{tab:regions
 \caption{Regional domains (colored lines) for the gridded products overlaid on the GEBCO bathymetry and the surface land-sea mask, used to delimit the region where the interpolation is performed.\label{fig:gebco_bathy_mask_domains3}}
 \end{figure*}
 
-Along with the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouths (see Section~\ref{sec:clim}) with a finer spatial resolution. Therefore, there are 11~spatial regions where climatologies are created.
+Within the regional seas, 4~coastal regions have been defined. They are used for the creation of specific products near river mouths (see Section~\ref{sec:clim}) with a finer spatial resolution. Therefore, there is a total of 11~spatial regions where climatologies are created.
 
 \begin{table*}[h!]
 \caption{Spatial extent of the regional seas and the coastal areas.\label{tab:regions}}
@@ -171,7 +171,7 @@ Po river					 & 12°E		& 14.0°E		& 44°N		& 46.0°N		&			& \\
 
 \subsection{Metadata\label{sec:metadata}}
 
-Each observation comes with a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based upon ISO~19115 and ISO~19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2021}.
+Each observation is accompanied by a \textit{Common Data Index} \citep[CDI,][]{Schaap2021,Schaap2022}, which provides details about the availability and geographical spreading of marine data sets managed by the SeaDataNet data centres. The index is based on ISO~19115 and ISO~19139 standards, which define metadata for the description of geographic information, and supported by SeaDataNet Common Vocabularies (\url{https://vocab.seadatanet.org/search}). The CDI has been published in the Ocean Data Standards, managed by the Intergovernmental Oceanographic Commission of the UNESCO \citet{Schaap2021}.
 
 Another relevant metadata field is the European Directory of Marine Organisations (EDMO) code, which indicates up-to-date addresses and activity profiles of the institution (research centers, universities, data center, \ldots) involved in the data holding. 
 
@@ -181,22 +181,22 @@ For each observation, the EDMO code and the CDI are concatenated to form a new v
 
 One of the main added value of the aggregated datasets is the validation procedure applied to assess the quality of the measurements \citep{Barth2015,Lipizer2021,Lipizer2023}. The EMODnet Chemistry quality control chain involves the following steps:
 \begin{enumerate}
-\item Metadata completeness: it ensures that temporal and spatial information (longitude, latitude, sampling depth, station bottom depth, time) is present.
-\item Conversion to standard units and harmonisation of parameter names: it ensures that a given variable is always expressed with the same units and has always the same name (Tab.~\ref{tab:variables}).
-\item Quality flagging of data: a value reflecting the quality is assigned to the measurements.
+\item Metadata completeness: ensures that temporal and spatial information (longitude, latitude, sampling depth, station bottom depth, time) is supplied.
+\item Conversion to standard units and harmonisation of parameter names: ensures that a given variable  always is expressed with the same units and  always has the same name (Tab.~\ref{tab:variables}).
+\item Quality flagging of data: a value reflecting the quality is assigned to each measurement.
 \end{enumerate} 
-The last step is described in detail in \citet{Lipizer2023}, where the quality flag setting is explained. A particular attention is paid to the range check: each regional sea is decomposed into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~\unit{mg/m{^3}}, while this range is narrower in other sub-regions.
+The last step is described in detail in \citet{Lipizer2023}, where the quality flag setting is described. Particular attention is paid to the range check: each regional sea is divided into sub-domains and the range of acceptable values, for each variable, is set in those sub-domains. For instance, the acceptable chlorophyll concentration values in the Northern Adriatic Sea (strongly influenced by river discharge) are between 0 and 20~\unit{mg/m{^3}}, while this range is narrower in other sub-regions.
 
 \subsection{Spatial distribution}
 
-As stated in Section~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. Figure~\ref{fig:phosphatedata} illustrates this feature by displaying the phosphate and the ammonium data points, in the 6~regional domains from Tab.~\ref{tab:regions}. The differences between the spatial distributions of the two variables is obvious, with the ammonium mostly sampled in coastal areas, whereas the phosphate observations have a more extended spatial coverage.
+As stated in Section~\ref{sec:insitu}, the datasets are characterised by their strong heterogeneity. Figure~\ref{fig:phosphatedata} illustrates this feature by displaying the phosphate and the ammonium data points, in the 6~regional domains from Tab.~\ref{tab:regions}. The differences between the spatial distributions of the two variables is obvious, with ammonium mostly sampled in coastal areas, whereas phosphate observations have a more extended spatial coverage.
 
 \begin{figure*}[t]
 \includegraphics[width=.49\textwidth]{observations_Water_body_phosphate.png}\includegraphics[width=.49\textwidth]{observations_Water_body_ammonium.png}
 \caption{Locations of the phosphate concentration and the dissolved inorganic nitrogen concentration profiles.\label{fig:phosphatedata}}
 \end{figure*}
 
-The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sea, while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage; with zones with almost no measurements at all (coastal zones of Tunisia and Libya). The data coverage will obviously impact the quality of the gridded fields (Section~\ref{sec:clim}).
+The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) displays the number of observations within hexagonal cells. The regions with the highest coverage are located in the Baltic Sea and in the southern part of the North Sea, while in general lower data densities are found at the edges of the global domain. The Mediterranean sea also exhibits an inhomogeneous data coverage; with zones with almost no measurements at all (coastal zones of Tunisia and Libya). The data coverage will distinctly impact the quality of the gridded fields (Section~\ref{sec:clim}).
 
 \begin{figure}[t]
 \includegraphics[width=8.3cm]{observations_Water_body_phosphate_hex.png}
@@ -205,9 +205,9 @@ The hexagonal binning (hexbin) plot (Fig.~\ref{fig:phosphatedatahexbin}) display
 
 \subsection{Temporal distribution}
 
-The number of phosphate concentration observations per year and per month are shown in Fig.~\ref{fig:phosphatetime}. The first sub-plot exhibits an overall positive trend from 1960 to 1990 approximately, followed by a more stationary period. The last years have less observations, due to the typical time lag between the data collection and their inclusion into the international databases. Another striking feature visible in the histogram is the contributions by the different regions. For instance, data on phosphate concentration in the North Sea only start to appear in the mid 1990's. The Baltic Sea stands out as the largest contributor for this variable, despite its smaller geographical extension.
+The number of phosphate concentration observations per year and per month are shown in Fig.~\ref{fig:phosphatetime}. The first sub-plot exhibits an overall positive trend from 1960 to 1990 approximately, followed by a more stationary period. The last years have less observations, due to the typical time lag between the data collection and their inclusion into international databases. Another striking feature visible in the histogram is the contributions by the different regions. For instance, data on phosphate concentration in the North Sea only started to appear in the mid 1990's. The Baltic Sea stands out as the largest contributor for this variable, despite its small geographical extension.
 
-The second sub-plot shows the seasonal, with a factor 2 between the number of observations available in the most sampled month (May) and in the least sampled month (December). 
+The second sub-plot shows the seasonal availability of measurements, with a factor 2 between the number of observations available in the most frequently sampled month (May) and in the least frequently sampled month (December). 
 
 The histograms for the other variables are not included in the paper, but they also display similar heterogeneities in the temporal distribution, along with variations related to the variables themselves. 
 
@@ -231,12 +231,12 @@ The histogram based on the observation values (Fig.~\ref{fig:histogram_value_Wat
 
 \subsection{File format}
 
-The original data collections are provided as ODV (Ocean Data View) data collections, which is one of the standard formats promoted by SeaDataNet marine data infrastructure \citep{Lowry2023}. Such collections are easily read then exported to another format using the ODV software tool \citep{SCHLITZER2002}. In the present work we exported the collections to netCDF files, which in turn are used as input files for the preparation of the climatologies (next Section). Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
+The original data collections are provided as ODV (Ocean Data View) data collections, which is one of the standard formats promoted by SeaDataNet marine data infrastructure \citep{Lowry2023}. The original data can be analyzed and visualized online via webODV at \url{https://emodnet-chemistry.webodv.awi.de/}. In addition to separate ODV collections for the individual regions, this site also provides access to an aggregated collection covering the data of all regions. Such collections are easily read when exported to another format using the ODV software tool \citep{SCHLITZER2002}. In this work, we exported the collections to netCDF files, which in turn are used as input files for the preparation of the climatologies (next Section). Along with the data (coordinates, time, depth and observed values), a set of metadata is assigned to each measurement. Among them we find information about the instrument, the cruise and the institute that performed the measurements. 
 
 \section{The gridding method\label{sec:method}}
 %---------------------------------
 
-In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and times. The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For the sake of simplicity, we will not review all of them but will insist on the distinction between two groups of techniques:
+In this paper, we refer to \textit{gridding} as the process of computing the values of a variable (for instance: sea water temperature) on the nodes of a regular grid, based on observations of that variable at different locations and time periods. The creation of gridded fields using sparse, in situ observations can be performed using different techniques. For simplicity, we will not review all of them but will concentrate on the distinction between two groups of techniques:
 \begin{enumerate}
 \item The interpolation techniques: the field has to contain (or pass through) all the data points. For two-dimensional cases, an example of such a method is the bi-linear interpolation. Due to the different types of noise affecting the measurements in the ocean (instrumental, representativeness, \ldots), such techniques are not the most suitable.
 \item The approximation techniques, also called analysis, where the field does not have to contain all the data points. Such a category of technique is often preferred when it comes to processing environmental data.
