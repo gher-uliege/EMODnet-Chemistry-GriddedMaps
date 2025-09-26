@@ -37,7 +37,14 @@ woadir = "/home/ctroupin/data/WOA/"
 lon_landsea, lat_landsea, landsea = GeoDatasets.landseamask(; resolution = 'i', grid = 5)
 landsea[landsea.==2] .= 1;
 landsea = Float64.(landsea)
-landsea[landsea.==0] .= NaN;
+landsea[landsea.==0] .= -999;
+
+# Subset land/sea mask
+goodlon = findall( (lon_landsea .>= first(lonr)) .& (lon_landsea .<= last(lonr)))
+goodlat = findall( (lat_landsea .>= first(latr)) .& (lat_landsea .<= last(latr)))
+lon_landsea = lon_landsea[goodlon]
+lat_landsea = lat_landsea[goodlat]
+landsea = landsea[goodlon, goodlat]
 
 coordscoast = GeoDatasets.gshhg("i", 1);
 
@@ -477,13 +484,24 @@ function plot_field_var(
     vmin::Float64=0.,
     vmax::Float64=1.
 )
+    varname_ = replace(varname, "_" => " ")
+
     fig = Figure()
     ga = GeoAxis(
         fig[1, 1],
-        title = "$(source) $(varname) field\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
+        title = "$(source) $(varname_) field\nat $(Int64(depth2plot)) m depth in $(Dates.monthname(month2plot))\n\n",
         dest = "+proj=laea +lon_0=15 +lat_0=45",
         xticks = (-50:20.0:70),
         yticks = (20:10.0:85),
+    )
+
+    heatmap!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea,
+        colormap = Reverse(:greys),
+        colorrange = [0, 2],
     )
 
     hm = heatmap!(
@@ -496,7 +514,81 @@ function plot_field_var(
         highclip = cmap.colors[end],
     )
 
-    add_coast!(ga, coordscoast)
+    # add_coast!(ga, coordscoast)
+    contour!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea2,
+        levels = [-0.1, 0.0],
+        color = :black,
+        linewidth = 0.5,
+    )
+
+    xlims!(ga, lonr[1], lonr[end])
+    ylims!(ga, latr[1], latr[end])
+    Colorbar(fig[1, 2], hm, label = varunits[varname], labelrotation = 0)
+    return fig, ga, hm
+end
+
+
+"""
+    plot_field_var_deepest(varname, lon, lat, field, depth2plot, month2plot)
+
+Plot the 2D field corresponding to the coordinates `lon` and `lat`, 
+at the depth level `depth2plot` and the time period `month2plot`.
+"""
+function plot_field_var_deepest(
+    varname::String,
+    lon,
+    lat,
+    field,
+    month2plot,
+    source::String = "DIVAnd",
+    cmap = cgrad(:RdYlBu, rev = true);
+    vmin::Float64=0.,
+    vmax::Float64=1.
+)
+    varname_ = replace(varname, "_" => " ")
+
+    fig = Figure()
+    ga = GeoAxis(
+        fig[1, 1],
+        title = "$(source) $(varname_) field\nat deepest depth in $(Dates.monthname(month2plot))\n\n",
+        dest = "+proj=laea +lon_0=15 +lat_0=45",
+        xticks = (-50:20.0:70),
+        yticks = (20:10.0:85),
+    )
+
+    heatmap!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea,
+        colormap = Reverse(:greys),
+        colorrange = [0, 2],
+    )
+
+    hm = heatmap!(
+        ga,
+        lon,
+        lat,
+        field,
+        colorrange = (vmin, vmax),
+        colormap = cmap,
+        highclip = cmap.colors[end],
+    )
+
+    # add_coast!(ga, coordscoast)
+    contour!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea2,
+        levels = [-0.1, 0.0],
+        color = :black,
+        linewidth = 0.5,
+    )
 
     xlims!(ga, lonr[1], lonr[end])
     ylims!(ga, latr[1], latr[end])
@@ -527,11 +619,19 @@ function plot_error_field(varname, lon, lat, fielderror, depth2plot, month2plot,
         lat,
         fielderror * 100.0,
         colorrange = (0, 100.0),
-        colormap = cmaperror,
-        highclip = cmap.colors[end],
+        colormap = cmaperror
     )
 
-    add_coast!(ga, coordscoast)
+    #add_coast!(ga, coordscoast)
+    contour!(
+        ga,
+        lon_landsea,
+        lat_landsea,
+        landsea2,
+        levels = [-0.1, 0.0],
+        color = :black,
+        linewidth = 0.5,
+    )
 
     xlims!(ga, lonr[1], lonr[end])
     ylims!(ga, latr[1], latr[end])
